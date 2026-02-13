@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="一一"/><meta name="copyright" content="一一"/><meta name="theme-color" content="#FFB347"/><meta name="format-detection" content="telephone=no"/><meta name="keywords" content="北航,大二,co"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-touch-fullscreen" content="yes"/><meta name="application-name" content="北航co计算机组成P3设计文档 | anAilurus' Blog"/><meta name="apple-mobile-web-app-title" content="北航co计算机组成P3设计文档 | anAilurus' Blog"/><meta name="apple-mobile-web-app-status-bar-style" content="#FFB347"/><link rel="canonical" href="http://anAilurus.github.io/2026/02/13/P3co/"/><meta name="description" content="Logisim实现单周期CPU.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北航co计算机组成P3设计文档 | anAilurus&#39; Blog">
+<meta property="og:url" content="http://anailurus.github.io/2026/02/13/P3co/index.html">
+<meta property="og:site_name" content="anAilurus&#39; Blog">
+<meta property="og:description" content="Logisim实现单周期CPU.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://anailurus.github.io/image-hosting//20260213170737891.jpg">
+<meta property="article:published_time" content="2026-02-13T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-13T14:46:59.355Z">
+<meta property="article:author" content="一一">
+<meta property="article:tag" content="co">
+<meta property="article:tag" content="北航">
+<meta property="article:tag" content="大二">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://anailurus.github.io/image-hosting//20260213170737891.jpg"><meta name="robots" content="index,follow"/><meta name="googlebot" content="index,follow"/><meta name="revisit-after" content="1 days"/><title>北航co计算机组成P3设计文档 | anAilurus' Blog</title><link rel="shortcut icon" href="/assets/images/fu_Q.ico"><link rel="preconnect" href="/assets"/><link rel="preconnect" href="assets"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/third-party/dist/APlayer.min.css">
+<link rel="prefetch" href="/"/><link rel="prefetch" href="/archives"/><link rel="prefetch" href="/tags"/><meta name="generator" content="Hexo 8.1.1"></head><body bg-style="none"><header><div id="navbar"><div id="nav-info"><a id="site-icon" href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a id="site-name" href="/" title="主页"><div>anAilurus' Blog</div><img src="/assets/images/svg/uc/uc-home.svg" class="icon noview" alt="Icon"></a></div><div id="nav-menu"><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="sub-menu-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="sub-menu-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div></div><div id="nav-function"><div id="search-btn"><a href="javascript:void(0);" title="搜索" accesskey="s"><img src="/assets/images/svg/uc/uc-search.svg" class="icon noview" alt="Icon"><span>搜索</span></a></div><div id="menu-btn"><a href="javascript:void(0);" title="打开菜单"><img src="/assets/images/svg/uc/uc-menu.svg" class="icon noview" alt="Icon"></a></div></div></div></header><div id="menu-aside"><div id="menu-aside-container"><div id="menu-aside-info"><a href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a href="/" title="主页">anAilurus' Blog</a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="menu-aside-sub-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-aside-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="menu-aside-sub-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-aside-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div><hr/></div></div><main><div class="banner"><div class="banner-info"><div class="banner-avatar"><img src="/assets/images/fu_cake.png" alt="Avatar"/></div><div class="banner-title">「 anAilurus' Blog 」</div></div></div><div class="post-container"><div class="post-main"><div class="post-content"><h1 class="post-title">北航co计算机组成P3设计文档</h1><div class="post-author"><span>作者: 一一</span></div><div class="post-meta"><div class="post-info"><div class="post-date"><div class="post-pubdate"><img src="/assets/images/svg/ta/ta-pubdate.svg" class="icon noview" alt="Icon"><span>发表于2026-02-13</span></div><div class="post-update"><img src="/assets/images/svg/ta/ta-update.svg" class="icon noview" alt="Icon"><span>更新于2026-02-13</span></div></div><div class="post-read"><div class="post-wordcount"><img src="/assets/images/svg/ta/ta-write.svg" class="icon noview" alt="Icon"><span>总字数: 1.6k字</span></div><div class="post-readtime"><img src="/assets/images/svg/ta/ta-time.svg" class="icon noview" alt="Icon"><span>阅读时长: 5分钟</span></div></div></div><div class="post-attribute"><div class="post-categories"><img src="/assets/images/svg/ta/ta-category.svg" class="icon noview" alt="Icon"><span><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/co/">co</a></span></div><div class="post-tags"><img src="/assets/images/svg/ta/ta-tag.svg" class="icon noview" alt="Icon"><span><a class="post-tags-link" href="/tags/co/" rel="tag">co</a><a class="post-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></span></div></div></div><div class="post markdown" indent="false"><img  class="postcover" alt="Post Cover"  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213170737891.jpg" ><div class="note yellow"><p>写在前面：<br>本人在 P3 时尚未认识到看学长学姐博客的重要性，<br>于是整个人根据课上老师讲解和指导书要求<br>乱七八糟的搭建了一个CPU，毫无美观可言<br>接口设计的超级不好，在这里就不展示了。<br>P4 的时候看了一些博客设计了一个比较美观的CPU，<br>（P4 只是把logisim上的CPU用verilog实现）<br>所以接口设计可以参考 P4 ，指路链接在下面。</p></div>
+
+<div class="button-list">
+          <div class="button-item">
+            <a href="/P4co.md" class="normal" alt=北航co计算机组成P4设计文档 target="_blank">
+              <div class="button-item-icon"><img  class="posticon" alt="Link Icon" no-view  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260212185314108.png"  ></div>
+              <div class="button-item-info">
+                <div class="button-item-name">北航co计算机组成P4设计文档</div>
+                <div class="button-item-desc">可以看看！！</div>
+              </div>
+            </a>
+          </div></div>
+
+<h1 id="P3-CPU设计文档及思考题"><a href="#P3-CPU设计文档及思考题" class="headerlink" title="P3 CPU设计文档及思考题"></a>P3 CPU设计文档及思考题</h1><h2 id="设计草稿"><a href="#设计草稿" class="headerlink" title="设计草稿"></a>设计草稿</h2><h3 id="1-指令详解"><a href="#1-指令详解" class="headerlink" title="1.指令详解"></a>1.指令详解</h3><ul>
+<li>ADD：add RD, RS, RT<br>编码：000000 sssss ttttt ddddd 00000 100000<br>描述：GPR[rd] &#x3D; GPR[rs] + GPR[rt]</li>
+<li>SUB：sub RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 100010<br>  描述：GPR[rd] &#x3D; GPR[rs] - GPR[rt]</li>
+<li>ORI：ori RT, RS, IMM<br>  编码：001101 sssss ttttt iiiii iiiii iiiiii<br>描述：GPR[rt] &#x3D; GPR[rs] | zero_extend(IMM)</li>
+<li>LW：lw RT, OFFSET(RS)<br>  编码：100011 sssss ttttt iiiii iiiii iiiiii<br>描述：GPR[rt] &#x3D; MEM[GPR[rs] + sign_ext(OFFSET)]</li>
+<li>SW：sw RT, OFFSET(RS)<br>  编码：101011 sssss ttttt iiiii iiiii iiiiii<br>描述：MEM[GPR[rs] + sign_ext(OFFSET)] &#x3D; GPR[rt]</li>
+<li>BEQ：beq RS, RT, LABEL<br>  编码：000100 sssss ttttt iiiii iiiii iiiiii<br>描述：if GPR[rs] &#x3D;&#x3D; GPR[rt], PC &#x3D; PC + 4 + sign_ext(LABEL);  else PC &#x3D; PC + 4;</li>
+<li>lui：lui RT, IMM<br>  编码：001111 00000 ttttt iiiii iiiii iiiiii<br>描述：GPR[rt] &#x3D; sign_ext(IMM) &lt;&lt; 16;</li>
+<li>nop：nop<br>  编码：000000 00000 00000 00000 00000 000000<br>描述：GPR[0] &#x3D; GPR[0]</li>
+</ul>
+<h3 id="2-数据通路设计"><a href="#2-数据通路设计" class="headerlink" title="2.数据通路设计"></a>2.数据通路设计</h3><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">Adder-A1</th>
+<th align="center">Adder-A2</th>
+<th align="center">shifter1</th>
+<th align="center">PC</th>
+<th align="center">IM</th>
+<th align="center">splitter</th>
+<th align="center">GRF-RA1</th>
+<th align="center">GRF-RA2</th>
+<th align="center">GRF-WA</th>
+<th align="center">GRT-WD</th>
+<th align="center">ALU-A1</th>
+<th align="center">ALU-A2</th>
+<th align="center">DM-RA</th>
+<th align="center">DM-WA</th>
+<th align="center">DM-WD</th>
+<th align="center">EXT</th>
+<th align="center">shifter2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">add</td>
+<td align="center">PC</td>
+<td align="center">4</td>
+<td align="center">-</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">splitter[d]</td>
+<td align="center">ALU</td>
+<td align="center">GRF-RD1</td>
+<td align="center">GRF-RD2</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">sub</td>
+<td align="center">PC</td>
+<td align="center">4</td>
+<td align="center">-</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">splitter[d]</td>
+<td align="center">ALU</td>
+<td align="center">GRF-RD1</td>
+<td align="center">GRF-RD2</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">ori</td>
+<td align="center">PC</td>
+<td align="center">4</td>
+<td align="center">-</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">splitter[s]</td>
+<td align="center">-</td>
+<td align="center">splitter[t]</td>
+<td align="center">ALU</td>
+<td align="center">GRF-RD1</td>
+<td align="center">EXT</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">splitter[i]</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">lw</td>
+<td align="center">PC</td>
+<td align="center">4</td>
+<td align="center">-</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">splitter[s]</td>
+<td align="center">-</td>
+<td align="center">splitter[t]</td>
+<td align="center">DM-RD</td>
+<td align="center">GRF-RD1</td>
+<td align="center">EXT</td>
+<td align="center">ALU</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">splitter[i]</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">sw</td>
+<td align="center">PC</td>
+<td align="center">4</td>
+<td align="center">-</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">GRF-RD1</td>
+<td align="center">EXT</td>
+<td align="center">-</td>
+<td align="center">ALU</td>
+<td align="center">GRF-RD2</td>
+<td align="center">splitter[i]</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">beq</td>
+<td align="center">PC</td>
+<td align="center">4&#x2F;4+shifter1</td>
+<td align="center">EXT&lt;&lt;2</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">GRF-RD1</td>
+<td align="center">GRF-RD2</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">splitter[i]</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">lui</td>
+<td align="center">PC</td>
+<td align="center">4</td>
+<td align="center">-</td>
+<td align="center">adder</td>
+<td align="center">pc</td>
+<td align="center">im</td>
+<td align="center">-</td>
+<td align="center">splitter[t]</td>
+<td align="center">shifter2</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">splitter[i]</td>
+<td align="center">EXT&lt;&lt;16</td>
+</tr>
+</tbody></table></div>
+<p>&#x2F;&#x2F;IFU由Adder、shifter、PC、IM构成</p>
+<h3 id="3-控制信号"><a href="#3-控制信号" class="headerlink" title="3.控制信号"></a>3.控制信号</h3><h4 id="总控制"><a href="#总控制" class="headerlink" title="总控制"></a>总控制</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">数值</th>
+<th align="center">RegWA_control</th>
+<th align="center">RegWD_control</th>
+<th align="center">RegWrite</th>
+<th align="center">ALU_Inputcontrol_2</th>
+<th align="center">MemWrite</th>
+<th align="center">EXTcontrol</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">splitter[t]</td>
+<td align="center">ALU</td>
+<td align="center">unable</td>
+<td align="center">GRF-RD2</td>
+<td align="center">unable</td>
+<td align="center">zero_extend</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">splitter[d]</td>
+<td align="center">DM</td>
+<td align="center">enable</td>
+<td align="center">EXT</td>
+<td align="center">enable</td>
+<td align="center">sign_extend</td>
+</tr>
+<tr>
+<td align="center">2(10)</td>
+<td align="center">-</td>
+<td align="center">shifter2</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+</tbody></table></div>
+<h4 id="ALU控制"><a href="#ALU控制" class="headerlink" title="ALU控制"></a>ALU控制</h4><p>000 : +<br>001 : -<br>010 : |</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">指令</th>
+<th align="center">ALU操作</th>
+<th align="center">ALUcontrol</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">add</td>
+<td align="center">+</td>
+<td align="center">000</td>
+</tr>
+<tr>
+<td align="center">sub</td>
+<td align="center">-</td>
+<td align="center">001</td>
+</tr>
+<tr>
+<td align="center">ori</td>
+<td align="center">or</td>
+<td align="center">010</td>
+</tr>
+<tr>
+<td align="center">lw</td>
+<td align="center">+</td>
+<td align="center">000</td>
+</tr>
+<tr>
+<td align="center">sw</td>
+<td align="center">+</td>
+<td align="center">000</td>
+</tr>
+<tr>
+<td align="center">beq</td>
+<td align="center">&#x3D;&#x3D;</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">lui</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+</tbody></table></div>
+<h2 id="课上："><a href="#课上：" class="headerlink" title="课上："></a>课上：</h2><p>本人没有记录课上题目，不过P3会有推荐题，在时间宽裕的情况下可以做。</p>
+<p>我知道一些同学会喜欢增加很多指导书没有涉及的指令，有利有弊，利在可以对添加指令更加熟练。弊在你的CPU会越来越复杂，而且课上添加的指令肯定是mips指令集中没有出现过的，如果课上添加指令的编码op恰好和自行添加的指令op一致，这将给课上造成很大的麻烦。</p>
+<p>课上可以有取巧的方法：（歪门邪道了</p>
+<ol>
+<li>直接新建模块对新增指令进行运算，模块的input为所需运算的值，output是结果</li>
+<li>将新建模块连接入mips顶层中，连接输入输出</li>
+<li>使用多路选择器输出结果，即如果op和新增指令一样（判断可以加在control中），结果即用新增模块的结果，其他的按照原本课下不变</li>
+</ol>
+<details class="fold blue" ><summary>思考题点击展开，不保证正确性，建议自己思考</summary><div class='fold-content'><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h4 id="1-上面我们介绍了通过-FSM-理解单周期-CPU-的基本方法。请大家指出单周期-CPU-所用到的模块中，哪些发挥状态存储功能，哪些发挥状态转移功能。"><a href="#1-上面我们介绍了通过-FSM-理解单周期-CPU-的基本方法。请大家指出单周期-CPU-所用到的模块中，哪些发挥状态存储功能，哪些发挥状态转移功能。" class="headerlink" title="1.上面我们介绍了通过 FSM 理解单周期 CPU 的基本方法。请大家指出单周期 CPU 所用到的模块中，哪些发挥状态存储功能，哪些发挥状态转移功能。"></a>1.上面我们介绍了通过 FSM 理解单周期 CPU 的基本方法。请大家指出单周期 CPU 所用到的模块中，哪些发挥状态存储功能，哪些发挥状态转移功能。</h4><p>状态存储功能：PC、GRF、DM<br>状态转移功能：ALU、EXT、Controller</p>
+<h4 id="2-现在我们的模块中-IM-使用-ROM，-DM-使用-RAM，-GRF-使用-Register，这种做法合理吗？-请给出分析，若有改进意见也请一并给出"><a href="#2-现在我们的模块中-IM-使用-ROM，-DM-使用-RAM，-GRF-使用-Register，这种做法合理吗？-请给出分析，若有改进意见也请一并给出" class="headerlink" title="2.现在我们的模块中 IM 使用 ROM， DM 使用 RAM， GRF 使用 Register，这种做法合理吗？ 请给出分析，若有改进意见也请一并给出"></a>2.现在我们的模块中 IM 使用 ROM， DM 使用 RAM， GRF 使用 Register，这种做法合理吗？ 请给出分析，若有改进意见也请一并给出</h4><p>合理。<br>IM使用ROM是合理的，因为指令在运行时通常是不改变的，ROM是只读的，符合指令存储的需求。<br>DM使用RAM是合理的，因为数据需要读写，RAM可以读写，符合数据存储的需求。<br>GRF使用Register是合理的，因为寄存器堆需要快速读写，且每个时钟周期都要更新，使用寄存器可以实现。</p>
+<h4 id="3-在上述提示的模块之外，你是否在实际实现时设计了其他的模块？如果是的话，请给出介绍和设计的思路。"><a href="#3-在上述提示的模块之外，你是否在实际实现时设计了其他的模块？如果是的话，请给出介绍和设计的思路。" class="headerlink" title="3.在上述提示的模块之外，你是否在实际实现时设计了其他的模块？如果是的话，请给出介绍和设计的思路。"></a>3.在上述提示的模块之外，你是否在实际实现时设计了其他的模块？如果是的话，请给出介绍和设计的思路。</h4><p>增加了shifter以实现lui所需要的位移（但可能可以加入在ALU中）</p>
+<h4 id="4-事实上，实现-nop-空指令，我们并不需要将它加入控制信号真值表，为什么？"><a href="#4-事实上，实现-nop-空指令，我们并不需要将它加入控制信号真值表，为什么？" class="headerlink" title="4.事实上，实现 nop 空指令，我们并不需要将它加入控制信号真值表，为什么？"></a>4.事实上，实现 nop 空指令，我们并不需要将它加入控制信号真值表，为什么？</h4><p>nop指令在MIPS中实际上是 sll $0, $0, 0。<br>其高6位为000000会在控制信号中被识别为R类指令，其任何操作都是对0号寄存器操作，$0寄存器无论如何都为0，相当于没有进行任何操作。所以不需要在控制信号真值表中对nop进行单独讨论。</p>
+<h4 id="5-阅读-Pre-的-“MIPS-指令集及汇编语言”-一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。"><a href="#5-阅读-Pre-的-“MIPS-指令集及汇编语言”-一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。" class="headerlink" title="5.阅读 Pre 的 “MIPS 指令集及汇编语言” 一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。"></a>5.阅读 Pre 的 “MIPS 指令集及汇编语言” 一节中给出的测试样例，评价其强度（可从各个指令的覆盖情况，单一指令各种行为的覆盖情况等方面分析），并指出具体的不足之处。</h4><h5 id="ori-指令："><a href="#ori-指令：" class="headerlink" title="ori 指令："></a>ori 指令：</h5><p>覆盖行为：从0号寄存器加载立即数。从非零寄存器进行或操作。立即数为正数。<br>不足之处：未测试立即数为边界值（如 0x0000 或 0xffff）。未测试源寄存器为其他非零值时的复杂逻辑组合。</p>
+<h5 id="lui-指令"><a href="#lui-指令" class="headerlink" title="lui 指令"></a>lui 指令</h5><p>覆盖行为：加载正立即数。加载负立即数。<br>不足之处：未测试立即数为 0x0000 的情况。未测试与后续 ori 组合形成完整32位值的所有情况（如正负组合）。</p>
+<h5 id="add-指令"><a href="#add-指令" class="headerlink" title="add 指令"></a>add 指令</h5><p>覆盖行为：正数加正数。正数加负数。负数加负数。<br>不足之处：未测试加法溢出情况。未测试零加零或零加其他数的情况。未测试结果为零的情况。</p>
+<h5 id="sw和lw指令"><a href="#sw和lw指令" class="headerlink" title="sw和lw指令"></a>sw和lw指令</h5><p>覆盖行为：存储和加载到内存的不同偏移地址。存储后重新加载并再次存储。<br>不足之处：未测试内存访问的地址边界情况。</p>
+<h5 id="beq-指令"><a href="#beq-指令" class="headerlink" title="beq 指令"></a>beq 指令</h5><p>覆盖行为：分支不发生。分支发生。</p></div></details></div><div class="post-copyright"><div class="post-copyright-info">本作品由 一一 于 2026-02-13 10:00:00 发布</div><div class="post-copyright-link"><span>作品地址：<a href="http://anailurus.github.io/2026/02/13/P3co/">北航co计算机组成P3设计文档</a></span><button class="copy-text" type="button" data-text="http://anailurus.github.io/2026/02/13/P3co/">复制</button></div><div class="post-copyright-detail">除特别声明外，本站作品均采用 <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' title='Attribution-NonCommercial-ShareAlike' target='_blank'>CC BY-NC-SA 4.0</a> 许可协议，转载请注明来自 <a href='/'>anAilurus' Blog</a></div><img class="post-copyright-icon noview" src="/assets/images/fu_cake.png" alt="Logo"/></div><div class="post-tail-tags"><a class="post-tail-tags-link" href="/tags/co/" rel="tag">co</a><a class="post-tail-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tail-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></div><div class="post-nav"><a class="post-nav-prev" href="/2026/02/13/P4co/" title="北航co计算机组成P4设计文档">上一篇<span>北航co计算机组成P4设计文档</span></a><a class="post-nav-next" href="/2026/02/12/hello-world/" title="Hello World">下一篇<span>Hello World</span></a></div></div><aside id="post-sidebar" status="show"><div id="toc-container"><div class="toc-title"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"><span>目录</span></div><div class="toc-content" id="toc-div"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#P3-CPU%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E5%8F%8A%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-list-text">P3 CPU设计文档及思考题</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E8%AE%BE%E8%AE%A1%E8%8D%89%E7%A8%BF"><span class="toc-list-text">设计草稿</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-%E6%8C%87%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-list-text">1.指令详解</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#2-%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-list-text">2.数据通路设计</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#3-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7"><span class="toc-list-text">3.控制信号</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E8%AF%BE%E4%B8%8A%EF%BC%9A"><span class="toc-list-text">课上：</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-list-text">思考题</span></a></li></ol></li></ol></div></div></aside></div></div><div id="toolbar" hide=""><div id="toolbar-setting-container" hide=""><div class="toolbar-item"><button id="tool-color-mode" title="深色模式" type="button"><img src="/assets/images/svg/ta/ta-moon.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button class="copy-text" id="tool-share" title="分享" type="button" data-text="http://anailurus.github.io/2026/02/13/P3co/"><img src="/assets/images/svg/ta/ta-share.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-plus" title="放大字体" type="button"><img src="/assets/images/svg/ta/ta-text-plus.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-minus" title="缩小字体" type="button"><img src="/assets/images/svg/ta/ta-text-minus.svg" class="icon noview" alt="Icon"></button></div></div><div class="toolbar-container"><div class="toolbar-item"><button id="tool-setting" title="设置" type="button"><img src="/assets/images/svg/ta/ta-setting.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-toc" title="目录" type="button"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-gototop" title="返回顶部" type="button"><img src="/assets/images/svg/ta/ta-up.svg" class="icon noview" alt="Icon"></button></div></div></div><div class="search-overlay"><div class="search-container"><div class="search-header"><div class="search-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+搜索</div><div class="search-close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21a9 9 0 0 0 9 -9a9 9 0 0 0 -9 -9a9 9 0 0 0 -9 9a9 9 0 0 0 9 9z" /><path d="M9 8l6 8" /><path d="M15 8l-6 8" /></svg></div></div><div class="search-input-box"><input id="search-input" type="search" placeholder="请输入关键词进行站内搜索……" value="" maxlength="80"/></div><div class="search-result-container"><div class="search-result-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></div></div></div></div><div id="music-player"></div></main><footer><div class="footer"><div id="footer-copyright">© 2026 <span>💗</span> <a href="/null">一一</a></div><div id="footer-info"><div id="footer-framework">🚀本站由 <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/chanwj/hexo-theme-meow" title="3.3.0" target="_blank">Meow</a> 强力驱动</div><div id="footer-runtime"><span id="runtime" data-startdate="2026-02-10T00:00:00.000Z">🌻已稳定运行.年.月.天</span></div></div></div></footer><div class="scripts"><script>const GLOBALCONFIG = {
+  root: '/',
+  toolbar: true,
+  lazyload_src: '/assets/images/Meow-Loading.webp',
+  friends: false,
+  album: '',
+  codeblock: true,
+  code_copy_text: false,
+  share_text: '🐱Share From anAilurus',
+  onblur_title: '＜(´⌯ ω ⌯`)＞',
+  mouse_click: true,
+  notify:{
+    enable: false,
+    info: '复制成功～转载请标注本文地址',
+    f12_info: '开发者模式已打开，请遵循本站版权协议'
+  },
+  search: {
+    enable: true,
+    path: 'search.json',
+    local: {
+      top_n_per_article: 1,
+      preload: false
+    }
+  },
+  encrypt: false,
+};
+</script><script>if (!localStorage.getItem('color-mode')) {
+  localStorage.setItem('color-mode', 'light' || 'light');
+}
+document.body.setAttribute('data-mode', localStorage.getItem('color-mode'));
+</script>
+<script src="/js/theme/tools/utils.js"></script>
+
+<script src="/js/plugins/dist/lazyload.min.js"></script>
+
+<script src="/js/plugins/view-image.min.js"></script>
+<script>if (localStorage.getItem('font-size')) {
+  document.querySelector('.post').style.fontSize = localStorage.getItem('font-size') + 'px';
+}
+</script>
+<script src="/js/plugins/dist/APlayer.min.js"></script>
+<script>const initAplayer = (data) => {
+  if (!data.length) return;
+
+  const ap = new APlayer({
+    container: document.getElementById('music-player'),
+    fixed: true,
+    autoplay: false,
+    theme: '#FFB347',
+    loop: 'all',
+    order: 'list',
+    volume: 0.7,
+    lrcType: 3,
+    audio: data
+  });
+
+  ap.on('play', () => {
+    document.getElementById('music-player').setAttribute("play", "");
+  });
+  ap.on('pause', () => {
+    document.getElementById('music-player').removeAttribute("play");
+  });
+};
+
+const fetchData = () => {
+  fetch('')
+    .then(res => res.json())
+    .then(result => initAplayer(result));
+};
+
+if ('') {
+  document.addEventListener("DOMContentLoaded", fetchData);
+} else {
+  document.addEventListener("DOMContentLoaded", initAplayer([{"name":"ESCAPE","artist":"i-dle","url":"https://anailurus.github.io/image-hosting//(G)I-DLE-ESCAPE.mp3","cover":"https://anailurus.github.io/image-hosting//20260212185314108.png","lrc":"https://anailurus.github.io/image-hosting//i-dle-ESCAPE.lrc"}]));;
+}</script>
+<script src="/js/plugins/dist/search.js"></script>
+
+<script src="/js/main.js" type="module"></script>
+</div></body></html>

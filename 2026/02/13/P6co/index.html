@@ -1,0 +1,1141 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="一一"/><meta name="copyright" content="一一"/><meta name="theme-color" content="#FFB347"/><meta name="format-detection" content="telephone=no"/><meta name="keywords" content="北航,大二,co"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-touch-fullscreen" content="yes"/><meta name="application-name" content="北航co计算机组成P6设计文档 | anAilurus' Blog"/><meta name="apple-mobile-web-app-title" content="北航co计算机组成P6设计文档 | anAilurus' Blog"/><meta name="apple-mobile-web-app-status-bar-style" content="#FFB347"/><link rel="canonical" href="http://anAilurus.github.io/2026/02/13/P6co/"/><meta name="description" content="Verilog实现流水线CPU（Plus）.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北航co计算机组成P6设计文档 | anAilurus&#39; Blog">
+<meta property="og:url" content="http://anailurus.github.io/2026/02/13/P6co/index.html">
+<meta property="og:site_name" content="anAilurus&#39; Blog">
+<meta property="og:description" content="Verilog实现流水线CPU（Plus）.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://anailurus.github.io/image-hosting//20260213170737891.jpg">
+<meta property="article:published_time" content="2026-02-13T05:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-13T14:45:02.869Z">
+<meta property="article:author" content="一一">
+<meta property="article:tag" content="co">
+<meta property="article:tag" content="北航">
+<meta property="article:tag" content="大二">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://anailurus.github.io/image-hosting//20260213170737891.jpg"><meta name="robots" content="index,follow"/><meta name="googlebot" content="index,follow"/><meta name="revisit-after" content="1 days"/><title>北航co计算机组成P6设计文档 | anAilurus' Blog</title><link rel="shortcut icon" href="/assets/images/fu_Q.ico"><link rel="preconnect" href="/assets"/><link rel="preconnect" href="assets"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/third-party/dist/APlayer.min.css">
+<link rel="prefetch" href="/"/><link rel="prefetch" href="/archives"/><link rel="prefetch" href="/tags"/><meta name="generator" content="Hexo 8.1.1"></head><body bg-style="none"><header><div id="navbar"><div id="nav-info"><a id="site-icon" href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a id="site-name" href="/" title="主页"><div>anAilurus' Blog</div><img src="/assets/images/svg/uc/uc-home.svg" class="icon noview" alt="Icon"></a></div><div id="nav-menu"><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="sub-menu-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="sub-menu-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div></div><div id="nav-function"><div id="search-btn"><a href="javascript:void(0);" title="搜索" accesskey="s"><img src="/assets/images/svg/uc/uc-search.svg" class="icon noview" alt="Icon"><span>搜索</span></a></div><div id="menu-btn"><a href="javascript:void(0);" title="打开菜单"><img src="/assets/images/svg/uc/uc-menu.svg" class="icon noview" alt="Icon"></a></div></div></div></header><div id="menu-aside"><div id="menu-aside-container"><div id="menu-aside-info"><a href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a href="/" title="主页">anAilurus' Blog</a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="menu-aside-sub-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-aside-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="menu-aside-sub-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-aside-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div><hr/></div></div><main><div class="banner"><div class="banner-info"><div class="banner-avatar"><img src="/assets/images/fu_cake.png" alt="Avatar"/></div><div class="banner-title">「 anAilurus' Blog 」</div></div></div><div class="post-container"><div class="post-main"><div class="post-content"><h1 class="post-title">北航co计算机组成P6设计文档</h1><div class="post-author"><span>作者: 一一</span></div><div class="post-meta"><div class="post-info"><div class="post-date"><div class="post-pubdate"><img src="/assets/images/svg/ta/ta-pubdate.svg" class="icon noview" alt="Icon"><span>发表于2026-02-13</span></div><div class="post-update"><img src="/assets/images/svg/ta/ta-update.svg" class="icon noview" alt="Icon"><span>更新于2026-02-13</span></div></div><div class="post-read"><div class="post-wordcount"><img src="/assets/images/svg/ta/ta-write.svg" class="icon noview" alt="Icon"><span>总字数: 5.6k字</span></div><div class="post-readtime"><img src="/assets/images/svg/ta/ta-time.svg" class="icon noview" alt="Icon"><span>阅读时长: 19分钟</span></div></div></div><div class="post-attribute"><div class="post-categories"><img src="/assets/images/svg/ta/ta-category.svg" class="icon noview" alt="Icon"><span><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/co/">co</a></span></div><div class="post-tags"><img src="/assets/images/svg/ta/ta-tag.svg" class="icon noview" alt="Icon"><span><a class="post-tags-link" href="/tags/co/" rel="tag">co</a><a class="post-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></span></div></div></div><div class="post markdown" indent="false"><img  class="postcover" alt="Post Cover"  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213170737891.jpg" ><h1 id="P6CPU设计文档及思考题"><a href="#P6CPU设计文档及思考题" class="headerlink" title="P6CPU设计文档及思考题"></a>P6CPU设计文档及思考题</h1><h2 id="设计草稿"><a href="#设计草稿" class="headerlink" title="设计草稿"></a>设计草稿</h2><h3 id="1-指令详解"><a href="#1-指令详解" class="headerlink" title="1.指令详解"></a>1.指令详解</h3><h4 id="1-calc-R"><a href="#1-calc-R" class="headerlink" title="(1)calc_R:"></a>(1)calc_R:</h4><ul>
+<li>ADD：add RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 100000<br> 描述：GPR[rd] &#x3D; GPR[rs] + GPR[rt]</li>
+<li>SUB：sub RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 100010<br> 描述：GPR[rd] &#x3D; GPR[rs] - GPR[rt</li>
+<li>AND：and RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 100100<br> 描述：GPR[rd] &#x3D; GPR[rs] &amp; GPR[rt]</li>
+<li>OR：or RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 100101<br> 描述：GPR[rd] &#x3D; GPR[rs] | GPR[rt]</li>
+<li>SLT：slt RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 101010<br> 描述：if GPR[rs] &lt; GPR[rt], GPR[rd] &#x3D; 1; else GPR[rd] &#x3D; 0;是有符号的比较</li>
+<li>SLTU：sltu RD, RS, RT<br> 编码：000000 sssss ttttt ddddd 00000 101011<br> 描述：if GPR[rs] &lt; GPR[rt], GPR[rd] &#x3D; 1; else GPR[rd] &#x3D; 0; 但是是无符号的比较</li>
+</ul>
+<h4 id="2-calc-I"><a href="#2-calc-I" class="headerlink" title="(2)calc_I:"></a>(2)calc_I:</h4><ul>
+<li>ADDI：addi RT, RS, IMM<br> 编码：001000 sssss ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; GPR[rs] + sign_ext(IMM)</li>
+<li>ANDI：andi RT, RS, IMM<br> 编码：001100 sssss ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; GPR[rs] &amp; zero_extend(IMM)</li>
+<li>ORI：ori RT, RS, IMM<br> 编码：001101 sssss ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; GPR[rs] | zero_extend(IMM)</li>
+</ul>
+<h4 id="3-load"><a href="#3-load" class="headerlink" title="(3)load:"></a>(3)load:</h4><ul>
+<li>LB：lb RT, OFFSET(RS)<br> 编码：100000 sssss ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; sign_ext(MEM[GPR[rs] + sign_ext(OFFSET)][7:0])<br> 操作：</li>
+</ul>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Addr = GPR[base] + sign_ext(offset) </span><br><span class="line">memword = memory[Addr] </span><br><span class="line">byte = Addr1..0 </span><br><span class="line">GPR[rt] = sign_ext(memword7+8*byte..8*byte) </span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<ul>
+<li>LH：lh RT, OFFSET(RS)<br> 编码：100001 sssss ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; sign_ext(MEM[GPR[rs] + sign_ext(OFFSET)][15:0])<br> 操作：</li>
+</ul>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Addr = GPR[base] + sign_ext(offset) </span><br><span class="line">memword = memory[Addr] </span><br><span class="line">byte = Addr1 </span><br><span class="line">GPR[rt] = sign_ext(memword15+16*byte..16*byte) </span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<ul>
+<li>LW：lw RT, OFFSET(RS)<br> 编码：100011 sssss ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; MEM[GPR[rs] + sign_ext(OFFSET)]</li>
+</ul>
+<h4 id="4-store"><a href="#4-store" class="headerlink" title="(4)store:"></a>(4)store:</h4><ul>
+<li>SB：sb RT, OFFSET(RS)<br> 编码：101000 sssss ttttt iiiii iiiii iiiiii<br> 描述：MEM[GPR[rs] + sign_ext(OFFSET)] &#x3D; GPR[rt][7:0]<br> 操作：</li>
+</ul>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Addr = GPR[base] + sign_extend(offset) </span><br><span class="line">byte = Addr1..0 </span><br><span class="line">memory[Addr]7+8*byte..8*byte = GPR[rt]7:0 </span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<ul>
+<li>SH：sh RT, OFFSET(RS)<br> 编码：101001 sssss ttttt iiiii iiiii iiiiii<br> 描述：MEM[GPR[rs] + sign_ext(OFFSET)] &#x3D; GPR[rt][15:0]<br> 操作：</li>
+</ul>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Addr = GPR[base] + sign_extend(offset) </span><br><span class="line">byte = Addr1 </span><br><span class="line">memory[Addr]15+16*byte..16*byte = GPR[rt]15:0 </span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<ul>
+<li>SW：sw RT, OFFSET(RS)<br> 编码：101011 sssss ttttt iiiii iiiii iiiiii<br> 描述：MEM[GPR[rs] + sign_ext(OFFSET)] &#x3D; GPR[rt]</li>
+</ul>
+<h4 id="（5）md"><a href="#（5）md" class="headerlink" title="（5）md:"></a>（5）md:</h4><ul>
+<li>mult：mult rs, rt<br>编码：000000 sssss ttttt 00000 00000 011000<br>描述：HI, LO &#x3D; GPR[rs] * GPR [rt](有符号)</li>
+<li>multu：multu rs, rt<br>编码：000000 sssss ttttt 00000 00000 011001<br>描述：HI, LO &#x3D; GPR[rs] * GPR[rt]</li>
+<li>div：div rs, rt<br>编码：000000 sssss ttttt 00000 00000 011010<br>描述：LO &#x3D; GPR[rs]&#x2F; GPR[rt];  HI &#x3D; GPR[rs] % GPR[rt]（有符号）</li>
+<li>divu：divu rs, rt<br>编码：000000 sssss ttttt 00000 00000 011011<br>描述：LO &#x3D; GPR[rs] &#x2F; GPR[rt];  HI &#x3D; GPR[rs] % GPR[rt]</li>
+</ul>
+<h4 id="（6）mf"><a href="#（6）mf" class="headerlink" title="（6）mf:"></a>（6）mf:</h4><ul>
+<li>mflo：mflo rd<br> 编码：000000 00000 00000 ddddd 00000 010010<br> 描述：GPR[rd] &#x3D; LO</li>
+<li>mfhi：mfhi rd<br> 编码：000000 00000 00000 ddddd 00000 010000<br> 描述：GPR[rd] &#x3D; HI</li>
+</ul>
+<h4 id="7-mt"><a href="#7-mt" class="headerlink" title="(7)mt:"></a>(7)mt:</h4><ul>
+<li>mtlo：mtlo rs<br> 编码：000000 sssss 00000 00000 00000 010011<br> 描述：LO &#x3D; GPR[rs]</li>
+<li>mthi：mthi rs<br> 编码：000000 sssss 00000 00000 00000 010001<br> 描述：HI &#x3D; GPR[rs]</li>
+</ul>
+<h4 id="8-B"><a href="#8-B" class="headerlink" title="(8)B:"></a>(8)B:</h4><ul>
+<li>BEQ：beq RS, RT, LABEL<br> 编码：000100 sssss ttttt iiiii iiiii iiiiii<br> 描述：if GPR[rs] &#x3D;&#x3D; GPR[rt], PC &#x3D; PC + 4 + sign_ext(LABEL);  else PC &#x3D; PC + 4;</li>
+<li>BNE：bne RS, RT, LABEL<br> 编码：000101 sssss ttttt iiiii iiiii iiiiii<br> 描述：if GPR[rs] !&#x3D; GPR[rt], PC &#x3D; PC + 4 + sign_ext(LABEL);  else PC &#x3D; PC + 4;</li>
+</ul>
+<h4 id="（9）Other"><a href="#（9）Other" class="headerlink" title="（9）Other:"></a>（9）Other:</h4><ul>
+<li>lui：lui RT, IMM<br> 编码：001111 00000 ttttt iiiii iiiii iiiiii<br> 描述：GPR[rt] &#x3D; sign_ext(IMM) &lt;&lt; 16;</li>
+<li>jal: jal target<br> 编码：000011 iiiii iiiii iiiii iiiii iiiiii<br> 描述：GPR[31] &#x3D; PC + 4;  PC &#x3D; PC[31,28]||instr_index||00</li>
+<li>jr: jr rs<br> 编码：000000 sssss 00000 00000 00000 001000<br> 描述：PC &#x3D; GPR[rs]</li>
+<li>nop：nop<br> 编码：000000 00000 00000 00000 00000 000000<br> 描述：GPR[0] &#x3D; GPR[0]</li>
+</ul>
+<h3 id="2-各部件接口设计"><a href="#2-各部件接口设计" class="headerlink" title="2.各部件接口设计"></a>2.各部件接口设计</h3><h4 id="NPC"><a href="#NPC" class="headerlink" title="NPC"></a>NPC</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">PC</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">前一拍指令地址</td>
+</tr>
+<tr>
+<td align="center">offset</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">用于计算B类指令跳转地址</td>
+</tr>
+<tr>
+<td align="center">Ins_26</td>
+<td align="center">I</td>
+<td align="center">25:0</td>
+<td align="center">用于计算J、JAL跳转地址</td>
+</tr>
+<tr>
+<td align="center">Ra</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">用于读取JR、JALR中寄存器存储的地址</td>
+</tr>
+<tr>
+<td align="center">B_judge</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">用于判断B类指令是否满足跳转条件</td>
+</tr>
+<tr>
+<td align="center">if_Branch</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">用于判断是否为B类指令</td>
+</tr>
+<tr>
+<td align="center">if_JR</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">用于判断是否为J、JR指令</td>
+</tr>
+<tr>
+<td align="center">Next_PC</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">下一拍指令地址</td>
+</tr>
+<tr>
+<td align="center">PC+4</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">上一拍指令地址+4，用于JAL、JALR地址存储</td>
+</tr>
+</tbody></table></div>
+<p>注意跳转指令PC要是它本身的PC，即beq指令的PC要和上一个周期的一样,不和延迟槽一样，不用+4.</p>
+<h4 id="IFU"><a href="#IFU" class="headerlink" title="IFU"></a>IFU</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">clk</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">时钟信号</td>
+</tr>
+<tr>
+<td align="center">Reset</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">同步复位信号</td>
+</tr>
+<tr>
+<td align="center">Next_PC</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">计算出的下一拍指令地址</td>
+</tr>
+<tr>
+<td align="center">En</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">有效信号，阻塞时为0</td>
+</tr>
+<tr>
+<td align="center">PC</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">当前指令地址</td>
+</tr>
+</tbody></table></div>
+<h4 id="GRF"><a href="#GRF" class="headerlink" title="GRF"></a>GRF</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">PC</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">当前指令地址</td>
+</tr>
+<tr>
+<td align="center">RA1</td>
+<td align="center">I</td>
+<td align="center">4:0</td>
+<td align="center">读寄存器1地址</td>
+</tr>
+<tr>
+<td align="center">RA2</td>
+<td align="center">I</td>
+<td align="center">4:0</td>
+<td align="center">读寄存器2地址</td>
+</tr>
+<tr>
+<td align="center">WA</td>
+<td align="center">I</td>
+<td align="center">4:0</td>
+<td align="center">写寄存器地址</td>
+</tr>
+<tr>
+<td align="center">WD</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">写寄存器数据</td>
+</tr>
+<tr>
+<td align="center">clk</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">时钟信号</td>
+</tr>
+<tr>
+<td align="center">reset</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">同步复位信号</td>
+</tr>
+<tr>
+<td align="center">RegWrite</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">写寄存器控制信号</td>
+</tr>
+<tr>
+<td align="center">RD1</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">读寄存器1数据</td>
+</tr>
+<tr>
+<td align="center">RD2</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">读寄存器2数据</td>
+</tr>
+</tbody></table></div>
+<h4 id="ALU"><a href="#ALU" class="headerlink" title="ALU"></a>ALU</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ALU_Op</td>
+<td align="center">I</td>
+<td align="center">3:0</td>
+<td align="center">ALU操作码</td>
+</tr>
+<tr>
+<td align="center">Src_A</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">ALU输入A数据</td>
+</tr>
+<tr>
+<td align="center">Src_B</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">ALU输入B数据</td>
+</tr>
+<tr>
+<td align="center">shift</td>
+<td align="center">I</td>
+<td align="center">5:0</td>
+<td align="center">位移量（对B数据进行位移）</td>
+</tr>
+<tr>
+<td align="center">ALU_Result</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">ALU输出结果</td>
+</tr>
+</tbody></table></div>
+<h4 id="EXT"><a href="#EXT" class="headerlink" title="EXT"></a>EXT</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Imm</td>
+<td align="center">I</td>
+<td align="center">15:0</td>
+<td align="center">扩展前的立即数</td>
+</tr>
+<tr>
+<td align="center">if_sign</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">是否为有符号扩展</td>
+</tr>
+<tr>
+<td align="center">offset</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">扩展后的立即数</td>
+</tr>
+</tbody></table></div>
+<h4 id="CMP"><a href="#CMP" class="headerlink" title="CMP"></a>CMP</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">D1</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">数据1</td>
+</tr>
+<tr>
+<td align="center">D2</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">数据2</td>
+</tr>
+<tr>
+<td align="center">CMPOP</td>
+<td align="center">I</td>
+<td align="center">2:0</td>
+<td align="center">比较操作码</td>
+</tr>
+<tr>
+<td align="center">out</td>
+<td align="center">O</td>
+<td align="center">1</td>
+<td align="center">比较结果</td>
+</tr>
+</tbody></table></div>
+<h4 id="MDU"><a href="#MDU" class="headerlink" title="MDU"></a>MDU</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">clk</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">时钟信号</td>
+</tr>
+<tr>
+<td align="center">reset</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">同步复位信号</td>
+</tr>
+<tr>
+<td align="center">start</td>
+<td align="center">I</td>
+<td align="center">1</td>
+<td align="center">乘除法开始运算信号</td>
+</tr>
+<tr>
+<td align="center">MDU_Op</td>
+<td align="center">I</td>
+<td align="center">3:0</td>
+<td align="center">MDU操作码</td>
+</tr>
+<tr>
+<td align="center">A</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">操作数A</td>
+</tr>
+<tr>
+<td align="center">B</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">操作数B</td>
+</tr>
+<tr>
+<td align="center">HI</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">乘除法结果</td>
+</tr>
+<tr>
+<td align="center">LO</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">乘除法结果</td>
+</tr>
+<tr>
+<td align="center">out</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">运算结果</td>
+</tr>
+<tr>
+<td align="center">busy</td>
+<td align="center">O</td>
+<td align="center">1</td>
+<td align="center">乘除法运算忙信号</td>
+</tr>
+</tbody></table></div>
+<h4 id="BE"><a href="#BE" class="headerlink" title="BE"></a>BE</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">I</td>
+<td align="center">1:0</td>
+<td align="center">DM写入地址的低2位</td>
+</tr>
+<tr>
+<td align="center">LSOp</td>
+<td align="center">I</td>
+<td align="center">2:0</td>
+<td align="center">访存功能信号</td>
+</tr>
+<tr>
+<td align="center">WD_in</td>
+<td align="center">I</td>
+<td align="center">31:0</td>
+<td align="center">未经处理的DM写入数据</td>
+</tr>
+<tr>
+<td align="center">byteen</td>
+<td align="center">O</td>
+<td align="center">3:0</td>
+<td align="center">DM字节使能信号</td>
+</tr>
+<tr>
+<td align="center">WD_out</td>
+<td align="center">O</td>
+<td align="center">31:0</td>
+<td align="center">经过处理的DM写入数据</td>
+</tr>
+</tbody></table></div>
+<h4 id="DE"><a href="#DE" class="headerlink" title="DE"></a>DE</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口名称</th>
+<th align="center">输入或输出</th>
+<th align="center">位宽</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">I</td>
+<td align="center">2</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">RD_in</td>
+<td align="center">I</td>
+<td align="center">32</td>
+<td align="center">未经处理的DM读出数据</td>
+</tr>
+<tr>
+<td align="center">LSOp</td>
+<td align="center">I</td>
+<td align="center">2</td>
+<td align="center">访存功能信号</td>
+</tr>
+<tr>
+<td align="center">RD_out</td>
+<td align="center">O</td>
+<td align="center">32</td>
+<td align="center">处理后的DM读出数据</td>
+</tr>
+</tbody></table></div>
+<h3 id="3-数据通路设计"><a href="#3-数据通路设计" class="headerlink" title="3.数据通路设计"></a>3.数据通路设计</h3><h4 id="NPC-1"><a href="#NPC-1" class="headerlink" title="NPC"></a>NPC</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">PC</th>
+<th align="center">offset</th>
+<th align="center">Ins_26</th>
+<th align="center">RA</th>
+<th align="center">if_Branch</th>
+<th align="center">if_jr</th>
+<th align="center">if_jal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">all</td>
+<td align="center">IFU</td>
+<td align="center">EXT</td>
+<td align="center">splitter</td>
+<td align="center">GRF</td>
+<td align="center">control</td>
+<td align="center">control</td>
+<td align="center">control</td>
+</tr>
+</tbody></table></div>
+<h4 id="IFU-1"><a href="#IFU-1" class="headerlink" title="IFU"></a>IFU</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">clk</th>
+<th align="center">Reset</th>
+<th align="center">Next_PC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">all</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">NPC</td>
+</tr>
+</tbody></table></div>
+<h4 id="GRF-1"><a href="#GRF-1" class="headerlink" title="GRF"></a>GRF</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">clk</th>
+<th align="center">Reset</th>
+<th align="center">RA1</th>
+<th align="center">RA2</th>
+<th align="center">WA</th>
+<th align="center">WD</th>
+<th align="center">RegWrite</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">add</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">splitter[d]</td>
+<td align="center">ALU</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">sub</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">splitter[d]</td>
+<td align="center">ALU</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">ori</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">-</td>
+<td align="center">splitter[t]</td>
+<td align="center">ALU</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">lw</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">-</td>
+<td align="center">splitter[t]</td>
+<td align="center">DM</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">sw</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">beq</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">splitter[t]</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">lui</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">splitter[t]</td>
+<td align="center">ALU</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">jal</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">31</td>
+<td align="center">NPC</td>
+<td align="center">control</td>
+</tr>
+<tr>
+<td align="center">jr</td>
+<td align="center">clk</td>
+<td align="center">reset</td>
+<td align="center">splitter[s]</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">control</td>
+</tr>
+</tbody></table></div>
+<h4 id="ALU-1"><a href="#ALU-1" class="headerlink" title="ALU"></a>ALU</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">ALU_Op</th>
+<th align="center">Src_A</th>
+<th align="center">Src_B</th>
+<th align="center">shift</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">add</td>
+<td align="center">control</td>
+<td align="center">GRF-RD1</td>
+<td align="center">GRF-RD2</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">sub</td>
+<td align="center">control</td>
+<td align="center">GRF-RD1</td>
+<td align="center">GRF-RD2</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">ori</td>
+<td align="center">control</td>
+<td align="center">GRF-RD1</td>
+<td align="center">EXT</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">lw</td>
+<td align="center">control</td>
+<td align="center">GRF-RD1</td>
+<td align="center">EXT</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">sw</td>
+<td align="center">control</td>
+<td align="center">GRF-RD1</td>
+<td align="center">EXT</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">beq</td>
+<td align="center">control</td>
+<td align="center">GRF-RD1</td>
+<td align="center">GRF-RD2</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">lui</td>
+<td align="center">control</td>
+<td align="center">-</td>
+<td align="center">EXT</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">jal</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">jr</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+</tbody></table></div>
+<h4 id="EXT-1"><a href="#EXT-1" class="headerlink" title="EXT"></a>EXT</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">Imm</th>
+<th align="center">if_sign</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">all</td>
+<td align="center">splitter[i]</td>
+<td align="center">control</td>
+</tr>
+</tbody></table></div>
+<h3 id="4-流水线寄存器"><a href="#4-流水线寄存器" class="headerlink" title="4.流水线寄存器"></a>4.流水线寄存器</h3><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">功能</th>
+<th align="center">F_D</th>
+<th align="center">D_E</th>
+<th align="center">E_M</th>
+<th align="center">M_W</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">IR</td>
+<td align="center">指令</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">PC</td>
+<td align="center">指令地址</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">WD</td>
+<td align="center">写寄存器数据</td>
+<td align="center">-</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">WA</td>
+<td align="center">写寄存器地址</td>
+<td align="center">-</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">RegWrite</td>
+<td align="center">写寄存器控制信号</td>
+<td align="center">-</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">Tnew</td>
+<td align="center">数据产生时间</td>
+<td align="center">-</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">其他</td>
+<td align="center"></td>
+<td align="center">PC+8</td>
+<td align="center">RD1,RD2,offset</td>
+<td align="center">RD2,ALU_Result</td>
+<td align="center">-</td>
+</tr>
+</tbody></table></div>
+<h3 id="5-控制信号"><a href="#5-控制信号" class="headerlink" title="5.控制信号"></a>5.控制信号</h3><h4 id="总控制"><a href="#总控制" class="headerlink" title="总控制"></a>总控制</h4><div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">数值</th>
+<th align="center">MemToReg</th>
+<th align="center">MemWrite</th>
+<th align="center">ALUSrc</th>
+<th align="center">RegWrite</th>
+<th align="center">signedEXT</th>
+<th align="center">RegDst</th>
+<th align="center">if_Branch</th>
+<th align="center">if_JR</th>
+<th align="center">if_JAL</th>
+<th align="center">ALUToReg</th>
+<th align="center">Ralink</th>
+<th align="center">lui</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">控制的位置</td>
+<td align="center">GRF-WD</td>
+<td align="center">DM-MemWrite</td>
+<td align="center">ALU-SrcB</td>
+<td align="center">GRF-RegWrite</td>
+<td align="center">EXT-if_sign</td>
+<td align="center">GRF-WA</td>
+<td align="center">NPC-if_Branch</td>
+<td align="center">NPC-if_JR</td>
+<td align="center">NPC-if_JAL</td>
+<td align="center">GRF-WD</td>
+<td align="center">GRF-WA</td>
+<td align="center">ALU_shift</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">ALU</td>
+<td align="center">unable</td>
+<td align="center">GRF-RD2</td>
+<td align="center">unable</td>
+<td align="center">zero_extend</td>
+<td align="center">splitter[t]</td>
+<td align="center">NOT-BEQ</td>
+<td align="center">NOT-JR</td>
+<td align="center">NOT-JAL</td>
+<td align="center">WD不是ALU结果</td>
+<td align="center">-</td>
+<td align="center">位移是shifter</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">DM</td>
+<td align="center">enable</td>
+<td align="center">EXT</td>
+<td align="center">enable</td>
+<td align="center">sign_extend</td>
+<td align="center">splitter[d]</td>
+<td align="center">BEQ</td>
+<td align="center">JR</td>
+<td align="center">JAL</td>
+<td align="center">WD不是ALU结果</td>
+<td align="center">将PC+4存入寄存器的编号（31）(WA的分支)</td>
+<td align="center">lui是位移16位</td>
+</tr>
+</tbody></table></div>
+<h4 id="ALU控制"><a href="#ALU控制" class="headerlink" title="ALU控制"></a>ALU控制</h4><p>0000 : +<br>0001 : -<br>0010 : &amp;<br>0011 : |<br>0100 : slt<br>0101 : sltu<br>1111 : 数据B向左位移shift位</p>
+<h4 id="cmp控制"><a href="#cmp控制" class="headerlink" title="cmp控制"></a>cmp控制</h4><p>000: &#x3D;&#x3D;<br>001: !&#x3D;<br>111：else</p>
+<h4 id="LSOp控制"><a href="#LSOp控制" class="headerlink" title="LSOp控制"></a>LSOp控制</h4><p>sw 3’b000<br>sh 3’b001<br>sb 3’b010<br>lw 3’b011<br>lh 3’b100<br>lb 3’b101<br>space 3’b111</p>
+<h4 id="MDUOp控制"><a href="#MDUOp控制" class="headerlink" title="MDUOp控制"></a>MDUOp控制</h4><p>space 4’b0000<br>mult 4’b0001<br>multu 4’b0010<br>div 4’b0011<br>divu 4’b0100<br>mfhi 4’b0101<br>mflo 4’b0110<br>mthi 4’b0111<br>mtlo 4’b1000</p>
+<h3 id="6-阻塞转发"><a href="#6-阻塞转发" class="headerlink" title="6.阻塞转发"></a>6.阻塞转发</h3><h4 id="Tuse-和-Tnew-的分析"><a href="#Tuse-和-Tnew-的分析" class="headerlink" title="Tuse 和 Tnew 的分析"></a>Tuse 和 Tnew 的分析</h4><p>Tuse表示数据到了 D 级之后还需要多少个周期要使用，每个指令的是固定不变的。<br>Tnew表示数据还有多长时间产生，会随着数据的流水动态的减少。（但是大于1）<br>Tuse表格</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">指令</th>
+<th align="center">rs_Tuse</th>
+<th align="center">rt_Tuse</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">calc_R</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">calc_I</td>
+<td align="center">1</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">md</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">mt</td>
+<td align="center">1</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">load</td>
+<td align="center">1</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">store</td>
+<td align="center">1</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">B</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">JR</td>
+<td align="center">0</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">其他的都是if_use&#x3D;0</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table></div>
+<p>D级时Tnew表格</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">指令</th>
+<th align="center">Tnew</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">calc_R</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">calc_I</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">mf</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">load</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">lui</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">jal</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">其他的都是RegWrite&#x3D;0</td>
+<td align="center"></td>
+</tr>
+</tbody></table></div>
+<h4 id="阻塞转发的判断"><a href="#阻塞转发的判断" class="headerlink" title="阻塞转发的判断"></a>阻塞转发的判断</h4><p>当Tuse≥Tnew时，可以通过转发解决；当Tuse &lt; Tnew时，必须阻塞流水线。</p>
+<h4 id="阻塞操作："><a href="#阻塞操作：" class="headerlink" title="阻塞操作："></a>阻塞操作：</h4><p>冻结PC寄存器（IFU_en &#x3D; ~stall &#x3D; 0）<br>冻结D级寄存器（D_en &#x3D; ~stall &#x3D; 0）<br>清空E级寄存器（E_clr &#x3D; stall &#x3D; 1）</p>
+<h4 id="转发操作："><a href="#转发操作：" class="headerlink" title="转发操作："></a>转发操作：</h4><p>转发需要：</p>
+<ol>
+<li>GRF内部转发</li>
+<li>D需要E、M的转发</li>
+<li>E需要M、W的转发</li>
+<li>M需要W的转发</li>
+</ol>
+<h2 id="课上"><a href="#课上" class="headerlink" title="课上"></a>课上</h2><blockquote>
+<p>和P5差不多啦！但是不要掉以轻心，P5过了P6挂的人也有不少）</p>
+</blockquote>
+<p>依旧保证课下正确。欢迎使用伟大的cot评测机！！</p>
+<div class="button-list">
+          <div class="button-item">
+            <a href="https://bhpan.buaa.edu.cn/link/AAD1541E4EDC8549DC9C3823DBA5A5A572" class="normal" alt=cot评测机 target="_blank">
+              <div class="button-item-icon"><img  class="posticon" alt="Link Icon" no-view  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260212185314108.png"  ></div>
+              <div class="button-item-info">
+                <div class="button-item-name">cot评测机</div>
+                <div class="button-item-desc">伟大的评测机！！</div>
+              </div>
+            </a>
+          </div></div>
+
+<p>如果P5写好了扩展性好的接口可以继续使用。如果没有写好，经过P5应该也知道要增加什么了）</p>
+<p>依旧是一样的课上题目分析：</p>
+<h5 id="1-计算类型"><a href="#1-计算类型" class="headerlink" title="1. 计算类型"></a>1. 计算类型</h5><p>形如：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WriteData &lt;- f(GPR[rs], GPR[rt])</span><br><span class="line">GPR[rd] &lt;- WriteData</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<p>做法：</p>
+<ol>
+<li>在控制模块中识别新指令，设置控制信号</li>
+<li>新增 ALU 计算类型</li>
+<li>新增各流水线级转发数据</li>
+</ol>
+<p><strong>仿照 add 指令编写</strong></p>
+<p><strong>与P5不一样的是，会有乘除槽指令的增加（当然也可能不是乘除槽</strong></p>
+<h5 id="2-条件跳转类型"><a href="#2-条件跳转类型" class="headerlink" title="2. 条件跳转类型"></a>2. 条件跳转类型</h5><p>形如：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">condition &lt;- f(GPR[rs], Ext_Ans)</span><br><span class="line">if condition:</span><br><span class="line">	jump </span><br><span class="line">	(GPR[rt] &lt;- data)</span><br><span class="line">else:</span><br><span class="line">	(NullifyDelayedBranch)</span><br><span class="line">	</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<ol>
+<li>控制模块中设置控制信号</li>
+<li>计算 condition</li>
+<li>跳转仿照 beq</li>
+<li>条件写入用特判+凌驾的做法，记得改 D-E 级流水线寄存器的输入</li>
+<li>清空延迟槽，新增控制信号Clr_F，Clr_F为真的条件：<strong>condition为假 &amp;&amp; D级是新指令 &amp;&amp; 此时不能阻塞</strong></li>
+</ol>
+<h5 id="3-访存类型"><a href="#3-访存类型" class="headerlink" title="3. 访存类型"></a>3. 访存类型</h5><p>形如：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DMdata &lt;- DM[addr]</span><br><span class="line">data &lt;- f(DMdata, GPR[rt])</span><br><span class="line">dest_reg &lt;- f(data)</span><br><span class="line">GPR[dest_reg] &lt;- data</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<ol>
+<li>data、dest_reg 是在 W级 算出来的，M-W 流水线传 rt</li>
+<li>W级该指令转发 data</li>
+<li>dest_reg 最好在 没算出来之前都是 0，防止转发冲突</li>
+<li><strong>dest_reg 的范围很重要</strong></li>
+<li>比较阻塞的时候，依次比较E，M级，条件为：是新指令 &amp;&amp; 要写寄存器 &amp;&amp; 寄存器处在 dest_reg 范围内 &amp;&amp; RA！&#x3D;0 &amp;&amp; Tuse &lt; Tnew</li>
+</ol>
+<p>往年题依旧指路室友博客</p>
+<div class="button-list">
+          <div class="button-item">
+            <a href="https://yhua10.github.io/" class="normal" alt=室友博客 target="_blank">
+              <div class="button-item-icon"><img  class="posticon" alt="Link Icon" no-view  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260212185314108.png"  ></div>
+              <div class="button-item-info">
+                <div class="button-item-name">室友博客</div>
+                <div class="button-item-desc">室友博客详细往年题记载！</div>
+              </div>
+            </a>
+          </div></div>
+
+
+
+<details class="fold blue" ><summary>思考题点击展开，不保证正确性，建议自己思考</summary><div class='fold-content'><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h4 id="1、为什么需要有单独的乘除法部件而不是整合进-ALU？为何需要有独立的-HI、LO-寄存器？"><a href="#1、为什么需要有单独的乘除法部件而不是整合进-ALU？为何需要有独立的-HI、LO-寄存器？" class="headerlink" title="1、为什么需要有单独的乘除法部件而不是整合进 ALU？为何需要有独立的 HI、LO 寄存器？"></a>1、为什么需要有单独的乘除法部件而不是整合进 ALU？为何需要有独立的 HI、LO 寄存器？</h4><p>分离设计的原因：乘除法运算需要多个周期（乘法5周期，除法10周期），而ALU的算术逻辑指令是单周期完成。若整合进ALU，会严重拖累流水线效率。并且，乘除法器硬件结构复杂，面积大，独立模块便于优化和复用。<br>HI、LO寄存器的作用：乘除法的结果往往是64位（32位×32位），HI存高32位，LO存低32位。专用寄存器避免占用通用寄存器堆，同时通过mfhi&#x2F;mflo指令提供访问接口。</p>
+<h4 id="2、真实的流水线-CPU-是如何使用实现乘除法的？请查阅相关资料进行简单说明。"><a href="#2、真实的流水线-CPU-是如何使用实现乘除法的？请查阅相关资料进行简单说明。" class="headerlink" title="2、真实的流水线 CPU 是如何使用实现乘除法的？请查阅相关资料进行简单说明。"></a>2、真实的流水线 CPU 是如何使用实现乘除法的？请查阅相关资料进行简单说明。</h4><p>一. 核心思想：用更简单的操作来实现复杂操作<br>乘法和除法本质上可以用更基本的加法、移位和比较来实现。CPU的算术逻辑单元（ALU）最初就是被这样设计的。<br>二. 乘法是如何实现的？<br>我们先从最直观的算法说起。<br>方法一：模拟手算乘法（移位相加）<br>我们以两个4位二进制数 1011 (11) 和 1101 (13) 为例：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        1 0 1 1   (被乘数)</span><br><span class="line">      x 1 1 0 1   (乘数)</span><br><span class="line">      ---------</span><br><span class="line">        1 0 1 1   (部分积1，因为乘数最低位是1)</span><br><span class="line">      0 0 0 0     (部分积2，因为乘数第二位是0，左移一位)</span><br><span class="line">    1 0 1 1       (部分积3，因为乘数第三位是1，左移两位)</span><br><span class="line">+ 1 0 1 1         (部分积4，因为乘数第四位是1，左移三位)</span><br><span class="line">---------------</span><br><span class="line">1 0 0 0 1 1 1 1   (结果 143)</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<p>CPU如何用硬件实现这个过程？</p>
+<ol>
+<li>初始化：准备三个寄存器，一个存放被乘数，一个存放乘数，一个初始为0用于存放结果（积）。</li>
+<li>循环检查：<br>· 检查乘数的最低位。<br>· 如果为1，则将被乘数加到结果寄存器上。<br>· 如果为0，则不加。</li>
+<li>移位：<br>· 将被乘数寄存器向左移位一位（相当于值翻倍）。<br>· 将乘数寄存器向右移位一位（这样下一次循环就能检查下一位）。</li>
+<li>判断终止：重复步骤2和3，直到乘数寄存器为0。<br>这个方法的缺点是速度慢，需要N个时钟周期（N是数据的位数）。<br>方法二：更快的现代方法<br>为了提速，现代CPU采用了更先进的技术：<br>· 布斯算法：一种优化算法，可以处理带符号数，并且能跳过连续的0或1，减少加法次数。<br>· 并行乘法器&#x2F;硬件乘法器：这是现代CPU的主流方式。它不像上面那样一步一步串行计算，而是使用一个巨大的、专门设计的组合逻辑电路（比如“华莱士树”），通过多级加法器并行地计算所有部分积的和。<br> · 优点：速度极快！可以在1个或几个时钟周期内完成一次乘法运算。<br> · 缺点：电路非常复杂，晶体管数量多，功耗和芯片面积都更大。<br>所以，当你写 a &#x3D; b * c 时，CPU几乎是在瞬间通过这个专用的硬件乘法器计算出结果的。<br>三. 除法是如何实现的？</li>
+</ol>
+<p>除法是乘法的逆运算，但它更复杂，速度也更慢。</p>
+<p>方法一：模拟手算除法（恢复余数法）</p>
+<p>我们以 1111 (15) 除以 0100 (4) 为例：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">          0011 (商 = 3)</span><br><span class="line">        --------</span><br><span class="line">除数 0100)1111 (被除数)</span><br><span class="line">        -0100</span><br><span class="line">        -----</span><br><span class="line">          0111</span><br><span class="line">         -0100</span><br><span class="line">         -----</span><br><span class="line">           0011 (余数 = 3)</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<p>CPU如何用硬件实现这个过程？</p>
+<ol>
+<li>初始化：准备寄存器存放被除数（和余数）、除数、商。</li>
+<li>对齐：将除数和被除数的最高有效位对齐。</li>
+<li>尝试减法：从当前被除数（或余数）中减去除数。</li>
+<li>判断结果：<br>· 如果结果大于等于0，说明够减，则将商的对应位置1，并将减法结果作为新的余数。<br>· 如果结果小于0，说明不够减，则将商的对应位置0，并恢复原来的被除数&#x2F;余数（这就是“恢复余数法”名称的由来）。</li>
+<li>移位：将除数右移一位，准备下一次计算。</li>
+<li>循环：重复步骤3-5，直到处理完所有位。</li>
+</ol>
+<p>这个方法同样很慢，最坏情况下需要2N个时钟周期（N是数据的位数）。</p>
+<p>方法二：更快的现代方法</p>
+<p>· 不恢复余数法&#x2F;SRT除法：这是“恢复余数法”的优化。它在发现不够减时，不去恢复余数，而是记录一个负的余数，并在下一步操作中通过加回来进行修正。这减少了很多不必要的步骤，是现代CPU常用的算法之一。<br>· 牛顿-拉弗森迭代法：这是一种利用乘法来逼近除法结果的方法。它通过一系列迭代，快速收敛到精确的商。公式大致是：  x_{n+1} &#x3D; x_n * (2 - D * x_n) ，其中D是除数。这种方法需要快速的乘法器支持，在计算高精度除法时特别有效。<br>· 查表法：对于某些初始近似值，CPU可能会使用一个小的、快速的查找表来获取，以加速迭代过程的启动。</p>
+<p>重要提示：除法在所有基本运算中是最慢的。即使是最优化的硬件实现，一次整数除法也可能需要几十个时钟周期，而一次整数乘法或加法可能只需要1个或几个周期。这就是为什么在优化代码时，要尽量避免不必要的除法操作。</p>
+<h4 id="3、请结合自己的实现分析，你是如何处理-Busy-信号带来的周期阻塞的？"><a href="#3、请结合自己的实现分析，你是如何处理-Busy-信号带来的周期阻塞的？" class="headerlink" title="3、请结合自己的实现分析，你是如何处理 Busy 信号带来的周期阻塞的？"></a>3、请结合自己的实现分析，你是如何处理 Busy 信号带来的周期阻塞的？</h4><p>乘除法到达E级时，产生控制信号Start&#x3D;1<br>当start&#x3D;1时，Busy&#x3D;1持续到运算完成。<br>在D级检测到Busy&#x3D;1或者start&#x3D;1时，同时D级是乘除法指令暂停流水线（插入气泡）。乘除法完成后Busy&#x3D;0，解除阻塞，流水线继续。</p>
+<h4 id="4、请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）"><a href="#4、请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）" class="headerlink" title="4、请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）"></a>4、请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）</h4><p>清晰性：m_data_byteen[3:0]明确指定写入哪些字节，避免手动拼接数据。<br>统一性：所有存储指令（sw&#x2F;sh&#x2F;sb）共用同一写端口，通过byteen区分行为，简化DM接口。</p>
+<h4 id="5、请思考，我们在按字节读和按字节写时，实际从-DM-获得的数据和向-DM-写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？"><a href="#5、请思考，我们在按字节读和按字节写时，实际从-DM-获得的数据和向-DM-写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？" class="headerlink" title="5、请思考，我们在按字节读和按字节写时，实际从 DM 获得的数据和向 DM 写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？"></a>5、请思考，我们在按字节读和按字节写时，实际从 DM 获得的数据和向 DM 写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？</h4><p>读操作：从DM读出的总是整个字（32位），再由数据扩展模块提取并扩展特定字节。<br>写操作：向DM写入的是整个字，但通过byteen控制哪些字节实际被写入。<br>当程序频繁访问非字对齐数据时，按字节访问可避免读写整个字，减少内存带宽浪费。在稀疏数据结构（如字符数组、标志位数组）中，字节访问更高效。</p>
+<h4 id="6、为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？"><a href="#6、为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？" class="headerlink" title="6、为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？"></a>6、为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？</h4><p>抽象手段：<br>1.将指令按功能分类（如算术、访存、跳转、乘除），统一生成控制信号。<br>2.用 define，替代判断选择信号的常量<br>规范手段：<br>1.模块化设计，各功能模块职责单一，接口清晰。<br>2.流水线寄存器规范化，统一传递必要信号。<br>特点和帮助：<br>逻辑更加简单，容易看懂，容易debug，方便修改。</p>
+<h4 id="7、在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？"><a href="#7、在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？" class="headerlink" title="7、在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？"></a>7、在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？</h4><p>遇到的冲突：<br>1.控制冲突：分支指令和跳转指令导致的控制流改变。<br>2.数据冲突：算术指令之间的读后写（RAW）冲突。<br>（1）在E级产生结果的指令和在D级需要数据的指令之间的冲突，如add后beq<br>（2）在M级产生结果的指令和在D级需要数据的指令之间的冲突，如lw后beq<br>（3）在E级产生结果的指令和在E级需要数据的指令之间的冲突，如add后add<br>（4）在M级产生结果的指令和在E级需要数据的指令之间的冲突，如lw后add<br>（5）在M级产生结果的指令和在M级需要数据的指令之间的冲突，如lw后sw<br>（6）乘除发指令之间的冲突<br>4.解决：通过延迟槽，阻塞，转发的方式解决<br>测试样例：部分测试如下表示，但是由于测试比较长，没有完全粘贴过来</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">    # 测试1: ALU→ALU转发</span><br><span class="line">    addi $1, $0, 1        # $1 = 1</span><br><span class="line">    addi $2, $0, 2        # $2 = 2  </span><br><span class="line">    add  $3, $1, $2       # $3 = 3 (RAW: 需要$1,$2)</span><br><span class="line">    add  $4, $3, $1       # $4 = 4 (需要E级转发)</span><br><span class="line">    </span><br><span class="line">    # 测试2: 加载使用冲突（需要阻塞）</span><br><span class="line">    addi $5, $0, 0x1000   # 数据地址</span><br><span class="line">    sw   $3, 0($5)        # 存储数据</span><br><span class="line">    lw   $6, 0($5)        # 加载数据</span><br><span class="line">    add  $7, $6, $1       # 需要阻塞1周期 (加载使用)</span><br><span class="line">    </span><br><span class="line">    # 测试3: 多级转发</span><br><span class="line">    addi $8, $0, 5        # $8 = 5</span><br><span class="line">    add  $9, $8, $1       # $9 = 6</span><br><span class="line">    add  $10, $9, $2      # $10 = 8</span><br><span class="line">    add  $11, $10, $9     # $11 = 14</span><br><span class="line">    </span><br><span class="line">    # 测试4: 转发到存储指令</span><br><span class="line">    addi $12, $0, 8</span><br><span class="line">    addi $13, $0, 9</span><br><span class="line">    add  $14, $12, $13    # $14 = 17</span><br><span class="line">    sw   $14, 4($5)       # 需要转发到存储数据</span><br><span class="line"></span><br><span class="line">    # 乘法测试</span><br><span class="line">    addi $1, $0, 15</span><br><span class="line">    addi $2, $0, 20</span><br><span class="line">    mult $1, $2           # 开始乘法，Busy=1</span><br><span class="line">    </span><br><span class="line">    # 测试乘除阻塞 - 这些指令应该被阻塞在D级</span><br><span class="line">    addi $3, $0, 30       # 应该正常执行</span><br><span class="line">    addi $4, $0, 40       # 应该正常执行</span><br><span class="line">    </span><br><span class="line">    # 在Busy期间尝试乘除指令（应该被阻塞）</span><br><span class="line">    mflo $5               # 应该等待乘法完成</span><br><span class="line">    mfhi $6               # 应该等待乘法完成</span><br><span class="line">    </span><br><span class="line">    # 除法测试</span><br><span class="line">    addi $7, $0, 100</span><br><span class="line">    addi $8, $0, 7</span><br><span class="line">    div  $7, $8           # 开始除法，Busy=1</span><br><span class="line">    </span><br><span class="line">    # 测试除法阻塞期间的指令</span><br><span class="line">    addi $9, $0, 50       # 正常执行</span><br><span class="line">    mflo $10              # 等待除法完成</span><br><span class="line">    mfhi $11              # 等待除法完成</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+<h4 id="8、如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证覆盖了所有需要测试的情况；如果你是完全随机生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了特殊的策略，比如构造连续数据冒险序列，请你描述一下你使用的策略如何结合了随机性达到强测的效果。"><a href="#8、如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证覆盖了所有需要测试的情况；如果你是完全随机生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了特殊的策略，比如构造连续数据冒险序列，请你描述一下你使用的策略如何结合了随机性达到强测的效果。" class="headerlink" title="8、如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证覆盖了所有需要测试的情况；如果你是完全随机生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了特殊的策略，比如构造连续数据冒险序列，请你描述一下你使用的策略如何结合了随机性达到强测的效果。"></a>8、如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证覆盖了所有需要测试的情况；如果你是完全随机生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了特殊的策略，比如构造连续数据冒险序列，请你描述一下你使用的策略如何结合了随机性达到强测的效果。</h4><p>手动构造样例策略：<br>1.先确保每一个寄存器都可以正常使用，用lui、ori、addi、andi对每一个寄存器先赋不同值，寄存器的值保证，有正有负有0有32’HFFFF_FFFF等<br>2.运用寄存器中的值，对每一条指令是否正常进行进行检测<br>3.构造冒险，保证每一类冒险的情况都覆盖<br>通过以上方式构造，同时确保每一点都覆盖所有情况，则可以基本保证覆盖了所有需要测试的情况。</p></div></details></div><div class="post-copyright"><div class="post-copyright-info">本作品由 一一 于 2026-02-13 13:00:00 发布</div><div class="post-copyright-link"><span>作品地址：<a href="http://anailurus.github.io/2026/02/13/P6co/">北航co计算机组成P6设计文档</a></span><button class="copy-text" type="button" data-text="http://anailurus.github.io/2026/02/13/P6co/">复制</button></div><div class="post-copyright-detail">除特别声明外，本站作品均采用 <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' title='Attribution-NonCommercial-ShareAlike' target='_blank'>CC BY-NC-SA 4.0</a> 许可协议，转载请注明来自 <a href='/'>anAilurus' Blog</a></div><img class="post-copyright-icon noview" src="/assets/images/fu_cake.png" alt="Logo"/></div><div class="post-tail-tags"><a class="post-tail-tags-link" href="/tags/co/" rel="tag">co</a><a class="post-tail-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tail-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></div><div class="post-nav"><a class="post-nav-prev" href="/2026/02/13/P7%20debug%E5%88%86%E4%BA%AB/" title="北航co计算机组成P7debug分享和思考题">上一篇<span>北航co计算机组成P7debug分享和思考题</span></a><a class="post-nav-next" href="/2026/02/13/P5co/" title="北航co计算机组成P5设计文档">下一篇<span>北航co计算机组成P5设计文档</span></a></div></div><aside id="post-sidebar" status="show"><div id="toc-container"><div class="toc-title"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"><span>目录</span></div><div class="toc-content" id="toc-div"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#P6CPU%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E5%8F%8A%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-list-text">P6CPU设计文档及思考题</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E8%AE%BE%E8%AE%A1%E8%8D%89%E7%A8%BF"><span class="toc-list-text">设计草稿</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#1-%E6%8C%87%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-list-text">1.指令详解</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#2-%E5%90%84%E9%83%A8%E4%BB%B6%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="toc-list-text">2.各部件接口设计</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#3-%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-list-text">3.数据通路设计</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#4-%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-list-text">4.流水线寄存器</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#5-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7"><span class="toc-list-text">5.控制信号</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#6-%E9%98%BB%E5%A1%9E%E8%BD%AC%E5%8F%91"><span class="toc-list-text">6.阻塞转发</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E8%AF%BE%E4%B8%8A"><span class="toc-list-text">课上</span></a></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-list-text">思考题</span></a></li></ol></li></ol></div></div></aside></div></div><div id="toolbar" hide=""><div id="toolbar-setting-container" hide=""><div class="toolbar-item"><button id="tool-color-mode" title="深色模式" type="button"><img src="/assets/images/svg/ta/ta-moon.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button class="copy-text" id="tool-share" title="分享" type="button" data-text="http://anailurus.github.io/2026/02/13/P6co/"><img src="/assets/images/svg/ta/ta-share.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-plus" title="放大字体" type="button"><img src="/assets/images/svg/ta/ta-text-plus.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-minus" title="缩小字体" type="button"><img src="/assets/images/svg/ta/ta-text-minus.svg" class="icon noview" alt="Icon"></button></div></div><div class="toolbar-container"><div class="toolbar-item"><button id="tool-setting" title="设置" type="button"><img src="/assets/images/svg/ta/ta-setting.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-toc" title="目录" type="button"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-gototop" title="返回顶部" type="button"><img src="/assets/images/svg/ta/ta-up.svg" class="icon noview" alt="Icon"></button></div></div></div><div class="search-overlay"><div class="search-container"><div class="search-header"><div class="search-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+搜索</div><div class="search-close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21a9 9 0 0 0 9 -9a9 9 0 0 0 -9 -9a9 9 0 0 0 -9 9a9 9 0 0 0 9 9z" /><path d="M9 8l6 8" /><path d="M15 8l-6 8" /></svg></div></div><div class="search-input-box"><input id="search-input" type="search" placeholder="请输入关键词进行站内搜索……" value="" maxlength="80"/></div><div class="search-result-container"><div class="search-result-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></div></div></div></div><div id="music-player"></div></main><footer><div class="footer"><div id="footer-copyright">© 2026 <span>💗</span> <a href="/null">一一</a></div><div id="footer-info"><div id="footer-framework">🚀本站由 <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/chanwj/hexo-theme-meow" title="3.3.0" target="_blank">Meow</a> 强力驱动</div><div id="footer-runtime"><span id="runtime" data-startdate="2026-02-10T00:00:00.000Z">🌻已稳定运行.年.月.天</span></div></div></div></footer><div class="scripts"><script>const GLOBALCONFIG = {
+  root: '/',
+  toolbar: true,
+  lazyload_src: '/assets/images/Meow-Loading.webp',
+  friends: false,
+  album: '',
+  codeblock: true,
+  code_copy_text: false,
+  share_text: '🐱Share From anAilurus',
+  onblur_title: '＜(´⌯ ω ⌯`)＞',
+  mouse_click: true,
+  notify:{
+    enable: false,
+    info: '复制成功～转载请标注本文地址',
+    f12_info: '开发者模式已打开，请遵循本站版权协议'
+  },
+  search: {
+    enable: true,
+    path: 'search.json',
+    local: {
+      top_n_per_article: 1,
+      preload: false
+    }
+  },
+  encrypt: false,
+};
+</script><script>if (!localStorage.getItem('color-mode')) {
+  localStorage.setItem('color-mode', 'light' || 'light');
+}
+document.body.setAttribute('data-mode', localStorage.getItem('color-mode'));
+</script>
+<script src="/js/theme/tools/utils.js"></script>
+
+<script src="/js/plugins/dist/lazyload.min.js"></script>
+
+<script src="/js/plugins/view-image.min.js"></script>
+<script>if (localStorage.getItem('font-size')) {
+  document.querySelector('.post').style.fontSize = localStorage.getItem('font-size') + 'px';
+}
+</script>
+<script src="/js/plugins/dist/APlayer.min.js"></script>
+<script>const initAplayer = (data) => {
+  if (!data.length) return;
+
+  const ap = new APlayer({
+    container: document.getElementById('music-player'),
+    fixed: true,
+    autoplay: false,
+    theme: '#FFB347',
+    loop: 'all',
+    order: 'list',
+    volume: 0.7,
+    lrcType: 3,
+    audio: data
+  });
+
+  ap.on('play', () => {
+    document.getElementById('music-player').setAttribute("play", "");
+  });
+  ap.on('pause', () => {
+    document.getElementById('music-player').removeAttribute("play");
+  });
+};
+
+const fetchData = () => {
+  fetch('')
+    .then(res => res.json())
+    .then(result => initAplayer(result));
+};
+
+if ('') {
+  document.addEventListener("DOMContentLoaded", fetchData);
+} else {
+  document.addEventListener("DOMContentLoaded", initAplayer([{"name":"ESCAPE","artist":"i-dle","url":"https://anailurus.github.io/image-hosting//(G)I-DLE-ESCAPE.mp3","cover":"https://anailurus.github.io/image-hosting//20260212185314108.png","lrc":"https://anailurus.github.io/image-hosting//i-dle-ESCAPE.lrc"}]));;
+}</script>
+<script src="/js/plugins/dist/search.js"></script>
+
+<script src="/js/main.js" type="module"></script>
+</div></body></html>
