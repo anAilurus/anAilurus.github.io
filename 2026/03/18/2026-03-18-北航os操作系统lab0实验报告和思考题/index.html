@@ -1,0 +1,1212 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="一一"/><meta name="copyright" content="一一"/><meta name="theme-color" content="#FFB347"/><meta name="format-detection" content="telephone=no"/><meta name="keywords" content="北航,大二,os"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-touch-fullscreen" content="yes"/><meta name="application-name" content="北航os操作系统lab0实验报告和思考题 | anAilurus' Blog"/><meta name="apple-mobile-web-app-title" content="北航os操作系统lab0实验报告和思考题 | anAilurus' Blog"/><meta name="apple-mobile-web-app-status-bar-style" content="#FFB347"/><link rel="canonical" href="http://anAilurus.github.io/2026/03/18/2026-03-18-北航os操作系统lab0实验报告和思考题/"/><meta name="description" content="初识操作系统...失败">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北航os操作系统lab0实验报告和思考题 | anAilurus&#39; Blog">
+<meta property="og:url" content="http://anailurus.github.io/2026/03/18/2026-03-18-%E5%8C%97%E8%88%AAos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Flab0%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E5%92%8C%E6%80%9D%E8%80%83%E9%A2%98/index.html">
+<meta property="og:site_name" content="anAilurus&#39; Blog">
+<meta property="og:description" content="初识操作系统...失败">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260329173545762.jpg">
+<meta property="article:published_time" content="2026-03-18T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-29T10:30:44.364Z">
+<meta property="article:author" content="一一">
+<meta property="article:tag" content="os">
+<meta property="article:tag" content="北航">
+<meta property="article:tag" content="大二">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260329173545762.jpg"><meta name="robots" content="index,follow"/><meta name="googlebot" content="index,follow"/><meta name="revisit-after" content="1 days"/><title>北航os操作系统lab0实验报告和思考题 | anAilurus' Blog</title><link rel="shortcut icon" href="/assets/images/fu_Q.ico"><link rel="preconnect" href="/assets"/><link rel="preconnect" href="assets"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/third-party/dist/APlayer.min.css">
+<link rel="prefetch" href="/"/><link rel="prefetch" href="/archives"/><link rel="prefetch" href="/tags"/><meta name="generator" content="Hexo 8.1.1"></head><body bg-style="none"><header><div id="navbar"><div id="nav-info"><a id="site-icon" href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a id="site-name" href="/" title="主页"><div>anAilurus' Blog</div><img src="/assets/images/svg/uc/uc-home.svg" class="icon noview" alt="Icon"></a></div><div id="nav-menu"><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="sub-menu-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="sub-menu-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div></div><div id="nav-function"><div id="search-btn"><a href="javascript:void(0);" title="搜索" accesskey="s"><img src="/assets/images/svg/uc/uc-search.svg" class="icon noview" alt="Icon"><span>搜索</span></a></div><div id="menu-btn"><a href="javascript:void(0);" title="打开菜单"><img src="/assets/images/svg/uc/uc-menu.svg" class="icon noview" alt="Icon"></a></div></div></div></header><div id="menu-aside"><div id="menu-aside-container"><div id="menu-aside-info"><a href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a href="/" title="主页">anAilurus' Blog</a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="menu-aside-sub-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-aside-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="menu-aside-sub-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-aside-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div><hr/></div></div><main><div class="banner"><div class="banner-info"><div class="banner-avatar"><img src="/assets/images/fu_cake.png" alt="Avatar"/></div><div class="banner-title">「 anAilurus' Blog 」</div></div></div><div class="post-container"><div class="post-main"><div class="post-content"><h1 class="post-title">北航os操作系统lab0实验报告和思考题</h1><div class="post-author"><span>作者: 一一</span></div><div class="post-meta"><div class="post-info"><div class="post-date"><div class="post-pubdate"><img src="/assets/images/svg/ta/ta-pubdate.svg" class="icon noview" alt="Icon"><span>发表于2026-03-18</span></div><div class="post-update"><img src="/assets/images/svg/ta/ta-update.svg" class="icon noview" alt="Icon"><span>更新于2026-03-29</span></div></div><div class="post-read"><div class="post-wordcount"><img src="/assets/images/svg/ta/ta-write.svg" class="icon noview" alt="Icon"><span>总字数: 13.4k字</span></div><div class="post-readtime"><img src="/assets/images/svg/ta/ta-time.svg" class="icon noview" alt="Icon"><span>阅读时长: 45分钟</span></div></div></div><div class="post-attribute"><div class="post-categories"><img src="/assets/images/svg/ta/ta-category.svg" class="icon noview" alt="Icon"><span><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/os/">os</a></span></div><div class="post-tags"><img src="/assets/images/svg/ta/ta-tag.svg" class="icon noview" alt="Icon"><span><a class="post-tags-link" href="/tags/os/" rel="tag">os</a><a class="post-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></span></div></div></div><div class="post markdown" indent="false"><img  class="postcover" alt="Post Cover"  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260329173545762.jpg" ><div class="note blue"><p>写在前面：<br>本人的lab0，死了，o(╥﹏╥)o<br>写的有点多了，废话连篇，点击右下角目录可以跳转到需要的地方</p></div>
+
+<h1 id="Lab-0-初识操作系统"><a href="#Lab-0-初识操作系统" class="headerlink" title="Lab 0 初识操作系统"></a>Lab 0 初识操作系统</h1><h2 id="知识梳理"><a href="#知识梳理" class="headerlink" title="知识梳理"></a>知识梳理</h2><h3 id="Linux-基本操作命令"><a href="#Linux-基本操作命令" class="headerlink" title="Linux 基本操作命令"></a>Linux 基本操作命令</h3><h4 id="一-在终端输入-wsl-进入-Ubuntu下的终端，按-ctrl-d-返回-windows"><a href="#一-在终端输入-wsl-进入-Ubuntu下的终端，按-ctrl-d-返回-windows" class="headerlink" title="一. 在终端输入 wsl 进入 Ubuntu下的终端，按 ctrl+d 返回 windows"></a>一. 在终端输入 <strong>wsl</strong> 进入 Ubuntu下的终端，按 <strong>ctrl+d</strong> 返回 windows</h4><p>或者可以输入 <code>ssh os-lab</code> ，进入 os 提供的实验环境的命令行界面。</p>
+<h4 id="二-一些特殊的目录"><a href="#二-一些特殊的目录" class="headerlink" title="二. 一些特殊的目录"></a>二. 一些特殊的目录</h4><ul>
+<li><strong>&#x2F;</strong> 表示根目录</li>
+<li><strong>~</strong> 表示家目录</li>
+<li><strong>..</strong> 表示上一级目录</li>
+<li><strong>.</strong>   表示当前目录</li>
+</ul>
+<h4 id="三-常用命令："><a href="#三-常用命令：" class="headerlink" title="三. 常用命令："></a>三. 常用命令：</h4><ol>
+<li><h5 id="ls"><a href="#ls" class="headerlink" title="ls :"></a><strong>ls</strong> :</h5><ul>
+<li>作用：知道当前目录中包含哪些文件。</li>
+<li>用法：<code>ls [选项] [文件]</code></li>
+<li>选项：<ul>
+<li><code>-a</code>：显示所有文件，包括隐藏文件（以 . 开头的文件）。</li>
+<li><code>-l</code>：以长格式显示文件信息，包括权限、所有者、大小和修改时间，并且每行显示一个文件。</li>
+</ul>
+</li>
+<li>如<code>ls -al</code>：显示当前目录下的所有文件（包括隐藏文件）以及它们的详细信息。</li>
+</ul>
+</li>
+<li><h5 id="touch"><a href="#touch" class="headerlink" title="touch :"></a><strong>touch</strong> :</h5><ul>
+<li>作用：创建一个新的空文件，或者更新一个已经存在的文件的访问和修改时间。</li>
+<li>用法：<code>touch [选项] 文件名</code></li>
+<li>如 <code>touch file.txt</code>：创建一个名为 file.txt 的新文件，如果该文件已经存在，则更新其访问和修改时间。</li>
+</ul>
+</li>
+<li><h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir :"></a><strong>mkdir</strong> :</h5><ul>
+<li>作用：创建一个新的目录。</li>
+<li>用法：<code>mkdir [选项] 目录名</code></li>
+<li>如 <code>mkdir new_folder</code>：创建一个名为 new_folder 的新目录。</li>
+</ul>
+</li>
+<li><h5 id="cd"><a href="#cd" class="headerlink" title="cd :"></a><strong>cd</strong> :</h5><ul>
+<li>作用：改变当前工作目录。</li>
+<li>用法：<code>cd [目录]</code></li>
+<li>如 <code>cd /home/user/Documents</code>：将当前工作目录更改为 &#x2F;home&#x2F;user&#x2F;Documents。</li>
+<li><code>cd ..</code>：返回上一级目录。</li>
+<li><code>cd .</code>：保持在当前目录。</li>
+<li><code>cd -</code> : 跳转到上一次访问的目录。</li>
+</ul>
+</li>
+<li><h5 id="pwd"><a href="#pwd" class="headerlink" title="pwd :"></a><strong>pwd</strong> :</h5><ul>
+<li>作用：显示当前工作目录的完整路径。</li>
+<li>用法：<code>pwd</code></li>
+<li>如 <code>pwd</code>：输出当前工作目录的绝对路径，例如 &#x2F;home&#x2F;user&#x2F;Documents。</li>
+</ul>
+</li>
+</ol>
+<div class="note yellow"><p>在需要键入文件名或目录名时，可以使用 Tab 键补足全名。<br>当有多种补足时，双击Tab键可以显示所有可能选项。<br>在屏幕上输入<code>cd /h</code>然后按下<code>Tab</code>， 就会自动补全为<code>cd /home</code>，如果输入的是<code>cd /</code>，再按两次<code>Tab</code>，会看到所有可选项，和 <code>ls</code> 类似</p></div>
+
+<ol start="6">
+<li><h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir :"></a><strong>rmdir</strong> :</h5><ul>
+<li>作用：删除一个空目录。</li>
+<li>用法：<code>rmdir [选项] 目录名</code></li>
+<li>如 <code>rmdir old_folder</code>：删除一个名为 old_folder 的目录（前提是该目录必须为空）。<br><code>rm -r old_folder</code>：递归删除一个名为 old_folder 的目录及其所有内容。</li>
+</ul>
+</li>
+<li><h5 id="rm"><a href="#rm" class="headerlink" title="rm :"></a><strong>rm</strong> :</h5><ul>
+<li>作用：删除文件或目录。</li>
+<li>用法：<code>rm [选项] 文件或目录</code></li>
+<li>选项：<ul>
+<li><code>-r</code>：递归删除目录及其内容。</li>
+<li><code>-f</code>：强制删除，不提示确认。</li>
+<li><code>-i</code>：交互式删除，系统会要求逐一确定是否要删除。这时，必须输入Y并按回车键， 才能删除文件。</li>
+</ul>
+</li>
+<li>如 <code>rm file.txt</code>：删除名为 file.txt 的文件。</li>
+<li><code>rm -rf old_folder</code>：强制递归删除名为 old_folder 的目录及其所有内容。</li>
+</ul>
+<div class="note yellow"><ol>
+<li><p><code>rm</code> 等命令支持对多个文件的操作，典型的方法是使用通配符 <code>*</code> 来匹配任意长度的字符串。<code>rm -rf *</code>、 <code>rm -rf ./*</code>可以删除当前所在目录的所有文件。</p>
+</li>
+<li><p>在家目录下建一个类似回收站的目录，如果要使用rm命令，先把要删除的文件 移到这个目录里，然后再进行rm</p>
+</li>
+</ol></div>
+</li>
+<li><h5 id="cp"><a href="#cp" class="headerlink" title="cp :"></a><strong>cp</strong> :</h5><ul>
+<li>作用：复制文件或目录。</li>
+<li>用法：<code>cp [选项] 源文件路径 目标文件路径</code></li>
+<li>选项：<ul>
+<li><code>-r</code>：递归复制目录及其内容。</li>
+<li><code>-i</code>：系统会要求逐一确定是否要覆盖。 这时，必须输入Y并按回车键， 才能覆盖文件。</li>
+</ul>
+</li>
+<li>如 <code>cp file.txt /home/user/Documents/</code>：将 file.txt 复制到 &#x2F;home&#x2F;user&#x2F;Documents&#x2F; 目录下。</li>
+</ul>
+</li>
+<li><h5 id="mv"><a href="#mv" class="headerlink" title="mv :"></a><strong>mv</strong> :</h5><ul>
+<li>作用：移动或重命名文件或目录。  </li>
+<li>用法：<code>mv [选项] 源文件路径 目标文件路径</code></li>
+<li>选项：<ul>
+<li><code>-v</code>：显示详细的操作信息。</li>
+<li><code>-i</code>：进行交互式操作，在覆盖前询问。</li>
+<li><code>-u</code>: 仅在源文件较新，或目标文件不存在时，才执行移动操作。</li>
+</ul>
+</li>
+<li>如 mv old_name.txt new_name.txt：将 old_name.txt 重命名为 new_name.txt。</li>
+<li><code>mv file.txt /home/user/Documents/</code>：将 file.txt 移动到 &#x2F; home&#x2F;user&#x2F;Documents&#x2F; 目录下。</li>
+</ul>
+</li>
+<li><h5 id="echo"><a href="#echo" class="headerlink" title="echo :"></a><strong>echo</strong> :</h5><ul>
+<li>作用：在终端输出文本或变量的值。回显命令。</li>
+<li>用法：<code>echo [选项] 字符串</code></li>
+<li>如 <code>echo &quot;Hello, World!&quot;</code>：在终端输出 Hello, World!。</li>
+<li><code>echo $HOME</code>：输出当前用户的家目录路径。</li>
+</ul>
+</li>
+<li><h5 id="man"><a href="#man" class="headerlink" title="man :"></a><strong>man</strong> :</h5><ul>
+<li>作用：查看命令的使用说明和帮助文档。</li>
+<li>用法：<code>man 命令</code>     </li>
+<li>如 <code>man ls</code>：查看 ls 命令的使用说明和帮助文档。</li>
+</ul>
+</li>
+<li><h5 id="cat"><a href="#cat" class="headerlink" title="cat :"></a><strong>cat</strong> :</h5><ul>
+<li>作用：连接文件并将内容输出到标准输出（通常是终端）。</li>
+<li>用法：<code>cat [选项] 文件</code></li>
+<li>如 <code>cat file.txt</code>：显示 file.txt 文件的内容。</li>
+<li><code>cat file1.txt file2.txt</code>：将 file1.txt 和 file2.txt 的内容连接起来并显示。</li>
+</ul>
+</li>
+</ol>
+<h4 id="四-常用快捷键"><a href="#四-常用快捷键" class="headerlink" title="四. 常用快捷键"></a>四. 常用快捷键</h4><ul>
+<li><strong>Ctrl + C</strong> : 终止当前正在运行的命令或程序。(复制粘贴的时候要用右键)</li>
+<li><strong>Ctrl + D</strong> : 退出当前的 shell 会话，或者在输入时表示文件结束（EOF）。</li>
+<li><strong>Ctrl + Z</strong> : 将当前正在运行的命令或程序暂停，并将其放入后台。<br>Ctrl+Z 挂起程序后会显示该程序挂起编号，若想要恢复该程序可以使用<strong>fg [job_spec]</strong>。job_spec 即为挂起编号，不输入时默认为最近挂起进程。</li>
+<li><strong>Ctrl + L</strong> : 清屏，类似于执行 clear 命令。</li>
+<li><strong>Ctrl + S</strong> : 暂停该终端（不是保存）。误触后<strong>Ctrl + Q</strong>可以继续进行</li>
+</ul>
+<h4 id="五-进阶命令"><a href="#五-进阶命令" class="headerlink" title="五. 进阶命令"></a>五. 进阶命令</h4><ol>
+<li><p>find：在指定目录下查找文件或目录。</p>
+<ul>
+<li>语法：<code>find [路径] [选项] [表达式]</code></li>
+<li>如 <code>find /home/user/Documents -name &quot;*.txt&quot;</code>：在 &#x2F;home&#x2F;user&#x2F;Documents 目录下查找所有以 .txt 结尾的文件。</li>
+</ul>
+</li>
+<li><p>grep：在文件中搜索指定的字符串。</p>
+<ul>
+<li>语法：<code>grep [选项] 模式 文件</code></li>
+<li>选项：<ul>
+<li><code>-i</code>：忽略大小写。</li>
+<li><code>-r</code>：递归搜索目录及其子目录中的文件。</li>
+<li><code>-a</code>：将二进制文件视为文本文件进行搜索。</li>
+<li><code>-n</code>：显示匹配行的行号。</li>
+</ul>
+</li>
+<li>如 <code>grep &quot;hello&quot; file.txt</code>：在 file.txt 文件中搜索字符串 “hello”。</li>
+</ul>
+</li>
+<li><p>tree：以树状结构显示目录和文件。</p>
+<ul>
+<li>语法：<code>tree [选项] [目录]</code></li>
+<li>选项：<ul>
+<li><code>-a</code>：显示所有文件，包括隐藏文件。</li>
+<li><code>-d</code>：仅显示目录，不显示文件。</li>
+</ul>
+</li>
+<li>如 <code>tree -a /home/user/Documents</code>：以树状结构显示 &#x2F;home&#x2F;user&#x2F;Documents 目录下的所有文件和目录。</li>
+</ul>
+</li>
+<li><p>chmod：修改文件或目录的权限。</p>
+<ul>
+<li>语法：<code>chmod [选项] 模式 文件</code></li>
+<li>模式：<ul>
+<li>u：表示文件所有者（user）。</li>
+<li>g：表示文件所属的用户组（group）。</li>
+<li>o：表示其他用户（others）。</li>
+<li>a：表示所有用户（all）。</li>
+<li>+：添加权限。</li>
+<li>-：删除权限。</li>
+<li>&#x3D;：设置权限。</li>
+<li>r：读权限。</li>
+<li>w：写权限。</li>
+<li>x：执行权限。</li>
+<li>X: 仅当文件是子目录或者已经具有执行权限时，才添加执行权限。</li>
+</ul>
+</li>
+<li>此外 chmod 也可以用数字表示权限：<br><code>chmod ugo</code> 中 ugo分别为一个三位的二进制数在十进制下的数值，这三个数字分别表示拥有者，群组，其他人的权限。三位二进制从高位到低位分别表示rwx的权限是否打开</li>
+<li>如 <code>chmod u+x script.sh</code>：为 script.sh 文件的所有者添加执行权限。</li>
+<li>此外 <code>chmod 755 script.sh</code>：将 script.sh 文件的权限设置为 rwxr-xr-x，即所有者具有读、写和执行权限，群组和其他用户具有读和执行权限。</li>
+<li><code>chmod -w file.txt</code>：删除所有人对 file.txt 文件的写权限。</li>
+</ul>
+</li>
+<li><p>diff：比较两个文件的内容并显示差异。</p>
+<ul>
+<li>语法：<code>diff [选项] 文件1 文件2</code></li>
+<li>选项：<ul>
+<li><code>-b</code>：忽略空白字符的变化。</li>
+<li><code>-B</code>：忽略空行的变化。</li>
+<li><code>-q</code>：仅显示是否存在差异，不显示具体差异内容。</li>
+</ul>
+</li>
+<li>如 <code>diff file1.txt file2.txt</code>：比较 file1.txt 和 file2.txt 的内容并显示差异。</li>
+</ul>
+</li>
+<li><p>sed：流编辑器，用于对文本进行替换、删除、插入等操作。</p>
+<ul>
+<li>语法：<code>sed [选项] &#39;命令&#39; 文件</code></li>
+<li>选项：<ul>
+<li><code>-i</code>：直接修改文件内容，而不是输出到标准输出。</li>
+<li><code>-n</code>：不自动打印模式空间的内容，通常与 p 命令一起使用来控制输出。</li>
+<li><code>-e</code>：允许在同一行里执行多条命令。</li>
+</ul>
+</li>
+<li>命令：<ul>
+<li><code>[行号]a\[内容]</code> 新增，在行号后新增一行相应内容。行号可以是“数字”，在这一行之后新增，也可以是“起始行，终止行”，在其中的每一行后新增。当不写行号时，在每一行之后新增。使用$表示最后一行。后面的命令同理。</li>
+<li><code>[行号]c\[内容]</code>取代。用内容取代相应行的文本。</li>
+<li><code>[行号]i\[内容]</code>插入。在当前行的上面插入一行文本。</li>
+<li><code>[行号]d</code> 删除当前行的内容。</li>
+<li><code>[行号]p</code> 输出选择的内容。通常与选项-n一起使用。</li>
+<li><code>s/re/string/</code> 将re（正则表达式）匹配的内容替换为string</li>
+</ul>
+</li>
+<li>如:</li>
+</ul>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#输出my.txt的第三行</span></span><br><span class="line">sed-n<span class="string">&#x27;3p&#x27;</span> my.txt</span><br><span class="line">      </span><br><span class="line"><span class="comment">#删除my.txt文件的第二行</span></span><br><span class="line">sed<span class="string">&#x27;2d&#x27;</span> my.txt</span><br><span class="line">      </span><br><span class="line"><span class="comment">#删除my.txt文件的第二行到最后一行（$符号表示到最末尾）</span></span><br><span class="line">sed<span class="string">&#x27;2,$d&#x27;</span>my.txt</span><br><span class="line">      </span><br><span class="line"><span class="comment">#在整行范围内把str1替换为str2。</span></span><br><span class="line"><span class="comment">#如果没有g标记，则只有每行第一个匹配的str1被替换成str2</span></span><br><span class="line">sed<span class="string">&#x27;s/str1/str2/g&#x27;</span> my.txt</span><br><span class="line">      </span><br><span class="line"><span class="comment">#-e选项允许在同一行里执行多条命令。例子的第一条是第四行后添加一个str，</span></span><br><span class="line"><span class="comment">#第二个命令是将str替换为aaa。命令的执行顺序对结果有影响。</span></span><br><span class="line">sed-e<span class="string">&#x27;4a\str&#x27;</span>-e<span class="string">&#x27;s/str/aaa/&#x27;</span>my.txt</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>awk：文本处理工具，用于对文本进行模式匹配和数据提取。</p>
+<ul>
+<li>语法：<code>awk [选项] &#39;程序&#39; 文件</code></li>
+<li>选项：<ul>
+<li><code>-F</code>：指定输入字段分隔符，默认为空格。</li>
+</ul>
+</li>
+<li>程序：由模式和动作组成的代码块，格式为 pattern { action }。当输入行匹配模式时，执行相应的动作。</li>
+<li><code>$n</code>：表示输入行的第 n 个字段，字段默认以空格分隔。<code>$0</code> 表示整行文本。</li>
+<li>如<code> awk &#39;$1&gt;2 &#123;print $0&#125;&#39; file.txt</code>：打印 file.txt 文件中第一列大于 2 的行。<br>*<code> awk -F, &#39;&#123;print $2&#125;&#39; file.csv</code>：打印 file.csv 文件中每行的第二个字段，以逗号作为分隔符。</li>
+</ul>
+</li>
+</ol>
+<h3 id="VIM"><a href="#VIM" class="headerlink" title="VIM"></a>VIM</h3><p>vim是一种文本编辑器。</p>
+<ol>
+<li><code>touch helloworld.c</code></li>
+<li><code>vim helloworld.c</code></li>
+<li>按 i 进入插入模式，输入代码</li>
+<li>完成文件修改以后，按 esc 退出插入模式回到命令模式，输入 : 进入底线命令模式，输入“w”（write），并<br>按下回车，文件便得到了保存；再进入底线命令模式，输入“q”（quit）便可以关闭文件，回到命令行界面，也可以由<code>:wq</code>一条命令完成</li>
+<li>vim 自定义配置：<code>vim ~/.vimrc</code></li>
+</ol>
+<h3 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h3><ol>
+<li><p>语法:<code>gcc [选项]...[参数]...</code></p>
+</li>
+<li><p>选项（常用）：<br><code>-o</code> 指定生成的输出文件<br><code>-S</code> 将C代码转换为汇编代码<br><code>-Wall</code> 显示一些警告信息<br><code>-c</code> 仅执行编译操作，不进行链接操作<br><code>-M</code> 列出依赖<br><code>-I&lt;path&gt;</code> 编译时指定头文件目录，使用标准库时不需要指定目录，-I参数可以用相对路径，比如头文件在当前目录，可以用-I.来指定</p>
+</li>
+<li><p>参数：<br>C源文件：指定C语言源代码文件<br>e.g. <code>$ gcc test.c -o test</code> #使用-o选项生成名为test的可执行文件</p>
+</li>
+<li><p>过编译之前完成的<code>helloworld.c</code></p>
+<ul>
+<li>使用<code>gcc helloworld.c -o helloworld</code>命令，便可以创建由<br>helloworld.c文件编译成的helloworld的可执行文件</li>
+<li>使用<code>./helloworld</code>命令运行生成的可执行文件，输出Hello, World!。</li>
+</ul>
+</li>
+<li><p>c语言是如何编译成可执行文件的：</p>
+<ul>
+<li>预处理：gcc 会先对源代码进行预处理，处理包括头文件包含、宏定义等预处理指令。如果写了 <code>#include &lt;stdio.h&gt;</code>，预处理器就会去找 stdio.h 这个文件，然后把它里面的内容全部复制粘贴到代码里。如果写了 <code>#define PI 3.14</code>，预处理器会把代码里所有的 PI 都替换成 3.14。生成 .i 文件。</li>
+<li>编译：语法检查，并将 .i 文件编译成汇编代码，生成 .s 文件。</li>
+<li>汇编：将 .s 文件汇编成目标文件，即将汇编代码转换为0和1组成的机器码，生成 .o 文件。</li>
+<li>链接：将 .o 文件与所需的库文件链接，生成最终的可执行文件。如，用了 <code>printf(&quot;Hello&quot;)</code>，链接器会将 printf 函数的实现代码链接到可执行文件中。如果写了多个 .c 文件，链接器也会在这一步把它们全缝合在一起。</li>
+</ul>
+</li>
+<li><p>如果想要同时编译多个文件，可以直接用 -o 选项将多个文件进行编译连接：<code>gcc testfun.c test.c -o test</code>，也可以先使用 -c 选项将每个文件单独编译成 .o 文件，再用 -o 选项将多个 .o 文件进行链接：<code>gcc -c testfun.c &amp;&amp; gcc -c test.c &amp;&amp; gcc testfun.o test.o -o test</code>，两者等价。</p>
+</li>
+</ol>
+<h3 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h3><ol>
+<li><p>作用：自动化构建工具，简化编译和构建过程。（感觉有点像宏定义）</p>
+</li>
+<li><p>语法：</p>
+<div class="code-container" code-lang="Makefile"><div class="codebox"><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">target: dependencies</span></span><br><span class="line">     command 1</span><br><span class="line">     command 2</span><br><span class="line">     ...</span><br><span class="line">     command n</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<ul>
+<li>target：要生成的目标文件或可执行文件。</li>
+<li>dependencies：生成目标所依赖的文件或其他目标。</li>
+<li>command：生成目标所需执行的命令，必须以Tab键开头。</li>
+</ul>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>Makefile 文件必须命名为 “Makefile” 或 “makefile”。</li>
+<li>每个命令行必须以 Tab键 开头，不能使用空格。</li>
+<li>可以使用变量来简化 Makefile 的编写，例如 <code>CC=gcc</code> 定义了一个变量 CC，后续可以使用 <code>$(CC)</code> 来引用它。</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<div class="code-container" code-lang="Makefile"><div class="codebox"><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o hello_world hello_world.c</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>可以先生成 makefile 文件，内容为</p>
+<div class="code-container" code-lang="Makefile"><div class="codebox"><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CC=gcc</span><br><span class="line"><span class="section">hello_world: hello_world.c </span></span><br><span class="line">              <span class="variable">$(CC)</span> -o hello_world hello_world.c</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>然后在终端输入 <code>make hello_world</code> 就会自动执行 <code>$(CC) -o hello_world hello_world.c</code> 命令，生成 hello_world 可执行文件。</p>
+</li>
+</ol>
+<h3 id="ctags"><a href="#ctags" class="headerlink" title="ctags"></a>ctags</h3><ol>
+<li><p>作用：生成代码标签，方便代码导航和跳转。</p>
+</li>
+<li><p>语法：<code>ctags [选项] 文件</code></p>
+</li>
+<li><p>选项：<br><code>-R</code>：递归生成标签文件，包含当前目录及其子目录中的所有文件。<br><code>-f &lt;file&gt;</code>：指定生成的标签文件名，默认为 “tags”。</p>
+</li>
+<li><p>在.vimrc中添加以下配置：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> tags=./tags;</span><br><span class="line"><span class="built_in">set</span> autochdir</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<ul>
+<li><code>set tags=./tags;</code>：指定标签文件的位置，这里是当前目录下的 tags 文件。</li>
+<li><code>set autochdir</code>：启用自动切换工作目录功能，使 Vim 在打开文件时自动切换到该文件所在的目录。</li>
+</ul>
+</li>
+<li><p>使用 ctags 生成标签文件：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctags -R *</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>在 Vim 中使用标签功能：</p>
+<ul>
+<li>使用 <code>:tag &lt;tagname&gt;</code> 命令跳转到指定标签的位置。</li>
+<li>使用 <code>:tags</code> 命令查看当前标签列表。</li>
+<li>使用 <code>Ctrl-]</code> 快捷键跳转到光标所在单词的定义位置。</li>
+<li>使用 <code>Ctrl-T</code> 或 <code>Ctrl-O</code> 快捷键返回上一个标签位置。</li>
+</ul>
+</li>
+</ol>
+<h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><ol>
+<li><p>作用：分布式版本控制系统，帮助开发者管理代码版本和协作开发。</p>
+</li>
+<li><p>常用命令：</p>
+<ul>
+<li><code>git init</code>：初始化一个新的 Git 仓库。</li>
+<li><strong><code>git add &lt;file&gt;</code></strong>：将文件添加到暂存区。<strong>新建文件后要 git add，修改文件后也需要git add。</strong></li>
+<li><strong><code>git commit -m &quot;message&quot;</code></strong>：提交更改并添加提交信息。</li>
+<li><code>git status</code>：查看当前仓库的状态，包括未跟踪、已修改和已暂存的文件。</li>
+<li><code>git log</code>：查看提交历史记录。</li>
+</ul>
+</li>
+<li><p>版本退回相关命令：</p>
+<ul>
+<li><code>git rm --cached &lt;file&gt;</code>：从暂存区移除不想再跟踪的文件，但保留在工作区。</li>
+<li><code>git checkout -- &lt;file&gt;</code>：将暂存区指定的文件替换工作区的文件，丢弃工作区的修改。</li>
+<li><strong><code>git restore &lt;file&gt;</code>：我们在修改一个文件之后，可能想要放弃这个修改。当这个文件还没有通过 <code>git add</code> 加入暂存区时，我们可以使用 <code>git restore &lt;filename&gt;</code> 来撤销对这个文件的修改，使其退回到上一个 commit 的状态。如果这个文件已经加入了暂存区，我们可以通过 <code>git restore --staged &lt;filename&gt;</code> 来取消暂存。</strong></li>
+<li><code>git checkout HEAD -- &lt;file&gt;</code>：将版本库中HEAD指向的目录树中的文件替换暂存区和工作区的文件，丢弃工作区的修改。</li>
+<li><code>git clean &lt;file&gt; -f</code>：从工作区删除未跟踪的文件。</li>
+<li><code>git reset HEAD &lt;file&gt;</code>：暂存区的目录树会被重写，由master分支指向的目录树所替换，但是工作区不受影响。相当于撤销了一次<code>git add</code>操作。</li>
+</ul>
+<div class="note yellow"><p>以下是<code>git reset</code>的更多用法：</p></div>
+
+<ul>
+<li><code>git reset --hard</code>：<ul>
+<li>将当前分支重置到指定的提交，并且丢弃所有未提交的更改。工作区也会变为之前的提交。</li>
+<li><code>git reset --hard HEAD~50</code> 会将当前分支重置到上50个版本的提交，并且丢弃所有未提交的更改。</li>
+<li><code>git reset --hard HEAD^</code> 会将当前分支重置到上一个提交，并且丢弃所有未提交的更改。HEAD^^ 会将当前分支重置到上两个提交，并且丢弃所有未提交的更改。</li>
+<li><code>git reset --hard &lt;commit&gt;</code> 会将当前分支重置到指定的提交，并且丢弃所有未提交的更改。commit 可以是提交的哈希值、分支名称或标签名称。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Git 分支管理：</p>
+<ul>
+<li><strong><code>git branch &lt;branch_name&gt;</code></strong>：创建一个新的分支。相当于把当前分支的内容拷贝一份到新的分支里去</li>
+<li><strong><code>git checkout &lt;branch_name&gt;</code></strong>：切换到指定的分支。</li>
+<li><code>git branch -d &lt;branch_name&gt;</code>：删除指定的分支。(-D是强制删除)</li>
+<li><code>git branch -a</code>：列出所有分支，包括本地和远程分支。</li>
+</ul>
+</li>
+<li><p>Git 远程仓库管理：</p>
+<ul>
+<li><code>git remote add &lt;remote_name&gt; &lt;remote_url&gt;</code>：添加一个新的远程仓库。</li>
+<li><code>git push &lt;remote_name&gt; &lt;branch_name&gt;</code>：将本地分支推送到远程仓库。(已经 commit 的部分)。这条命令可以将我们本地创建的分支推送到远程仓库中，在远程仓库建立一个同名的本地追踪的远程分支。</li>
+<li><code>git pull &lt;remote_name&gt; &lt;branch_name&gt;</code>：从远程仓库拉取并合并指定分支的更改到当前分支。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><code>git clone &lt;URL&gt;</code>：从远程仓库“克隆”一个已有的储存库到当前目录下</li>
+</ul>
+<ol start="6">
+<li><p>Git 配置：</p>
+<ul>
+<li><code>git config --global user.email &quot;you@example.com&quot;</code></li>
+<li><code>git config --global user.name &quot;YourName&quot;</code><br>用来设置全局的用户名和邮箱，这些信息会被记录在每次提交中，帮助识别提交者的身份。</li>
+</ul>
+</li>
+<li><p>Git 文件状态：</p>
+<ul>
+<li>Untracked（未跟踪）：表示没有跟踪（ add ）某个文件的变化，使用git add即可跟踪文件。</li>
+<li>Modified（已修改）：表示修改了某个文件,但还没有加入（add）到暂存区中。</li>
+<li>Staged（已暂存）：文件已被添加到暂存区，准备提交。</li>
+<li>unmodified（未修改）(已经被 commit)：表示某文件在跟踪后一直没有改动过或者改动已经被提交。</li>
+</ul>
+<figure class="img-caption"><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260226221346737.png"  alt="image-20260226221306391" style="zoom: 50%;" ><figcaption>image-20260226221306391</figcaption></figure>
+
+<p>add the file: <code>git add &lt;file&gt;</code><br>edit the file: <code>vim &lt;file&gt;</code><br>stage the file: <code>git add &lt;file&gt;</code><br>commit: <code>git commit -m &quot;message&quot;</code><br>remove the file: <code>git rm &lt;file&gt;</code></p>
+</li>
+<li><p>实例：</p>
+<ul>
+<li>创建并进入名为 learn_git 的目录，使用<code>git init</code>命令初始化一个新的 Git 仓库。</li>
+<li>创建一个名为 readme.md 的文件，并使用<code>git add readme.md</code>命令将其添加到暂存区。</li>
+<li>使用<code>git commit</code> 命令提交更改，并添加提交信息。</li>
+<li>在弹出的窗口使用 i 键进入编辑模式，输入提交信息，完成后按<code>esc</code>键退出编辑模式，输入<code>:wq</code>保存并退出。<br>（<code>git commit --amend</code>命令可以修改上一次提交的信息，使用方法与<code>git commit</code>相同）</li>
+</ul>
+</li>
+<li><p>Git 三棵树</p>
+<ul>
+<li>工作区（Working Directory）：包含当前正在编辑的文件，是开发者进行代码修改的地方。</li>
+<li>暂存区（Staging Area）：也称为索引（Index），是一个临时区域，用于保存即将提交的文件快照。只有被添加到暂存区的文件才会被提交到版本库中。</li>
+<li>版本库（Repository）：包含所有提交历史记录和版本信息的地方，Git 将每次提交的快照保存在版本库中，以便后续查看和回滚。</li>
+</ul>
+<p><figure class="img-caption"><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260226225518511.png"  alt="image-20260226225518298"><figcaption>image-20260226225518298</figcaption></figure></p>
+<ul>
+<li>objects：Git 中的对象库<br>index：Git 中的索引文件，记录了暂存区的状态<br>master：Git 中的默认分支名称，表示主分支，此时HEAD指向master分支。</li>
+<li><code>git add</code>：当对工作区修改（或新增）的文件执行git add命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID被记录在暂存区的文件索引中。</li>
+<li><code>git commit</code>：当执行提交操作（git commit）时，会将暂存区的目录树写到版本库（对象库）中，master 分支会做相应的更新。即HEAD 指向的目录树就是提交时暂存区的目录树。</li>
+<li><code>git rm --cached &lt;file&gt;</code>：直接从暂存区删除文件，工作区则不做出改变。</li>
+<li><code>git reset HEAD</code>：暂存区的目录树会被重写，由master分支指向的目录树所替换，但是工作区不受影响。</li>
+<li><code>git checkout -- &lt;file&gt;</code>：用暂存区指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区的改动。</li>
+<li><code>git checkout HEAD &lt;file&gt;</code> ：用 HEAD 指向的master 分支中的指定文件来替换暂存区和以及工作区中的文件。</li>
+</ul>
+</li>
+</ol>
+<h3 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h3><ol>
+<li>作用：终端复用工具，允许在一个终端窗口中同时运行多个会话和窗口。</li>
+<li>常用命令：<ul>
+<li>窗格操作：<ul>
+<li><code>Ctrl + b + %</code>：水平分割当前窗格。左右两屏</li>
+<li><code>Ctrl + b + &quot;</code>：垂直分割当前窗格。上下两屏</li>
+<li><code>Ctrl + b + o</code>：在窗格之间切换。</li>
+<li><code>Ctrl + b + up/down/left/right</code>：在窗格之间切换。</li>
+<li><code>Ctrl + b + Space</code>：切换到下一个布局。</li>
+<li><code>Ctrl + b + z</code>：切换当前窗格的最大化状态。</li>
+<li><code>Ctrl + b + x</code>：关闭当前窗格。</li>
+</ul>
+</li>
+<li>窗口操作：<ul>
+<li><code>Ctrl + b + c</code>：创建一个新的窗口。</li>
+<li><code>Ctrl + b + n</code>：切换到下一个窗口。</li>
+<li><code>Ctrl + b + p</code>：切换到上一个窗口。</li>
+<li><code>Ctrl + b + 0-9</code>：切换到指定编号的窗口。</li>
+<li><code>Ctrl + b + w</code>：列出所有窗口并选择要切换的窗口。</li>
+<li><code>Ctrl + b + &amp;</code>：关闭当前窗口。</li>
+</ul>
+</li>
+<li>会话操作：<ul>
+<li><code>tmux new -s &lt;session_name&gt;</code>：创建一个新的会话并命名。 </li>
+<li><code>Ctrl + b + d</code>：分离当前会话，返回到主终端。</li>
+<li><code>tmux ls</code>：列出所有会话。</li>
+<li><code>tmux a -t &lt;session_name&gt;</code>：重新连接到指定的会话。</li>
+<li><code>tmux kill-session -t &lt;session_name&gt;</code>：关闭指定的会话。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="shell脚本"><a href="#shell脚本" class="headerlink" title="shell脚本"></a>shell脚本</h3><ol>
+<li><p>作用：自动化执行一系列命令的脚本文件，常用于系统管理和任务自动化。</p>
+</li>
+<li><p>语法：<br>(1) <code>vim my.sh</code>：创建一个新的 shell 脚本文件并进入编辑模式。<br>(2) </p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 注释</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Hello, World!&quot;</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>   在脚本文件中编写 shell 命令，第一行的 <code>#!/bin/bash</code> 以保证直接执行我们的脚本时使用bash作为解释器<br>(3) <code>bash my.sh</code>：使用 bash 解释器执行 shell 脚本。 或者 4.5.<br>(4) <code>chmod +x my.sh</code>：为 shell 脚本添加可执行权限。<br>(5) <code>./my.sh</code>：直接执行 shell 脚本（前提是当前目录下有 <code>my.sh</code> 文件，并且该文件具有可执行权限）。</p>
+</li>
+<li><p>参数与函数<br>(1) 参数：在 shell 脚本中，可以使用位置参数来传递命令行参数。例如，<code>$1</code> 表示第一个参数，<code>$2</code> 表示第二个参数，以此类推。<code>$0</code> 表示命令本身。</p>
+<ul>
+<li><p><code>$#</code> 表示传递给脚本的参数个数。</p>
+</li>
+<li><p><code>$*</code> 表示传递给脚本的所有参数，作为一个单词。</p>
+</li>
+<li><p><code>$?</code> 表示上一个命令的退出状态，0表示成功，非0表示失败。</p>
+</li>
+<li><p>如<code>my.sh</code>文件内容为：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The first argument is: <span class="variable">$1</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;The second argument is: <span class="variable">$2</span>&quot;</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>执行命令 <code>bash my.sh arg1 arg2</code>，输出将会是：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The first argument is: arg1</span><br><span class="line">The second argument is: arg2</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>这说明我们成功地将命令行参数传递给了 shell 脚本，并在脚本中使用了这些参数。<br>(2) shell中的函数也用类似的方式传递参数。</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">function_name</span></span>() &#123;</span><br><span class="line">    <span class="comment"># 函数体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>如：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">my_function</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;This is a <span class="variable">$1</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">my_function arg1 <span class="comment">#调用</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p><code>./my.sh</code>文件内容为上面代码，执行命令。<br>输出将会是：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This is a arg1</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<div class="note yellow"><p>在函数调用的后面需要使用 <code>$?</code> 获取返回值</p></div></li>
+</ul>
+</li>
+<li><p>分支语句</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> &lt; condition &gt;; <span class="keyword">then</span></span><br><span class="line"> <span class="comment"># 条件为真时执行的命令    </span></span><br><span class="line"><span class="keyword">elif</span> &lt; condition &gt;; <span class="keyword">then</span></span><br><span class="line"> <span class="comment"># 另一个条件为真时执行的命令</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"> <span class="comment"># 条件都不满足时执行的命令</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>注意:</p>
+<ul>
+<li><p><strong>等号两边必须无空格。</strong> <code>a = 1</code>会理解成一个名为a的命令，并给它传入参数&#x3D;和1。</p>
+</li>
+<li><p>condition 的位置也是命令，条件表达式的结果决定了命令的退出状态，0表示条件为真，非0表示条件为假。</p>
+</li>
+<li><p><code>[</code>是一种常用作条件的命令，其参数是一个条件表达式和末尾的<code>]</code>。该命令在关系成立时返回0，在关系不成立时返回非0。</p>
+</li>
+<li><p>条件表达式需要放在方括号 <code>[ ]</code> 中，并且左中括号后和右中括号前一定需要空格。</p>
+</li>
+<li><p>条件表达式中的关系运算符：</p>
+<ul>
+<li><code>-eq</code>：等于</li>
+<li><code>-ne</code>：不等于</li>
+<li><code>-gt</code>：大于</li>
+<li><code>-lt</code>：小于</li>
+<li><code>-ge</code>：大于或等于</li>
+<li><code>-le</code>：小于或等于</li>
+</ul>
+</li>
+<li><p>如：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ! diff file1.txt file2.txt ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;The files are different.&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;The files are the same.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=1</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$a</span> -ne 1 ]; <span class="keyword">then</span> <span class="built_in">echo</span> ok; <span class="keyword">fi</span> <span class="comment">#$a表示变量a的值，-ne表示不等于，如果a的值不等于1，则输出ok</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ul>
+</li>
+<li><p>循环语句</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> &lt; condition &gt;; <span class="keyword">do</span></span><br><span class="line"> <span class="comment"># 条件为真时执行的命令</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>如：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$a</span> -lt 10 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   <span class="built_in">mkdir</span> file<span class="variable">$a</span></span><br><span class="line">   a=$[<span class="variable">$a</span>+1] <span class="comment">#在 Shell（如 Bash）中，变量默认都是“字符串（String）”，而不是数字。$a+1 表示将变量 a 的值与数字 1 进行字符串连接，而不是进行数学运算。为了让 Shell 将 $a+1 解释为数学表达式，我们需要使用 $(( )) 或者 $[ ] 来进行算术扩展。</span></span><br><span class="line">   <span class="comment">#a=$((a+1)) 或者 a=$[a+1] 都可以实现将变量 a 的值加 1 的效果。</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>括号分析：</p>
+<ul>
+<li><p>美元符与单小括号、反引号:</p>
+<ul>
+<li><p><code>$()</code>：命令替换，执行括号内的命令，并将输出结果作为字符串返回,替换至原处。</p>
+</li>
+<li><p>&#96;&#96;：也是命令替换的另一种语法，但不支持嵌套使用，且在某些情况下可能需要转义。<br>如：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">&quot;<span class="subst">$(diff file1.txt file2.txt)</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;same&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">&quot;different&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p><code>[</code>命令 <code>-z</code>为选项，判断是否为空字符</p>
+</li>
+</ul>
+</li>
+<li><p>双小括号:</p>
+<ul>
+<li><p><code>$(( ))</code>：算术扩展，用于执行数学运算，并返回结果。括号内可以包含变量和算术表达式。</p>
+</li>
+<li><p><code>(( ))</code>：也是算术扩展的另一种语法，但不返回结果，而是直接执行表达式，通常用于条件测试或循环控制。<br>如：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">a=5</span><br><span class="line">b=3</span><br><span class="line">result=$((a + b)) <span class="comment"># result 的值将会是 8</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$result</span> <span class="comment"># 输出 8</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> ((a &gt; b)); <span class="keyword">then</span> <span class="comment">#执行了((a &gt; b))这个命令</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;a is greater than b&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">&quot;a is not greater than b&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"> </span><br><span class="line">((a = <span class="number">10</span>)) <span class="comment"># 将 a 的值设置为 10，是一条命令</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ul>
+</li>
+<li><p>单种括号 <code>[ ]</code>：用于条件测试，通常与 if 语句一起使用。方括号内的表达式会被解析为条件判断。</p>
+</li>
+<li><p>双方括号 <code>[[ ]]</code>：也是用于条件测试，但提供了更多的功能和更好的语法支持。双方括号内的表达式可以使用更多的操作符，并且不需要对某些特殊字符进行转义。如：<code>[[$a-gt1&amp;&amp;$a-lt100]]</code>，等同于单中括号<code>[$a-gt1]&amp;&amp;[$a-lt100]</code></p>
+</li>
+</ul>
+</li>
+<li><p>重定向和管道</p>
+<ul>
+<li><p>三种流：</p>
+<ul>
+<li>标准输入（stdin）：默认从键盘输入，文件描述符为0。</li>
+<li>标准输出（stdout）：默认输出到终端，文件描述符为1。</li>
+<li>标准错误（stderr）：默认输出到终端，文件描述符为2。</li>
+</ul>
+</li>
+<li><p>重定向：</p>
+<ul>
+<li><p><code>&gt;</code>：将命令的输出重定向到一个文件，覆盖原有内容。</p>
+</li>
+<li><p><code>&gt;&gt;</code>：将命令的输出重定向到一个文件，追加到原有内容的末尾。</p>
+</li>
+<li><p><code>&lt;</code>：将一个文件的内容作为命令的输入。</p>
+</li>
+<li><p><code>2&gt;</code>：将命令的错误输出重定向到一个文件，覆盖原有内容。</p>
+</li>
+<li><p><code>2&gt;&gt;</code>：将命令的错误输出重定向到一个文件，追加到原有内容的末尾。</p>
+</li>
+<li><p>如：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">command</span> &lt; input.txt 1&gt;output.txt 2&gt;err.txt</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ul>
+</li>
+<li><p>管道（ <code>|</code>  ）：将一个命令的输出直接作为另一个命令的输入。</p>
+<ul>
+<li>如：<code>ls -l | grep &quot;txt&quot;</code>：将 <code>ls -l</code> 命令的输出通过管道传递给 <code>grep</code> 命令，<code>grep</code> 命令会过滤出包含 “txt” 的行并显示出来。</li>
+</ul>
+</li>
+<li><p>可混合使用：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt; my.sh | grep <span class="string">&quot;Hello&quot;</span> &gt; output.txt</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p><code>cat &lt; my.sh</code>输出的是 my.sh 文件的内容，<code>grep &quot;Hello&quot;</code>过滤出包含 “Hello” 的行，<code>&gt; output.txt</code>将结果重定向到 output.txt 文件中</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h3 id="Thinking-0-1"><a href="#Thinking-0-1" class="headerlink" title="Thinking 0.1"></a>Thinking 0.1</h3><div class="note purple"><p>思考下列有关Git的问题：</p>
+<p>在前述已初始化的 ~&#x2F;learnGit 目录下，创建一个名为 README.txt 的文件。</p>
+<p>执行命令<code>git status &gt; Untracked.txt</code>。</p>
+<p>在 README.txt 文件中添加任意文件内容，然后使用<code>add</code>命令，再执行命令<code>git status&gt;Stage.txt</code>。 </p>
+<p>提交 README.txt ，并在提交说明里写入自己的学号。 执行命令 <code>cat Untracked.txt</code> 和 <code>cat Stage.txt</code> ，对比两次运行的结果，体会 README.txt 两次所处位置的不同。 修改 README.txt 文件，再执行命令<code>git status &gt; Modified.txt</code>。 执行命令 <code>cat Modified.txt</code> ，观察其结果和第一次执行 <code>add</code> 命令之前的 status 是否一样，并思考原因。</p></div>
+
+<p>执行结果如下：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">git@2437xxxx:~ $ <span class="built_in">mkdir</span> ~/learnGit</span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">cd</span> learnGit/</span><br><span class="line">git@2437xxxx:~/learnGit $ git init</span><br><span class="line">提示：使用 <span class="string">&#x27;master&#x27;</span> 作为初始分支的名称。这个默认分支名称可能会更改。要在新仓库中</span><br><span class="line">提示：配置使用初始分支名，并消除这条警告，请执行：</span><br><span class="line">提示：</span><br><span class="line">提示：  git config --global init.defaultBranch &lt;名称&gt;</span><br><span class="line">提示：</span><br><span class="line">提示：除了 <span class="string">&#x27;master&#x27;</span> 之外，通常选定的名字有 <span class="string">&#x27;main&#x27;</span>、<span class="string">&#x27;trunk&#x27;</span> 和 <span class="string">&#x27;development&#x27;</span>。</span><br><span class="line">提示：可以通过以下命令重命名刚创建的分支：</span><br><span class="line">提示：</span><br><span class="line">提示：  git branch -m &lt;name&gt;</span><br><span class="line">已初始化空的 Git 仓库于 /home/git/learnGit/.git/</span><br><span class="line">git@2437xxxx:~/learnGit $ <span class="built_in">touch</span> README.txt</span><br><span class="line">git@2437xxxx:~/learnGit $ git status &gt; Untracked.txt</span><br><span class="line">git@2437xxxx:~/learnGit $ vim README.txt</span><br><span class="line">git@2437xxxx:~/learnGit $ git add README.txt </span><br><span class="line">git@2437xxxx:~/learnGit $ git status &gt; Stage.txt</span><br><span class="line">git@2437xxxx:~/learnGit $ git commit -m<span class="string">&quot;2437xxxx&quot;</span></span><br><span class="line">[master （根提交） 79b5ba6] 2437xxxx</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br><span class="line"> create mode 100644 README.txt</span><br><span class="line">git@2437xxxx:~/learnGit (master)$ <span class="built_in">cat</span> Untracked.txt </span><br><span class="line">位于分支 master</span><br><span class="line"></span><br><span class="line">尚无提交</span><br><span class="line"></span><br><span class="line">未跟踪的文件:</span><br><span class="line">  （使用 <span class="string">&quot;git add &lt;文件&gt;...&quot;</span> 以包含要提交的内容）</span><br><span class="line">        README.txt</span><br><span class="line">        Untracked.txt</span><br><span class="line"></span><br><span class="line">提交为空，但是存在尚未跟踪的文件（使用 <span class="string">&quot;git add&quot;</span> 建立跟踪）</span><br><span class="line">git@2437xxxx:~/learnGit (master)$ <span class="built_in">cat</span> Stage.txt </span><br><span class="line">位于分支 master</span><br><span class="line"></span><br><span class="line">尚无提交</span><br><span class="line"></span><br><span class="line">要提交的变更：</span><br><span class="line">  （使用 <span class="string">&quot;git rm --cached &lt;文件&gt;...&quot;</span> 以取消暂存）</span><br><span class="line">        新文件：   README.txt</span><br><span class="line"></span><br><span class="line">未跟踪的文件:</span><br><span class="line">  （使用 <span class="string">&quot;git add &lt;文件&gt;...&quot;</span> 以包含要提交的内容）</span><br><span class="line">        Stage.txt</span><br><span class="line">        Untracked.txt</span><br><span class="line">git@2437xxxx:~/learnGit (master)$ vim README.txt <span class="comment">#改变README.txt的内容</span></span><br><span class="line">git@2437xxxx:~/learnGit (master)$ git status &gt; Modified.txt</span><br><span class="line">git@2437xxxx:~/learnGit (master)$ <span class="built_in">cat</span> Modified.txt </span><br><span class="line">位于分支 master</span><br><span class="line">尚未暂存以备提交的变更：</span><br><span class="line">  （使用 <span class="string">&quot;git add &lt;文件&gt;...&quot;</span> 更新要提交的内容）</span><br><span class="line">  （使用 <span class="string">&quot;git restore &lt;文件&gt;...&quot;</span> 丢弃工作区的改动）</span><br><span class="line">        修改：     README.txt</span><br><span class="line"></span><br><span class="line">未跟踪的文件:</span><br><span class="line">  （使用 <span class="string">&quot;git add &lt;文件&gt;...&quot;</span> 以包含要提交的内容）</span><br><span class="line">        Modified.txt</span><br><span class="line">        Stage.txt</span><br><span class="line">        Untracked.txt</span><br><span class="line"></span><br><span class="line">修改尚未加入提交（使用 <span class="string">&quot;git add&quot;</span> 和/或 <span class="string">&quot;git commit -a&quot;</span>）</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<ul>
+<li><code>git status</code>会查看当前文件状态，并通过重定向输出到 Untracked.txt 、 Stage.txt 、 Modified.txt 中</li>
+<li>执行 <code>git status &gt; Untracked.txt</code> 时，还未使用 <code>git add</code> 跟踪 README.txt ，README.txt 文件处于未跟踪状态（untracked）</li>
+<li>执行 <code>git status &gt; Stage.txt</code> 时，还已使用 <code>git add</code> 跟踪 README.txt ，README.txt 文件放在下次提交（commit）时要保存的清单中，还未提交，处于未跟踪已暂存状态（staged）</li>
+<li>执行 <code>git status &gt; Modified.txt</code> 时，README.txt 文件已经提交了一次并且发生了修改， 还未使用 <code>git add</code> 加入到暂存区，README.txt 文件处于已修改状态（modified）</li>
+</ul>
+<h3 id="Thinking-0-2"><a href="#Thinking-0-2" class="headerlink" title="Thinking 0.2"></a>Thinking 0.2</h3><div class="note purple"><p>仔细看看下图，思考一下箭头中的 add the file、stage the file 和 commit 分别对应的是Git里的哪些命令呢？</p>
+<figure class="img-caption"><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260319101600794.png"  alt="image-20260319101600685" style="zoom:50%;" ><figcaption>image-20260319101600685</figcaption></figure></div> 
+
+<ul>
+<li>add the file：<code>git add</code></li>
+<li>stage the file：<code>git add</code></li>
+<li>commit：<code>git commit</code></li>
+</ul>
+<h3 id="Thinking-0-3"><a href="#Thinking-0-3" class="headerlink" title="Thinking 0.3"></a>Thinking 0.3</h3><div class="note purple"><p>思考下列问题： </p>
+<ol>
+<li><p>代码文件 print.c 被错误删除时，应当使用什么命令将其恢复？</p>
+</li>
+<li><p>代码文件 print.c 被错误删除后，执行了 <code>git rm print.c</code> 命令，此时应当 使用什么命令将其恢复？ </p>
+</li>
+<li><p>无关文件 hello.txt 已经被添加到暂存区时，如何在不删除此文件的前提下 将其移出暂存区</p>
+</li>
+</ol></div> 
+
+<ol>
+<li>使用<code>git checkout -- print.c</code> 或者 <code>git restore print.c</code>，将暂存区的文件恢复到工作区</li>
+<li>使用<code>git reset HEAD print.c</code> 撤销暂存区的修改，然后使用 <code>git checkout -- print.c</code> 或者 <code>git restore print.c</code>将暂存区的文件恢复到工作区</li>
+<li>使用<code>git rm --cached hello.txt</code> 从暂存区中删除文件</li>
+</ol>
+<h3 id="Thinking-0-4"><a href="#Thinking-0-4" class="headerlink" title="Thinking 0.4"></a>Thinking 0.4</h3><div class="note purple"><p>思考下列有关Git的问题：</p>
+<p>找到在 &#x2F;home&#x2F;22xxxxxx&#x2F;learnGit 下刚刚创建的 README.txt 文件，若不存在则新建该文件。 </p>
+<p>在文件里加入 Testing 1，<code>git add</code>，<code>git commit</code>，提交说明记为 1。 </p>
+<p>模仿上述做法，把1分别改为2和3，再提交两次。 </p>
+<p>使用<code>git log</code>命令查看提交日志，看是否已经有三次提交，记下提交说明为3的哈希值。 </p>
+<p>进行版本回退。执行命令<code>git reset --hard HEAD^</code>后，再执行<code>git log</code>，观察其变化。 </p>
+<p>找到提交说明为1的哈希值，执行命令<code>git reset --hard &lt;hash&gt;</code>后，再执行<code>git log</code>，观察其变化。 </p>
+<p>现在已经回到了旧版本，为了再次回到新版本，执行<code>git reset --hard &lt;hash&gt;</code>，再执行<code>git log</code>，观察其变化。</p></div> 
+
+<p>执行情况如下：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ vim README.txt <span class="comment">#内容是 Testing 1</span></span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git add README.txt </span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git commit -m<span class="string">&quot;1&quot;</span></span><br><span class="line">[master 30b5a2e] 1</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ vim README.txt <span class="comment">#内容是 Testing 2</span></span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git add README.txt </span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git commit -m<span class="string">&quot;2&quot;</span></span><br><span class="line">[master a95aa94] 2</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ vim README.txt <span class="comment">#内容是 Testing 3</span></span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git add README.txt </span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git commit -m<span class="string">&quot;3&quot;</span></span><br><span class="line">[master 0614b86] 3</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git <span class="built_in">log</span></span><br><span class="line">commit 0614b868bd5d655ea7cd16e8346f2303a8552c12 (HEAD -&gt; master)</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:36:41 2026 +0800</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line"></span><br><span class="line">commit a95aa94efe8710519c7f8b9dfb0628b79c6bd914</span><br><span class="line">Author: xxxx &lt;24371366@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:36:14 2026 +0800</span><br><span class="line"></span><br><span class="line">    2</span><br><span class="line"></span><br><span class="line">commit 30b5a2ef9533e0eb72e799de2615c01608fee6d9</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:35:26 2026 +0800</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line"></span><br><span class="line">commit 79b5ba601cc3246a0645f71fa52058781585eefb</span><br><span class="line">Author: 张博雅 &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 09:46:35 2026 +0800</span><br><span class="line"></span><br><span class="line">    2437xxxx</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git reset --hard HEAD^ </span><br><span class="line">HEAD 现在位于 a95aa94 2</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git <span class="built_in">log</span></span><br><span class="line">commit a95aa94efe8710519c7f8b9dfb0628b79c6bd914 (HEAD -&gt; master)</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:36:14 2026 +0800</span><br><span class="line"></span><br><span class="line">    2</span><br><span class="line"></span><br><span class="line">commit 30b5a2ef9533e0eb72e799de2615c01608fee6d9</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:35:26 2026 +0800</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line"></span><br><span class="line">commit 79b5ba601cc3246a0645f71fa52058781585eefb</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 09:46:35 2026 +0800</span><br><span class="line"></span><br><span class="line">    2437xxxx</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git reset --hard 79b5ba</span><br><span class="line">HEAD 现在位于 79b5ba6 24371366</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git <span class="built_in">log</span></span><br><span class="line">commit 79b5ba601cc3246a0645f71fa52058781585eefb (HEAD -&gt; master)</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 09:46:35 2026 +0800</span><br><span class="line"></span><br><span class="line">    2437xxxx</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git reset --hard 0614b8</span><br><span class="line">HEAD 现在位于 0614b86 3</span><br><span class="line">git@2437xxxx:~/2437xxxx/learnGit (master)$ git <span class="built_in">log</span></span><br><span class="line">commit 0614b868bd5d655ea7cd16e8346f2303a8552c12 (HEAD -&gt; master)</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:36:41 2026 +0800</span><br><span class="line"></span><br><span class="line">    3</span><br><span class="line"></span><br><span class="line">commit a95aa94efe8710519c7f8b9dfb0628b79c6bd914</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:36:14 2026 +0800</span><br><span class="line"></span><br><span class="line">    2</span><br><span class="line"></span><br><span class="line">commit 30b5a2ef9533e0eb72e799de2615c01608fee6d9</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 10:35:26 2026 +0800</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line"></span><br><span class="line">commit 79b5ba601cc3246a0645f71fa52058781585eefb</span><br><span class="line">Author: xxxx &lt;2437xxxx@buaa.edu.cn&gt;</span><br><span class="line">Date:   Thu Mar 19 09:46:35 2026 +0800</span><br><span class="line"></span><br><span class="line">    2437xxxx</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<ul>
+<li>第一次<code>git log</code>，所处的是提交说明为 3 的版本，README.txt 中内容是 Testing 3</li>
+<li>第二次<code>git log</code>，所处的是提交说明为 2 的版本，README.txt 中内容是 Testing 2</li>
+<li>第三次<code>git log</code>，所处的是提交说明为 1 的版本，README.txt 中内容是 Testing 1</li>
+<li>最后一次<code>git log</code>，所处的是提交说明为 3 的版本，README.txt 中内容是 Testing 3</li>
+</ul>
+<h3 id="Thinking-0-5"><a href="#Thinking-0-5" class="headerlink" title="Thinking 0.5"></a>Thinking 0.5</h3><div class="note purple"><p>执行如下命令, 并查看结果 </p>
+<ul>
+<li>echo first </li>
+<li>echo second &gt; output.txt</li>
+<li>echo third &gt; output.txt</li>
+<li>echo forth &gt;&gt; output.txt</li>
+</ul></div> 
+
+<p>执行结果如下：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git@2437xxxx:~ $ <span class="built_in">echo</span> first</span><br><span class="line">first</span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">echo</span> second &gt; output.txt</span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">cat</span> output.txt </span><br><span class="line">second</span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">echo</span> third &gt; output.txt </span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">cat</span> output.txt </span><br><span class="line">third</span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">echo</span> forth &gt;&gt; output.txt </span><br><span class="line">git@2437xxxx:~ $ <span class="built_in">cat</span> output.txt </span><br><span class="line">third</span><br><span class="line">forth</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<h3 id="Thinking-0-6"><a href="#Thinking-0-6" class="headerlink" title="Thinking 0.6"></a>Thinking 0.6</h3><div class="note purple"><p>使用你知道的方法（包括重定向）创建下图内容的文件（文件命名为 test），将创建该文件的命令序列保存在 command 文件中，并将 test 文件作为批处理文件运行，将运行结果输出至 result 文件中。给出 command 文件和 result 文件的内容，并对最后的结果进行解释说明（可以从 test 文件的内容入手）. 具体实现的过程中思考下列问题: echo echo Shell Start  与 echo `echo Shell Start` 效果是否有区别; echo echo $c&gt;file1 与echo  `echo $c&gt;file1` 效果是否有区别.</p></div> 
+
+<p>command 文件：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> 1 <span class="comment">#!/bin/bash</span></span><br><span class="line"> 2 <span class="comment">#create test</span></span><br><span class="line"> 3 </span><br><span class="line"> 4 <span class="built_in">touch</span> <span class="built_in">test</span></span><br><span class="line"> 5 <span class="built_in">echo</span> <span class="string">&#x27;echo Shell Start...&#x27;</span> &gt; <span class="built_in">test</span></span><br><span class="line"> 6 <span class="built_in">echo</span> <span class="string">&#x27;echo set a = 1&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line"> 7 <span class="built_in">echo</span> <span class="string">&#x27;a=1&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line"> 8 <span class="built_in">echo</span> <span class="string">&#x27;echo set b = 2&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line"> 9 <span class="built_in">echo</span> <span class="string">&#x27;b=2&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">10 <span class="built_in">echo</span> <span class="string">&#x27;echo set c = a+b&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">11 <span class="built_in">echo</span> <span class="string">&#x27;c=$[$a+$b]&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">12 <span class="built_in">echo</span> <span class="string">&#x27;echo c = $c&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">13 <span class="built_in">echo</span> <span class="string">&#x27;echo save c to ./file1&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">14 <span class="built_in">echo</span> <span class="string">&#x27;echo $c&gt;file1&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">15 <span class="built_in">echo</span> <span class="string">&#x27;echo save b to ./file2&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">16 <span class="built_in">echo</span> <span class="string">&#x27;echo $b&gt;file2&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">17 <span class="built_in">echo</span> <span class="string">&#x27;echo save a to ./file3&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">18 <span class="built_in">echo</span> <span class="string">&#x27;echo $a&gt;file3&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">19 <span class="built_in">echo</span> <span class="string">&#x27;echo save file1 file2 file3 to file4&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">20 <span class="built_in">echo</span> <span class="string">&#x27;cat file1&gt;file4&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">21 <span class="built_in">echo</span> <span class="string">&#x27;cat file2&gt;&gt;file4&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">22 <span class="built_in">echo</span> <span class="string">&#x27;cat file3&gt;&gt;file4&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">23 <span class="built_in">echo</span> <span class="string">&#x27;echo save file4 to ./result&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br><span class="line">24 <span class="built_in">echo</span> <span class="string">&#x27;cat file4&gt;&gt;result&#x27;</span> &gt;&gt; <span class="built_in">test</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>执行 test：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ bash <span class="built_in">test</span></span><br><span class="line">Shell Start...</span><br><span class="line"><span class="built_in">set</span> a = 1</span><br><span class="line"><span class="built_in">set</span> b = 2</span><br><span class="line"><span class="built_in">set</span> c = a+b</span><br><span class="line">c = 3</span><br><span class="line">save c to ./file1</span><br><span class="line">save b to ./file2</span><br><span class="line">save a to ./file3</span><br><span class="line">save file1 file2 file3 to file4</span><br><span class="line">save file4 to ./result</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>test文件中，a 被设置为 1，b 被设置为 2，c 是 a 和 b 之和，即 3。随后，利用重定向，c 的值被保存入 file1 中，b 的值被保存入 file2 中，a 的值被保存入 file3 中，然后再次利用重定向将 file1 中内容保存进 file4 中，将 file2 中内容追加进 file4 中，将 file3 中内容追加进 file4 中，将 file4 中内容追加进 result 中。于是，result 中即是 3 2 1（每个数字一排）</p>
+<p>result 文件：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">2</span><br><span class="line">1</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<ul>
+<li><p>echo echo Shell Start 直接把“echo Shell Start” 作为字符串输出；</p>
+<p>echo `echo Shell Start`将 “echo Shell Start” 的输出作为外层 echo 的输入</p>
+<p>echo ‘echo Shell Start’ 直接把“echo Shell Start” 作为字符串输出；</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="built_in">echo</span> Shell Start</span><br><span class="line"><span class="built_in">echo</span> Shell Start</span><br><span class="line">$ <span class="built_in">echo</span> `<span class="built_in">echo</span> Shell Start`</span><br><span class="line">Shell Start</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;echo Shell Start&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> Shell Start</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>设置 test.sh：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1 <span class="comment">#!/bin/bash</span></span><br><span class="line">2 c=3</span><br><span class="line">3 <span class="built_in">echo</span> <span class="built_in">echo</span> <span class="variable">$c</span>&gt;file1</span><br><span class="line">4 <span class="built_in">cat</span> file1</span><br><span class="line">5 <span class="built_in">echo</span> <span class="string">&#x27;echo $c&gt;file1&#x27;</span></span><br><span class="line">6 <span class="built_in">cat</span> file1</span><br><span class="line">7 <span class="built_in">echo</span> `<span class="built_in">echo</span> <span class="variable">$c</span>&gt;file1`</span><br><span class="line">8 <span class="built_in">cat</span> file1</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>执行</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ bash test.sh </span><br><span class="line"><span class="built_in">echo</span> 3</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$c</span>&gt;file1</span><br><span class="line"><span class="built_in">echo</span> 3</span><br><span class="line"></span><br><span class="line">3</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>echo echo $c&gt;file1 中，echo 直接把其后 echo 3 作为输出给了 file1；</p>
+<p>echo ‘echo $c&gt;file1’中，直接把“echo $c&gt;file1” 作为字符串输出，此时<code>&gt;file1</code>无效，file1 的值没有改变</p>
+<p>echo <code>echo $c&gt;file1</code>中，将 “echo $c&gt;file1” 的输出作为外层 echo 的输入，故输出空，file1 中存入了 3 。</p>
+</li>
+</ul>
+<h2 id="实验反思"><a href="#实验反思" class="headerlink" title="实验反思"></a>实验反思</h2><h3 id="exam"><a href="#exam" class="headerlink" title="exam"></a>exam</h3><p>exam是一个Makefile补全，比较简单</p>
+<p>其主要结构如下：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── calc1.c</span><br><span class="line">├── calc2.c</span><br><span class="line">├── casegen.c</span><br><span class="line">├── common.h</span><br><span class="line">├── main.c</span><br><span class="line">├── Makefile</span><br><span class="line">├── makefile.inc</span><br><span class="line">└── post_calc.c</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>make 规则如下：</p>
+<ul>
+<li><p>有共同文件 main.c、 post_calc.c、 common.h</p>
+</li>
+<li><p>ver1：编译链接共同文件和 calc1.c，生成可执行文件</p>
+</li>
+<li><p>ver2：编译链接共同文件和 calc2.c，生成可执行文件</p>
+</li>
+<li><p>casegen：编译链接 casegen.c，生成可执行文件</p>
+</li>
+<li><p>all：生成可执行文件 ver1、ver2、casegen</p>
+</li>
+<li><p>run：运行可执行文件 ver1、ver2、casegen</p>
+</li>
+<li><p>clean：清除 casegen、ver1、ver2，以及过程中生成的所有 .txt</p>
+</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li><p>make run 和 make 作用相同</p>
+</li>
+<li><p>运行可执行文件 ver1、ver2、casegen 的相关文件为 makefile.inc 已经提供</p>
+<p>makefile.inc：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 CASE_NUM = 50 </span><br><span class="line">2 INPUT_FILE = input.txt</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>运行可执行文件 ver1、ver2、casegen 的运行逻辑是 </p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./casegen CASE_NUM INPUT_FILE</span><br><span class="line">./ver1 INPUT_FILE</span><br><span class="line">./ver2 INPUT_FILE</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>题目要求，若当前目录下有一个名为 clean、run 的文件，命令仍然执行。 即 clean、run 为伪目标</p>
+<p>使用.PHONY可将一个或多个目标定义为伪目标，其语法为<code>.PHONY:targets</code>，其中 targets可以是一个或多个目标名，以空格分隔。</p>
+</li>
+</ul>
+<p>最终 Makefile 文件如下：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> 1 include makefile.inc</span><br><span class="line"> 2 </span><br><span class="line"> 3 COMMON_FILE = main.c post_calc.c common.h</span><br><span class="line"> 4 </span><br><span class="line"> 5 .PHONY: run clean</span><br><span class="line"> 6 </span><br><span class="line"> 7 run: casegen ver1 ver2</span><br><span class="line"> 8     ./casegen $(CASE_NUM) $(INPUT_FILE)</span><br><span class="line"> 9     ./ver1 $(INPUT_FILE)</span><br><span class="line">10     ./ver2 $(INPUT_FILE)</span><br><span class="line">11 </span><br><span class="line">12 </span><br><span class="line">13 all: casegen ver1 ver2</span><br><span class="line">14 </span><br><span class="line">15 ver1: $(COMMON_FILE) calc1.c</span><br><span class="line">16     gcc $(COMMON_FILE) calc1.c -o ver1</span><br><span class="line">17 </span><br><span class="line">18 ver2: $(COMMON_FILE) calc2.c</span><br><span class="line">19     gcc $(COMMON_FILE) calc2.c -o ver2</span><br><span class="line">20 </span><br><span class="line">21 casegen: casegen.c</span><br><span class="line">22     gcc casegen.c -o casegen</span><br><span class="line">23 </span><br><span class="line">24 clean:</span><br><span class="line">25     <span class="built_in">rm</span> -f casegen</span><br><span class="line">26     <span class="built_in">rm</span> -f ver1</span><br><span class="line">27     <span class="built_in">rm</span> -f ver2</span><br><span class="line">28     <span class="built_in">rm</span> -f *.txt</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<h3 id="extra"><a href="#extra" class="headerlink" title="extra"></a>extra</h3><div class="note blue"><p>其实硬要说，extra也不是很难，但是<del>让我抱怨一下没有天时地利人和，前几天为冯如杯答辩熬了几个通宵，几乎睡了两三个小时，当天中午答辩紧张一天没吃饭，下午oo强测结果出来备受打击。</del> 好吧，确实是没有好好掌握。</p></div>
+
+<p>题目中包含两种日志文件，分别是 access.log 和 error.log </p>
+<p>access.log 记录访问日志，格式样例是：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">172.16.0.3 - - [2025-10-22:00:06:23 +0800] PUT /about HTTP/1.1 500 0</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p> error.log 记录错误日志，格式样例是：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2025-10-22 00:06:39 [FATAL]: Critical service unavailable</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>题目的 tree 是：</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── logs</span><br><span class="line">│   ├── 2025-04-06</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-04-15</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-05-18</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-06-14</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-06-20</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-06-23</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-07-12</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-07-22</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-08-08</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-10-11</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-10-22</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-11-02</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-12-05</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   ├── 2025-12-07</span><br><span class="line">│   │   ├── access.log</span><br><span class="line">│   │   └── error.log</span><br><span class="line">│   └── 2025-12-16</span><br><span class="line">│       ├── access.log</span><br><span class="line">│       └── error.log</span><br><span class="line">├── out</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>我们要完成 analyze.sh ，要求如下：</p>
+<ol>
+<li><p>要求传入一个参数，表示时间格式为YYYY-MM-DD</p>
+<p>如果没有该参数，输出 <code>analyze.sh: No date provided</code></p>
+<ul>
+<li><p>这个用 if 语句即可实现</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">6 <span class="keyword">if</span> ((<span class="variable">$#</span> == <span class="number">0</span>)); <span class="keyword">then</span></span><br><span class="line">7     <span class="built_in">echo</span> <span class="string">&quot;analyze.sh: No date provided&quot;</span></span><br><span class="line">8 <span class="keyword">elif</span> ((<span class="variable">$#</span> == <span class="number">1</span>))</span><br><span class="line">9 <span class="keyword">then</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ul>
+</li>
+<li><p>创建 reports ，以后生成的所有文件都在其中，所有生成的目录的权限为rwxrwxr-x，其他权限为rw-rw-r–。</p>
+<ul>
+<li><p>创建目录使用<code>mkdir</code></p>
+</li>
+<li><p>创建其他文件使用<code>touch</code></p>
+</li>
+<li><p>修改权限使用<code>chmod</code></p>
+<p>目录使用<code>chmod 775 ...</code></p>
+<p>其他文件使用<code>chmod 664 ...</code></p>
+</li>
+</ul>
+</li>
+<li><p>在 reports 中创建以输入参数为名字的目录 reports.&#x2F;YYYY-MM-DD</p>
+</li>
+<li><p>在 log 中找到相应以输入参数为名字的目录，将其中 error.log 中有 ERROR的行，生成到 reports.&#x2F;YYYY-MM-DD&#x2F;error.log 中，若没有含有 ERROR 的行，<strong>不生成 error.log</strong></p>
+<ul>
+<li><p>查找用 <code>grep</code>即可</p>
+</li>
+<li><p>这里需要一个判断是否含有 ERROR 的行，这里有两种办法：</p>
+<ul>
+<li><pre><code class="language-sh">if grep ERROR ./logs/$1/error.log
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">联系指导书中的 `if diff file1 file2 `可以想到这种解法，通过尝试可以知道 `grep` 在找到时返回0，未找到时返回1。而 shell脚本中，0为真，1为假，所以我们只需要</span><br><span class="line"></span><br><span class="line">```sh</span><br><span class="line">if grep ERROR ./logs/$1/error.log</span><br><span class="line">then</span><br><span class="line">	touch ./reports/$1/error.log</span><br><span class="line">	...</span><br><span class="line">fi</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+即可解决
+</code></pre>
+</li>
+<li><p>还有一个办法是，先将 grep 的结果存为变量，在通过变量是否为空来判断</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">errors=$(grep ERROR ./logs/<span class="variable">$1</span>/error.log)</span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">&quot;<span class="variable">$&#123;errors&#125;</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">	...</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<div class="note blue"><p>当然这个语法超纲了</p></div>
+</li>
+<li><p>还有一个办法是，创造一个空文件，比较生成的 error.log 和其是否相等，相等则删掉空文件和 error.log，不相等就只删除空文件</p>
+</li>
+</ul>
+<div class="note blue"><p>一个办法都没有想出来，遗憾离场</p></div></li>
+</ul>
+</li>
+<li><p>将其中 logs&#x2F;YYYY-MM-DD&#x2F;access.log 中的 &#x2F;127.0.0.1，改为 &#x2F;localhost，生成到 reports&#x2F;YYYY-MM-DD&#x2F;access.log 中</p>
+<ul>
+<li><p>利用 sed 和重定向即可完成</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s|/127\.0\.0\.1|/localhost|g&#x27;</span> ./logs/<span class="variable">$1</span>/access.log &gt; ./reports/<span class="variable">$1</span>/access.log</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>注意：</p>
+<ul>
+<li>由于原本替换部分有 “&#x2F;“，所以分割符我们要用其他的，sed会默认 ‘s 后面的符号是分隔符</li>
+<li>. 要能在引号中表示原有的字符，需要变成<code>\.</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>统计 logs&#x2F;YYYY-MM-DD&#x2F;access.log 中每个 IP 的访问次数，从高到低排列，然后输出到 reports&#x2F;YYYY-MM-DD&#x2F;summary.txt 中，格式为“IP地址 访问次数”</p>
+<p>题目提示：</p>
+<ol>
+<li><p>sort 可以进行从小到大的排序，一般采用字典序，-r 可以使其倒序，-n 可以使其按照数字顺序排序</p>
+</li>
+<li><p>uniq 可以合并<strong>附近</strong>内容一样的行，-c 可以将出现次数生成在第一列</p>
+</li>
+</ol>
+<ul>
+<li><p>于是，根据题目提示，再加上 awk 的知识，我们就可以写出答案</p>
+<div class="code-container" code-lang="Sh"><div class="codebox"><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s|/127\.0\.0\.1|/localhost|g&#x27;</span> ./logs/<span class="variable">$1</span>/access.log &gt; ./reports/<span class="variable">$1</span>/access.log</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>这里要注意，uniq 只是合并附近的，并不是将所有一样的行都合并，所以在使用 uniq 之前我们需要先进行一次排序。</p>
+<div class="note blue"><p>本人上机又没注意到，又丢了一堆数据点</p></div></li>
+</ul>
+<div class="note yellow"><p>一些其他技巧，我们要多次用到冗长的<code>./logs/$1/</code>和<code>./reports/$1/</code>可以存成变量，好看，防止写错，也减少麻烦。这些变量不可以设置在判断参数个数之前，不然会报错。</p></div></li>
+</ol>
+<details class="fold blue" ><summary>还有一些pre的知识，补充在后面啦，点击展开</summary><div class='fold-content'><h1 id="GDB：程序的解剖术"><a href="#GDB：程序的解剖术" class="headerlink" title="GDB：程序的解剖术"></a>GDB：程序的解剖术</h1><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc -g adds.c -o adds</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p><strong>需要 <code>-g</code> 生成需要的文件</strong>  </p>
+<div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gdb</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>运行 GDB</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">指令</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>file &lt;executable&gt;</code></td>
+<td align="left">加载程序</td>
+</tr>
+<tr>
+<td align="left"><code>run</code></td>
+<td align="left">运行程序</td>
+</tr>
+<tr>
+<td align="left"><code>set args [arg]...</code></td>
+<td align="left">设置程序的参数</td>
+</tr>
+<tr>
+<td align="left"><code>run [arg]...</code></td>
+<td align="left">以设定的参数运行程序</td>
+</tr>
+<tr>
+<td align="left"><code>quit</code></td>
+<td align="left">退出 GDB</td>
+</tr>
+</tbody></table></div>
+<p>也可以在命令行中加载程序，传入参数</p>
+<div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gdb &lt;executable&gt;</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gdb --args ./&lt;executable&gt; [arg]...</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<h3 id="追踪程序工作"><a href="#追踪程序工作" class="headerlink" title="追踪程序工作"></a>追踪程序工作</h3><div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">指令</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>start</code></td>
+<td align="left">启动程序并使其停在 <code>main</code> 函数起始处</td>
+</tr>
+<tr>
+<td align="left"><code>start [arg]...</code></td>
+<td align="left">以设定的参数启动程序并使其停在 <code>main</code> 函数起始处</td>
+</tr>
+<tr>
+<td align="left"><code>step</code></td>
+<td align="left">执行下一步程序，包括进入函数</td>
+</tr>
+<tr>
+<td align="left"><code>finish</code></td>
+<td align="left">跳出当前函数</td>
+</tr>
+<tr>
+<td align="left"><code>next</code></td>
+<td align="left">执行单行程序，不进入函数</td>
+</tr>
+<tr>
+<td align="left"><code>continue</code></td>
+<td align="left">继续执行函数</td>
+</tr>
+<tr>
+<td align="left"><code>kill</code></td>
+<td align="left">杀死程序进程</td>
+</tr>
+</tbody></table></div>
+<h3 id="设置断点"><a href="#设置断点" class="headerlink" title="设置断点"></a>设置断点</h3><div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">指令</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>list [position]</code></td>
+<td align="left">显示指定位置源代码</td>
+</tr>
+<tr>
+<td align="left"><code>break [position]</code></td>
+<td align="left">在指定位置设置断点</td>
+</tr>
+<tr>
+<td align="left"><code>info breakpoints</code></td>
+<td align="left">显示所有断点信息</td>
+</tr>
+<tr>
+<td align="left"><code>disable breakpoints [num]...</code></td>
+<td align="left">禁用指定断点</td>
+</tr>
+<tr>
+<td align="left"><code>enable breakpoints [num]...</code></td>
+<td align="left">启用指定断点</td>
+</tr>
+<tr>
+<td align="left"><code>delete breakpoints [num]...</code></td>
+<td align="left">删除指定断点</td>
+</tr>
+<tr>
+<td align="left"><code>tbreak [position]</code></td>
+<td align="left">在指定位置设置临时断点</td>
+</tr>
+<tr>
+<td align="left"><code>break [position] if &lt;condition&gt;</code></td>
+<td align="left">在指定位置设置条件断点</td>
+</tr>
+<tr>
+<td align="left"><code>tbreak [position] if &lt;condition&gt;</code></td>
+<td align="left">在指定位置设置条件临时断点</td>
+</tr>
+<tr>
+<td align="left"><code>condition &lt;num&gt; &lt;condition&gt;</code></td>
+<td align="left">修改断点的条件</td>
+</tr>
+<tr>
+<td align="left"><code>ignore &lt;num&gt; &lt;times&gt;</code></td>
+<td align="left">忽略断点前指定次数的访问</td>
+</tr>
+<tr>
+<td align="left"><code>clear &lt;position&gt;</code></td>
+<td align="left">删除指定位置的所有断点</td>
+</tr>
+<tr>
+<td align="left"><code>watch &lt;expression&gt;</code></td>
+<td align="left">为指定表达式设置观察点</td>
+</tr>
+<tr>
+<td align="left"><code>rwatch &lt;expression&gt;</code></td>
+<td align="left">为指定表达式设置读观察点</td>
+</tr>
+<tr>
+<td align="left"><code>awatch &lt;expression&gt;</code></td>
+<td align="left">为指定表达式设置访问观察点</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><code>list [position]</code> 指令的使用形式包括 <code>list</code>（显示当前运行位置的源代码）、<code>list &lt;line nunmber&gt;</code>、<code>list &lt;file&gt;:&lt;line number&gt;</code>、<code>list &lt;function name&gt;</code> 和 <code>list &lt;file&gt;:&lt;function name&gt;</code></p>
+<p><code>break</code>也有这五种使用形式</p>
+</blockquote>
+<blockquote>
+<p>条件断点：<code>&lt;condition&gt;</code> 部分应该是一个在当前上下文中符合语义的表达式，如 <code>a &gt;= b + 1</code>，其中 <code>a</code> 和 <code>b</code> 均已定义。一个比较简单的判断方法是如果在代码中添加 <code>if (&lt;condition&gt;){}</code>，不会出现编译或运行时错误，则该表达式就可以使用。</p>
+</blockquote>
+<h3 id="程序的机理：查看运行时数据"><a href="#程序的机理：查看运行时数据" class="headerlink" title="程序的机理：查看运行时数据"></a>程序的机理：查看运行时数据</h3><div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">指令</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>backtrace</code></td>
+<td align="left">查看调用栈信息</td>
+</tr>
+<tr>
+<td align="left"><code>up [steps]</code></td>
+<td align="left">向调用者方向移动栈帧</td>
+</tr>
+<tr>
+<td align="left"><code>down [steps]</code></td>
+<td align="left">向被调用者方向移动栈帧</td>
+</tr>
+<tr>
+<td align="left"><code>frame [level]</code></td>
+<td align="left">移动到指定的栈帧</td>
+</tr>
+<tr>
+<td align="left"><code>print &lt;expression&gt;</code></td>
+<td align="left">查看表达式的值</td>
+</tr>
+<tr>
+<td align="left"><code>disassemble [position]</code></td>
+<td align="left">查看对应位置的汇编码</td>
+</tr>
+</tbody></table></div>
+<h3 id="高级调试：修改运行时程序"><a href="#高级调试：修改运行时程序" class="headerlink" title="高级调试：修改运行时程序"></a>高级调试：修改运行时程序</h3><div class="table-container"><table>
+<thead>
+<tr>
+<th align="left">指令</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>set variable &lt;variable&gt; = &lt;expression&gt;</code></td>
+<td align="left">修改变量的值</td>
+</tr>
+<tr>
+<td align="left"><code>return [expression]</code></td>
+<td align="left">立即从函数中以指定的返回值返回</td>
+</tr>
+<tr>
+<td align="left"><code>jump &lt;position&gt;</code></td>
+<td align="left">无条件跳转到程序的指定位置</td>
+</tr>
+</tbody></table></div>
+<h3 id="打开-TUI"><a href="#打开-TUI" class="headerlink" title="打开 TUI"></a>打开 TUI</h3><div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdb -tui ./file</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>或者在 GDB 中<code>Ctrl + X + A</code></p>
+<h1 id="MIPS-相关知识补充"><a href="#MIPS-相关知识补充" class="headerlink" title="MIPS 相关知识补充"></a>MIPS 相关知识补充</h1><h3 id="一些directives"><a href="#一些directives" class="headerlink" title="一些directives"></a>一些directives</h3><ol>
+<li>.byte: 定义一个字节</li>
+<li>.half: 定义一个半字（2字节）</li>
+<li>.word: 定义一个字（4字节）</li>
+<li>.asciiz: 定义一个以null结尾的字符串</li>
+<li>.ascii: 定义一个字符串</li>
+<li>.align: 对齐指令，后面跟一个数字表示对齐的字节数（2^n）</li>
+<li>.globl: 定义全局符号</li>
+<li>.extern: 声明外部符号<br>在对另一模块中的全局标签引用时，没有必要添加 .extern（但对另一模块中的全局变量引用时，需要添加.extern）</li>
+<li>.set: <ul>
+<li>.set noreorder: 禁止指令重排</li>
+<li>.set reorder: 允许指令重排（默认）<br>reorder 模式下汇编器会自动调度指令至延迟槽,noreorder 模式下需要手动填充延迟槽。</li>
+<li>.set at: 允许使用 $at 寄存器（默认）</li>
+<li>.set noat: 禁止使用 $at 寄存器</li>
+</ul>
+</li>
+</ol>
+<h3 id="一些宏"><a href="#一些宏" class="headerlink" title="一些宏"></a>一些宏</h3><ol>
+<li><p>LEAF</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#define LEAF(symbol)                     \ </span><br><span class="line"> .globl  symbol;                         \  # 定义全局符号</span><br><span class="line"> .align  2;                              \  # 对齐指令</span><br><span class="line"></span><br><span class="line"> .type   symbol,@function;               \  # 定义符号类型为函数</span><br><span class="line"> .ent    symbol;                         \  # 定义符号的开始位置</span><br><span class="line"> symbol:                                 \  </span><br><span class="line"> .frame  sp,0,ra                            # 定义栈帧信息</span><br><span class="line"></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>NESTED</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#define NESTED(symbol, framesize, rpc)   \</span><br><span class="line"> .globl  symbol;                         \</span><br><span class="line"> .align  2;                              \</span><br><span class="line"> .type   symbol,@function;               \</span><br><span class="line"> .ent    symbol,0;                       \</span><br><span class="line"> symbol:                                 \</span><br><span class="line"> .frame  sp, framesize, rpc</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>END</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define END(function)                   \  </span><br><span class="line">.end    function;                       \  # 定义符号的结束位置</span><br><span class="line">.size   function,.-function             \  # 定义符号占用储存空间的大小</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ol>
+<h1 id="C-语言拾遗"><a href="#C-语言拾遗" class="headerlink" title="C 语言拾遗"></a>C 语言拾遗</h1><h4 id="从源代码到可执行文件"><a href="#从源代码到可执行文件" class="headerlink" title="从源代码到可执行文件"></a>从源代码到可执行文件</h4><ol>
+<li><p>预处理</p>
+<div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc -E hello.c -o hello.i</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>编译</p>
+<div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc -S hello.i -o hello.s</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>汇编</p>
+<div class="code-container" code-lang="Shell"><div class="codebox"><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gcc -c hello.s -o hello.o</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>链接</p>
+</li>
+</ol>
+<h4 id="C语言中变量的存储类别"><a href="#C语言中变量的存储类别" class="headerlink" title="C语言中变量的存储类别"></a>C语言中变量的存储类别</h4><ol>
+<li><p>存储期</p>
+<ul>
+<li>静态存储期：在函数中<strong>使用 <code>static</code> 关键字定义的变量，或者在函数外定义的变量</strong>，它们所对应的对象具有静态存储期。它们在程序执行期间一直存在，并且在程序执行过程中对象<strong>所占据的内存空间大小和对象的起始地址</strong>不会发生变化。如果不对该对象进行初始化，那么该对象的值会自动初始化为 0。</li>
+<li>自动存储期：在函数中<strong>不使用 <code>static</code> 关键字定义的变量</strong>所对应的对象具有自动存储期属性。程序执行到该变量声明的时候会创建变量对应的对象，在执行到该变量作用域结束时会释放掉该对象，随后该对象所占据的内存空间可做他用。如果在变量定义时不进行初始化，那么该变量的值不确定。</li>
+</ul>
+</li>
+<li><p>作用域</p>
+<ul>
+<li><p>块作用域</p>
+<p>块（block）是用一对花括号括起来的代码区域。定义在块中的变量具有块作用域。</p>
+</li>
+<li><p>函数作用域</p>
+</li>
+<li><p>文件作用域</p>
+<p>如果变量定义在函数的外部，那么这个变量具有文件作用域。</p>
+</li>
+</ul>
+</li>
+<li><p>链接</p>
+<ul>
+<li><p>内部链接</p>
+<p>内部链接变量只能在定义它的文件中使用。使用 <code>static</code> 关键字声明的全局变量是内部链接的。</p>
+</li>
+<li><p>外部链接</p>
+<p>外部链接变量可以在所有的文件中使用。全局变量默认是外部链接的。</p>
+<blockquote>
+<p>外部链接使用的时候要加上<code>extern</code>，如<code>extern int foo</code> </p>
+<p><strong>定义式声明（defining declaration）</strong> 和<strong>引用式声明（referencing declaration）</strong>：定义式声明会创建对象，而引用式声明不会创建对象，编译器会假设这个变量的定义在别的地方（在函数外）。</p>
+</blockquote>
+</li>
+<li><p>无链接</p>
+<p>无链接其实就是这个变量没有链接属性的意思，在函数中定义的变量都是无链接的。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="预处理指令"><a href="#预处理指令" class="headerlink" title="预处理指令"></a>预处理指令</h4><ol>
+<li><p>预处理器发现程序中的宏后，会用宏等价的替换文本进行替换。</p>
+<ul>
+<li><p>定义函数式宏的时候要格外小心，尤其要多加括号</p>
+</li>
+<li><p>多用<code>do {……} while(0)</code>：</p>
+<div class="code-container" code-lang="C"><div class="codebox"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MACRO_NAME(para1, para2) \</span></span><br><span class="line"><span class="meta">    do &#123; \</span></span><br><span class="line"><span class="meta">        express1; \</span></span><br><span class="line"><span class="meta">        express2; \</span></span><br><span class="line"><span class="meta">    &#125; while(0)</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ul>
+</li>
+<li><p><code>#</code> 运算符</p>
+<p><code>#</code> 运算符会自动把传入的参数用双引号括起来称为一个字符串，并且<strong>实参中的连续多个空格会被替换成一个空格。</strong></p>
+<div class="code-container" code-lang="C"><div class="codebox"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> PSQR(x)  printf(<span class="string">&quot; The square of &quot;</span> #x <span class="string">&quot; is %d&quot;</span>,((x)*(x)))</span></span><br><span class="line"><span class="type">int</span> y = <span class="number">5</span></span><br><span class="line">PSQR(y)</span><br><span class="line"><span class="comment">// 输出：the square of y is 25</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p><code>##</code> 运算符</p>
+<p>在宏定义中可以使用 <code>##</code> 把前后两个预处理符号连接成一个预处理符号，和 <code>#</code> 运算符不同，<code>##</code> 运算符不仅限于函数式宏定义，变量式宏定义也可以用。</p>
+<div class="code-container" code-lang="C"><div class="codebox"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CONCAT(a, b) a##b</span></span><br><span class="line"><span class="comment">// CONCAT(con, cat) 展开为 concat</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>变参宏：<code>...</code> 和 <code>__VA_ARGS__</code></p>
+<p>函数式宏定义还可以带可变参数，具体做法是在参数列表中使用 <code>...</code> 表示可变参数。在宏定义中，可变参数的部分用 <code>__VA_ARGS__</code> 表示，实参中对应 <code>...</code> 的几个参数可以看成一个参数替换到宏定义中 <code>__VA_ARGS__</code> 所在的地方。</p>
+<div class="code-container" code-lang="C"><div class="codebox"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> showlist(...) printf(#__VA_ARGS__)</span></span><br><span class="line">showlist(The first, second, and third items.);</span><br><span class="line"><span class="comment">// printf(&quot;The first, second, and third items.&quot;);</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p><code>#undef</code></p>
+<p><code>#undef &lt;macro&gt;</code> 用来取消对 <code>&lt;macro&gt;</code> 的定义</p>
+</li>
+<li><p>条件预处理指令</p>
+<p><code>#ifndef</code> 、 <code>#endif</code>、<code>#ifdef</code> 、<code>#else</code>、<code>#if</code>、<code>#elif</code>、<code>#error</code></p>
+<blockquote>
+<p>每写一个头文件都要加上 Header Guard，宏定义名就用头文件名的大写形式</p>
+<p>如：</p>
+<div class="code-container" code-lang="C"><div class="codebox"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _STDIO_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _STDIO_H        1</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></blockquote>
+</li>
+</ol></div></details></div><div class="post-copyright"><div class="post-copyright-info">本作品由 一一 于 2026-03-18 14:00:00 发布</div><div class="post-copyright-link"><span>作品地址：<a href="http://anailurus.github.io/2026/03/18/2026-03-18-%E5%8C%97%E8%88%AAos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Flab0%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E5%92%8C%E6%80%9D%E8%80%83%E9%A2%98/">北航os操作系统lab0实验报告和思考题</a></span><button class="copy-text" type="button" data-text="http://anailurus.github.io/2026/03/18/2026-03-18-%E5%8C%97%E8%88%AAos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Flab0%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E5%92%8C%E6%80%9D%E8%80%83%E9%A2%98/">复制</button></div><div class="post-copyright-detail">除特别声明外，本站作品均采用 <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' title='Attribution-NonCommercial-ShareAlike' target='_blank'>CC BY-NC-SA 4.0</a> 许可协议，转载请注明来自 <a href='/'>anAilurus' Blog</a></div><img class="post-copyright-icon noview" src="/assets/images/fu_cake.png" alt="Logo"/></div><div class="post-tail-tags"><a class="post-tail-tags-link" href="/tags/os/" rel="tag">os</a><a class="post-tail-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tail-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></div><div class="post-nav"><a class="post-nav-prev" nopost=""></a><a class="post-nav-next" href="/2026/02/14/%E5%85%B3%E4%BA%8E%E7%9D%A1%E7%9C%A0%EF%BC%81/" title="关于睡眠！">下一篇<span>关于睡眠！</span></a></div></div><aside id="post-sidebar" status="show"><div id="toc-container"><div class="toc-title"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"><span>目录</span></div><div class="toc-content" id="toc-div"><ol class="toc-list"><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#Lab-0-%E5%88%9D%E8%AF%86%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-list-text">Lab 0 初识操作系统</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86"><span class="toc-list-text">知识梳理</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Linux-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="toc-list-text">Linux 基本操作命令</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#VIM"><span class="toc-list-text">VIM</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#GCC"><span class="toc-list-text">GCC</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Makefile"><span class="toc-list-text">Makefile</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#ctags"><span class="toc-list-text">ctags</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Git"><span class="toc-list-text">Git</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#tmux"><span class="toc-list-text">tmux</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#shell%E8%84%9A%E6%9C%AC"><span class="toc-list-text">shell脚本</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-list-text">思考题</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Thinking-0-1"><span class="toc-list-text">Thinking 0.1</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Thinking-0-2"><span class="toc-list-text">Thinking 0.2</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Thinking-0-3"><span class="toc-list-text">Thinking 0.3</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Thinking-0-4"><span class="toc-list-text">Thinking 0.4</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Thinking-0-5"><span class="toc-list-text">Thinking 0.5</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#Thinking-0-6"><span class="toc-list-text">Thinking 0.6</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E5%AE%9E%E9%AA%8C%E5%8F%8D%E6%80%9D"><span class="toc-list-text">实验反思</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#exam"><span class="toc-list-text">exam</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#extra"><span class="toc-list-text">extra</span></a></li></ol></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#GDB%EF%BC%9A%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%A7%A3%E5%89%96%E6%9C%AF"><span class="toc-list-text">GDB：程序的解剖术</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-list-text">准备工作</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%BF%BD%E8%B8%AA%E7%A8%8B%E5%BA%8F%E5%B7%A5%E4%BD%9C"><span class="toc-list-text">追踪程序工作</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%AD%E7%82%B9"><span class="toc-list-text">设置断点</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E7%90%86%EF%BC%9A%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE"><span class="toc-list-text">程序的机理：查看运行时数据</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E9%AB%98%E7%BA%A7%E8%B0%83%E8%AF%95%EF%BC%9A%E4%BF%AE%E6%94%B9%E8%BF%90%E8%A1%8C%E6%97%B6%E7%A8%8B%E5%BA%8F"><span class="toc-list-text">高级调试：修改运行时程序</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E6%89%93%E5%BC%80-TUI"><span class="toc-list-text">打开 TUI</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#MIPS-%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="toc-list-text">MIPS 相关知识补充</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%80%E4%BA%9Bdirectives"><span class="toc-list-text">一些directives</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%80%E4%BA%9B%E5%AE%8F"><span class="toc-list-text">一些宏</span></a></li></ol></li><li class="toc-list-item toc-list-level-1"><a class="toc-list-link" href="#C-%E8%AF%AD%E8%A8%80%E6%8B%BE%E9%81%97"><span class="toc-list-text">C 语言拾遗</span></a></li></ol></div></div></aside></div></div><div id="toolbar" hide=""><div id="toolbar-setting-container" hide=""><div class="toolbar-item"><button id="tool-color-mode" title="深色模式" type="button"><img src="/assets/images/svg/ta/ta-moon.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button class="copy-text" id="tool-share" title="分享" type="button" data-text="http://anailurus.github.io/2026/03/18/2026-03-18-%E5%8C%97%E8%88%AAos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9Flab0%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A%E5%92%8C%E6%80%9D%E8%80%83%E9%A2%98/"><img src="/assets/images/svg/ta/ta-share.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-plus" title="放大字体" type="button"><img src="/assets/images/svg/ta/ta-text-plus.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-minus" title="缩小字体" type="button"><img src="/assets/images/svg/ta/ta-text-minus.svg" class="icon noview" alt="Icon"></button></div></div><div class="toolbar-container"><div class="toolbar-item"><button id="tool-setting" title="设置" type="button"><img src="/assets/images/svg/ta/ta-setting.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-toc" title="目录" type="button"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-gototop" title="返回顶部" type="button"><img src="/assets/images/svg/ta/ta-up.svg" class="icon noview" alt="Icon"></button></div></div></div><div class="search-overlay"><div class="search-container"><div class="search-header"><div class="search-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+搜索</div><div class="search-close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21a9 9 0 0 0 9 -9a9 9 0 0 0 -9 -9a9 9 0 0 0 -9 9a9 9 0 0 0 9 9z" /><path d="M9 8l6 8" /><path d="M15 8l-6 8" /></svg></div></div><div class="search-input-box"><input id="search-input" type="search" placeholder="请输入关键词进行站内搜索……" value="" maxlength="80"/></div><div class="search-result-container"><div class="search-result-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></div></div></div></div><div id="music-player"></div></main><footer><div class="footer"><div id="footer-copyright">© 2026 <span>💗</span> <a href="/null">一一</a></div><div id="footer-info"><div id="footer-framework">🚀本站由 <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/chanwj/hexo-theme-meow" title="3.3.0" target="_blank">Meow</a> 强力驱动</div><div id="footer-runtime"><span id="runtime" data-startdate="2026-02-10T00:00:00.000Z">🌻已稳定运行.年.月.天</span></div></div></div></footer><div class="scripts"><script>const GLOBALCONFIG = {
+  root: '/',
+  toolbar: true,
+  lazyload_src: '/assets/images/Meow-Loading.webp',
+  friends: false,
+  album: '',
+  codeblock: true,
+  code_copy_text: false,
+  share_text: '🐱Share From anAilurus',
+  onblur_title: '＜(´⌯ ω ⌯`)＞',
+  mouse_click: true,
+  notify:{
+    enable: false,
+    info: '复制成功～转载请标注本文地址',
+    f12_info: '开发者模式已打开，请遵循本站版权协议'
+  },
+  search: {
+    enable: true,
+    path: 'search.json',
+    local: {
+      top_n_per_article: 1,
+      preload: false
+    }
+  },
+  encrypt: false,
+};
+</script><script>if (!localStorage.getItem('color-mode')) {
+  localStorage.setItem('color-mode', 'light' || 'light');
+}
+document.body.setAttribute('data-mode', localStorage.getItem('color-mode'));
+</script>
+<script src="/js/theme/tools/utils.js"></script>
+
+<script src="/js/plugins/dist/lazyload.min.js"></script>
+
+<script src="/js/plugins/view-image.min.js"></script>
+<script>if (localStorage.getItem('font-size')) {
+  document.querySelector('.post').style.fontSize = localStorage.getItem('font-size') + 'px';
+}
+</script>
+<script src="/js/plugins/dist/APlayer.min.js"></script>
+<script>const initAplayer = (data) => {
+  if (!data.length) return;
+
+  const ap = new APlayer({
+    container: document.getElementById('music-player'),
+    fixed: true,
+    autoplay: false,
+    theme: '#FFB347',
+    loop: 'all',
+    order: 'list',
+    volume: 0.7,
+    lrcType: 3,
+    audio: data
+  });
+
+  ap.on('play', () => {
+    document.getElementById('music-player').setAttribute("play", "");
+  });
+  ap.on('pause', () => {
+    document.getElementById('music-player').removeAttribute("play");
+  });
+};
+
+const fetchData = () => {
+  fetch('')
+    .then(res => res.json())
+    .then(result => initAplayer(result));
+};
+
+if ('') {
+  document.addEventListener("DOMContentLoaded", fetchData);
+} else {
+  document.addEventListener("DOMContentLoaded", initAplayer([{"name":"ESCAPE","artist":"i-dle","url":"https://anailurus.github.io/image-hosting//(G)I-DLE-ESCAPE.mp3","cover":"https://anailurus.github.io/image-hosting//20260212185314108.png","lrc":"https://anailurus.github.io/image-hosting//i-dle-ESCAPE.lrc"}]));;
+}</script>
+<script src="/js/plugins/dist/search.js"></script>
+
+<script src="/js/main.js" type="module"></script>
+</div></body></html>

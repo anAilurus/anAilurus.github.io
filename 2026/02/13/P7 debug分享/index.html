@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="一一"/><meta name="copyright" content="一一"/><meta name="theme-color" content="#FFB347"/><meta name="format-detection" content="telephone=no"/><meta name="keywords" content="北航,大二,co"/><meta name="mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-touch-fullscreen" content="yes"/><meta name="application-name" content="北航co计算机组成P7debug分享和思考题 | anAilurus' Blog"/><meta name="apple-mobile-web-app-title" content="北航co计算机组成P7debug分享和思考题 | anAilurus' Blog"/><meta name="apple-mobile-web-app-status-bar-style" content="#FFB347"/><link rel="canonical" href="http://anAilurus.github.io/2026/02/13/P7 debug分享/"/><meta name="description" content="Verilog实现mips微系统（异常中断）.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北航co计算机组成P7debug分享和思考题 | anAilurus&#39; Blog">
+<meta property="og:url" content="http://anailurus.github.io/2026/02/13/P7%20debug%E5%88%86%E4%BA%AB/index.html">
+<meta property="og:site_name" content="anAilurus&#39; Blog">
+<meta property="og:description" content="Verilog实现mips微系统（异常中断）.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://anailurus.github.io/image-hosting//20260213170737891.jpg">
+<meta property="article:published_time" content="2026-02-13T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-13T13:22:32.052Z">
+<meta property="article:author" content="一一">
+<meta property="article:tag" content="co">
+<meta property="article:tag" content="北航">
+<meta property="article:tag" content="大二">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://anailurus.github.io/image-hosting//20260213170737891.jpg"><meta name="robots" content="index,follow"/><meta name="googlebot" content="index,follow"/><meta name="revisit-after" content="1 days"/><title>北航co计算机组成P7debug分享和思考题 | anAilurus' Blog</title><link rel="shortcut icon" href="/assets/images/fu_Q.ico"><link rel="preconnect" href="/assets"/><link rel="preconnect" href="assets"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/third-party/dist/APlayer.min.css">
+<link rel="prefetch" href="/"/><link rel="prefetch" href="/archives"/><link rel="prefetch" href="/tags"/><meta name="generator" content="Hexo 8.1.1"></head><body bg-style="none"><header><div id="navbar"><div id="nav-info"><a id="site-icon" href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a id="site-name" href="/" title="主页"><div>anAilurus' Blog</div><img src="/assets/images/svg/uc/uc-home.svg" class="icon noview" alt="Icon"></a></div><div id="nav-menu"><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="sub-menu-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="sub-menu-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div></div><div id="nav-function"><div id="search-btn"><a href="javascript:void(0);" title="搜索" accesskey="s"><img src="/assets/images/svg/uc/uc-search.svg" class="icon noview" alt="Icon"><span>搜索</span></a></div><div id="menu-btn"><a href="javascript:void(0);" title="打开菜单"><img src="/assets/images/svg/uc/uc-menu.svg" class="icon noview" alt="Icon"></a></div></div></div></header><div id="menu-aside"><div id="menu-aside-container"><div id="menu-aside-info"><a href="/" title="主页"><img src="/assets/images/fu_cake.png" alt="Logo"/></a><a href="/" title="主页">anAilurus' Blog</a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-article.svg" class="icon noview" alt="Icon"><span>文章</span></a><ul class="menu-aside-sub-item"><li><a href="/archives"><img src="/assets/images/svg/uc/uc-archive.svg" class="icon noview" alt="Icon"><span>归档</span></a></li><li><a href="/categories"><img src="/assets/images/svg/uc/uc-category.svg" class="icon noview" alt="Icon"><span>分类</span></a></li><li><a href="/tags"><img src="/assets/images/svg/uc/uc-tag.svg" class="icon noview" alt="Icon"><span>标签</span></a></li></ul></div><div class="menu-aside-item"><a href="/essay"><img src="/assets/images/svg/uc/uc-sun.svg" class="icon noview" alt="Icon"><span>动态</span></a></div><div class="menu-aside-item"><a href="javascript:void(0);"><img src="/assets/images/svg/uc/uc-link.svg" class="icon noview" alt="Icon"><span>链接</span></a><ul class="menu-aside-sub-item"><li><a href="/friends"><img src="/assets/images/svg/uc/uc-friend.svg" class="icon noview" alt="Icon"><span>友情链接</span></a></li></ul></div><div class="menu-aside-item"><a href="/about"><img src="/assets/images/svg/uc/uc-about.svg" class="icon noview" alt="Icon"><span>关于</span></a></div><hr/></div></div><main><div class="banner"><div class="banner-info"><div class="banner-avatar"><img src="/assets/images/fu_cake.png" alt="Avatar"/></div><div class="banner-title">「 anAilurus' Blog 」</div></div></div><div class="post-container"><div class="post-main"><div class="post-content"><h1 class="post-title">北航co计算机组成P7debug分享和思考题</h1><div class="post-author"><span>作者: 一一</span></div><div class="post-meta"><div class="post-info"><div class="post-date"><div class="post-pubdate"><img src="/assets/images/svg/ta/ta-pubdate.svg" class="icon noview" alt="Icon"><span>发表于2026-02-13</span></div><div class="post-update"><img src="/assets/images/svg/ta/ta-update.svg" class="icon noview" alt="Icon"><span>更新于2026-02-13</span></div></div><div class="post-read"><div class="post-wordcount"><img src="/assets/images/svg/ta/ta-write.svg" class="icon noview" alt="Icon"><span>总字数: 5.7k字</span></div><div class="post-readtime"><img src="/assets/images/svg/ta/ta-time.svg" class="icon noview" alt="Icon"><span>阅读时长: 18分钟</span></div></div></div><div class="post-attribute"><div class="post-categories"><img src="/assets/images/svg/ta/ta-category.svg" class="icon noview" alt="Icon"><span><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a><a class="post-categories-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/co/">co</a></span></div><div class="post-tags"><img src="/assets/images/svg/ta/ta-tag.svg" class="icon noview" alt="Icon"><span><a class="post-tags-link" href="/tags/co/" rel="tag">co</a><a class="post-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></span></div></div></div><div class="post markdown" indent="false"><img  class="postcover" alt="Post Cover"  lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213170737891.jpg" ><div class="note yellow"><p>写在前面：<br>本人P7设计文档和P6大差不差，所以就放debug分享了，思考题附在了后面</p></div>
+
+<h2 id="P7-debug分享"><a href="#P7-debug分享" class="headerlink" title="P7 debug分享"></a><code>P7</code> debug分享</h2><h3 id="一-易错分析"><a href="#一-易错分析" class="headerlink" title="一.  易错分析"></a>一.  易错分析</h3><p>有点啰嗦，按需阅读</p>
+<p>首先，先让我们理清楚<code>P7</code>在<code>P6</code>的基础上增加了什么，以及哪些比较容易错。与此相对应的，我们在看<code>P7</code>的bug前请保证<code>P6</code>代码部分已经没有问题。</p>
+<p>（以下实现都可能有其他情况）</p>
+<h4 id="CPU内部："><a href="#CPU内部：" class="headerlink" title="CPU内部："></a>CPU内部：</h4><ul>
+<li><h5 id="F级："><a href="#F级：" class="headerlink" title="F级："></a>F级：</h5><ol>
+<li><p>当D级指令是<code>eret</code>时，F级下一个PC为<code>EPC</code></p>
+<blockquote>
+<p>若采用不清空 <code>eret</code> 后面的延迟槽的办法，F 级当前指令即为 <code>EPC</code></p>
+</blockquote>
+</li>
+<li><p>当<code>Req == 1</code>的时候，<code>PC &lt;= 32&#39;H00004180</code></p>
+<p>易错点：</p>
+<ul>
+<li><p><code>Req</code>和<code>reset</code>和<code>stall</code>之间存在优先级</p>
+<p>请确保代码符合：</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(reset == <span class="number">1</span>)</span><br><span class="line">	<span class="keyword">begin</span></span><br><span class="line">		……</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	<span class="keyword">begin</span></span><br><span class="line">		<span class="keyword">if</span>(Req == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			PC &lt;= <span class="number">32&#x27;H00004180</span>;</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			<span class="keyword">if</span>(stall == <span class="number">1</span>)</span><br><span class="line">			<span class="keyword">begin</span></span><br><span class="line">				……</span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">begin</span></span><br><span class="line">				……</span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<blockquote>
+<p><code>Req == 1</code>时除了 <code>W</code> 级以外（以 <code>CP0</code> 设在 M 级为例）全部流水级的 <code>PC</code> 均<code>&lt;=</code> <code>32&#39;H00004180</code>，正常情况下宏观 <code>PC</code> 应连续三个周期保持在 <code>32&#39;H00004180</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>增加相应的检测异常的部分。此时可以检测出来的异常有<code>AdEL</code></p>
+<p>易错点：</p>
+<ul>
+<li><code>AdEL</code>错误发生后请把指令清空，<strong>只</strong> 需要把instr变成0即可</li>
+<li>在判断地址时，请和指导书要求保持一致，确保<code>&lt;</code>并没有写成<code>&lt;=</code>等等</li>
+</ul>
+</li>
+<li><p>连线部分：</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">新增接口</th>
+<th align="center">连线部分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>F_EPC</code></td>
+<td align="center"><code>CP0_EPCOut</code></td>
+</tr>
+<tr>
+<td align="center"><code>if_eret</code></td>
+<td align="center"><code>D_control_iferet</code>（有其他实现）</td>
+</tr>
+<tr>
+<td align="center"><code>F_Req</code></td>
+<td align="center"><code>CP0_Req</code></td>
+</tr>
+</tbody></table></div>
+<p>其余部分实现差异可能较大，无论如何请保证连线正确。</p>
+</li>
+</ol>
+</li>
+<li><h5 id="FtoD流水线寄存器："><a href="#FtoD流水线寄存器：" class="headerlink" title="FtoD流水线寄存器："></a><code>FtoD</code>流水线寄存器：</h5><ol>
+<li><p>增加对<code>Req == 1</code>的相应部分</p>
+<p>易错点：</p>
+<ul>
+<li>把PC改为<code>32&#39;H00004180</code>，而不是清零。</li>
+<li>仍然是保证<code>Req</code>和<code>reset</code>和<code>stall</code>之间的优先级</li>
+<li>其余清零即可</li>
+</ul>
+</li>
+<li><p>当D级是<code>eret</code>指令时清空延迟槽，保持PC不变（有其他实现方式）</p>
+<p>易错点：</p>
+<ul>
+<li><p>不阻塞的时候才可以清空延迟槽</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(stall == <span class="number">1</span>)</span><br><span class="line">	<span class="keyword">begin</span></span><br><span class="line">		……</span><br><span class="line">	<span class="keyword">end</span> </span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	<span class="keyword">begin</span></span><br><span class="line">		<span class="keyword">if</span>(if_eret == <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			……</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">begin</span></span><br><span class="line">			……</span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ul>
+</li>
+<li><p>增加<code>BD</code>、<code>EXCcode</code>的流水</p>
+</li>
+<li><p>各部分的更改：<code>reset</code>将<code>PC</code>改为<code>32&#39;H00003000</code>，其余清零即可；<code>Req</code>将<code>PC</code>改为<code>32&#39;H00004180</code>，其余清零即可；<code>stall</code>将所有值保持不变；清空延迟槽保持<code>PC</code>不变,其余清零即可。</p>
+<blockquote>
+<p>注意在阻塞注入空泡时 <code>BD</code> 需正常流水（而非清零或保持当前值）</p>
+</blockquote>
+</li>
+<li><p>连线部分</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">新增接口</th>
+<th align="center">连线部分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Req</code></td>
+<td align="center"><code>CP0_Req</code></td>
+</tr>
+<tr>
+<td align="center"><code>if_eret</code>（如果需要）</td>
+<td align="center"><code>D_control_iferet</code>（有其他实现）</td>
+</tr>
+<tr>
+<td align="center"><code>BD</code></td>
+<td align="center">&#96;D_control_Branch</td>
+</tr>
+<tr>
+<td align="center"><code>EXCcode</code></td>
+<td align="center"><code>F_EXCcode</code></td>
+</tr>
+<tr>
+<td align="center">instr</td>
+<td align="center">注意传异常处理之后清零的instr</td>
+</tr>
+</tbody></table></div>
+<p>其余部分实现差异可能较大，无论如何请保证连线正确。</p>
+</li>
+</ol>
+</li>
+<li><h5 id="D级："><a href="#D级：" class="headerlink" title="D级："></a>D级：</h5><ol>
+<li><p>D级需要信号能够反馈当前是否为<code>eret</code>(给F) 和 <code>mtc0</code>(为了暴力阻塞)</p>
+</li>
+<li><p>原始控制信号部分增加<code>RegWrite = …… | mfc0 </code>(控制信号以分布式为例)</p>
+<p>易错点：</p>
+<ul>
+<li>在判断指令<code>mfc0</code>和<code>mtc0</code>时请注意它的特殊性<code>(rs == mfc0)</code></li>
+</ul>
+</li>
+<li><p>增加相应的检测异常的部分。此时可以检测出来的异常有<code>Syscall</code>和<code>RI</code></p>
+<p>易错点：</p>
+<ul>
+<li>检测到异常发生后请把指令清空，<strong>只</strong> 需要把IR变成0即可</li>
+<li>虽然我们对<code>nop</code>啥都不干，但是它是已知指令: (</li>
+</ul>
+</li>
+<li><p>**阻塞阻塞阻塞！**当D级是<code>eret</code>时，如果E级和M级是<code>mtc0</code>，记得暴力阻塞一下。(<code>cp0</code>实现内部转发+E级到D级转发  &#x2F;  <code>cp0</code>实现内部转发+E级与D级阻塞也可以，但有可能会导致对拍不一致)</p>
+</li>
+<li><p>给新增指令增加<code>Tuse</code>和<code>Tnew</code></p>
+</li>
+<li><p>连线部分</p>
+<p>好像没有特别需要注意的连线，提一句的就是把E级和M级的<code>if_mtc0</code>传过来方便阻塞。</p>
+</li>
+</ol>
+</li>
+<li><h5 id="DtoE流水线寄存器："><a href="#DtoE流水线寄存器：" class="headerlink" title="DtoE流水线寄存器："></a><code>DtoE</code>流水线寄存器：</h5><ol>
+<li><p>增加对指令是否是<code>mtc0</code>的流水，用于暴力阻塞</p>
+</li>
+<li><p>增加<code>BD</code>、<code>EXCcode</code>的流水</p>
+</li>
+<li><p>增加对<code>Req == 1</code>的相应部分</p>
+<p>易错点：</p>
+<ul>
+<li>仍然是保证<code>Req</code>和<code>reset</code>和<code>stall</code>之间的优先级</li>
+</ul>
+</li>
+<li><p>各部分的更改：<code>reset</code>将<code>PC</code>改为<code>32&#39;H00003000</code>，其余清零即可；<code>Req</code>将<code>PC</code>改为<code>32&#39;H00004180</code>，其余清零即可；<strong><code>stall</code>时<code>PC</code>改为当前在D级指令的新<code>PC</code>，<code>BD</code>改为当前在D级指令的新<code>BD</code></strong></p>
+</li>
+<li><p>连线部分</p>
+<ul>
+<li><p><code>EXCcode</code>的流水，优先F级的异常，若F级没有异常再流水D级的异常（没有异常可以认为是0），如：<code>EXCcode = (F_EXCcode != 0)? F_EXCcode : D_EXCcode;</code></p>
+</li>
+<li><p><code>BD</code>连接<code>FtoD</code>流水线寄存器输出的<code>BD</code> 即可</p>
+</li>
+<li><p><code>if_mtc0</code>连接<code>D_control_ifmtc0</code>（有其他实现）</p>
+</li>
+<li><p><code>instr</code>注意发生异常后清零</p>
+</li>
+<li><p><code>RegWrite</code>注意发生异常后清零</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><h5 id="E级："><a href="#E级：" class="headerlink" title="E级："></a>E级：</h5><ol>
+<li><p>​     在<code>ALU</code>中判断是否溢出，采用指令集的方法即可</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(temp[<span class="number">32</span>] != temp[<span class="number">31</span>])</span><br><span class="line">	<span class="keyword">begin</span></span><br><span class="line">		overflow = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	<span class="keyword">begin</span></span><br><span class="line">		overflow = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">end</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p><code>MDU</code>模块中增加<code>Req</code>。当<code>Req</code>为1的时候，乘除槽中原本的计算继续计算，但是不可以加入新的计算。（不可以取巧，比如室友想反正<code>eret</code>回到乘除指令都需要写入，那直接写入但先不开启延迟倒计时也没有区别，然而是异常处理程序部分会拿出LO和HI进行保存，这个时候就WA了）（本人在这里卡了好久，可能是乘除槽实现问题，如果对自己的实现不把握的话，可以单独对<code>MDU</code>模块进行仿真测试）</p>
+</li>
+<li><p>增加相应的检测异常的部分。此时可以检测出来的异常有<code>AdEL</code>、<code>AdES</code>、<code>Ov</code>(也可以在M级对这些异常进行检测，但是要注意异常的指令不可以对<code>Bridge</code>以及后续<code>W级</code>的<code>REG</code>产生任何影响)</p>
+<p>易错点：</p>
+<ul>
+<li><p>检测到异常发生后可以选择把指令清空，防止对后续<code>DM</code>和寄存器产生影响，<strong>只</strong> 需要把IR变成0即可（这样做其实有点风险）</p>
+<blockquote>
+<p>另一种实现思路是保留完整的异常指令一直到 <code>M</code> 级，在 <code>Req = 1</code> 的时候禁访存（手动把 <code>byteen</code> 搞成 0）</p>
+</blockquote>
+<blockquote>
+<p>注意这里不能因为 <code>GRF</code> 在 <code>CP0</code> 之后就不管 <code>GRF</code>，如果不把受害指令清零的话错误操作照样会流水到 <code>W</code> 级                                                            </p>
+</blockquote>
+</li>
+<li><p><strong>对地址的判断较为繁琐,高频易错，细致细致</strong>，一定<strong>对着指导书的写</strong>（见过不少<code>AdEL</code>、<code>AdES</code>判断错误的都是断章取义了）。确保符号正确，<code>&lt;</code>并没有写成<code>&lt;=</code>，<code>||</code>没有写成<code>&amp;&amp;</code>等等。确保地址数据正确，如计时器的<code>Count</code>寄存器是<code>32&#39;H0000_7F08</code>和<code>32&#39;H0000_7F18</code>（见证了室友写成<code>32&#39;H0000_7F28</code>）</p>
+</li>
+</ul>
+</li>
+<li><p>连线部分</p>
+<p>把<code>MDU_Req</code>连接<code>CP0_Req</code></p>
+</li>
+</ol>
+</li>
+<li><h5 id="EtoM流水线寄存器："><a href="#EtoM流水线寄存器：" class="headerlink" title="EtoM流水线寄存器："></a><code>EtoM</code>流水线寄存器：</h5><ol>
+<li><p>增加对指令是否是<code>mtc0</code>的流水，用于暴力阻塞</p>
+</li>
+<li><p>增加<code>BD</code>、<code>EXCcode</code>的流水</p>
+</li>
+<li><p>增加对<code>Req == 1</code>的相应部分</p>
+<p>易错点：</p>
+<ul>
+<li>仍然是保证<code>Req</code>和<code>reset</code>之间的优先级</li>
+</ul>
+</li>
+<li><p>各部分的更改：<code>reset</code>将<code>PC</code>改为<code>32&#39;H00003000</code>，其余清零即可；<code>Req</code>将<code>PC</code>改为<code>32&#39;H00004180</code>，其余清零即可；</p>
+</li>
+<li><p>连线部分</p>
+<ul>
+<li><p><code>EXCcode</code>的流水，优先D级的异常，若D级没有异常再流水E级的异常（没有异常可以认为是0），如：<code>EXCcode = (D_EXCcode != 0)? D_EXCcode : E_EXCcode;</code></p>
+</li>
+<li><p><code>BD</code>连接<code>DtoE</code>流水线寄存器输出的<code>BD</code> 即可</p>
+</li>
+<li><p><code>if_mtc0</code>连接<code>DtoE</code>流水线寄存器输出的<code>if_mtc0</code> 即可（有其他实现）</p>
+</li>
+<li><p><code>instr</code>注意发生异常后清零</p>
+</li>
+<li><p><code>RegWrite</code>注意发生异常后清零</p>
+<blockquote>
+<p> 如果 <code>Regwrite</code> 不是流水的的话，在 <code>MtoW</code> 把 <code>IR</code> 清零也是一样的</p>
+</blockquote>
+<blockquote>
+<p>异常指令保留到 <code>MtoW</code> 就可以放心清零了，因为  <code>W</code> 级不可能加异常的</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><h5 id="M级："><a href="#M级：" class="headerlink" title="M级："></a>M级：</h5><ol>
+<li><p>本人将<code>CP0</code>放在了M级，由于<code>CP0</code>的复杂性本人打算等会讲</p>
+</li>
+<li><p>在<code>M_control</code>中增加<code>CP0OuttoReg</code>、<code>CP0en</code>、<code>iferet</code>输出</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> CP0OutToReg = mfc0;</span><br><span class="line"><span class="keyword">assign</span> CP0en = mtc0;</span><br><span class="line"><span class="keyword">assign</span> iferet = eret;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>连线部分</p>
+<p>异常的指令<code>byteen</code>一定要保证是0。</p>
+<p>于是，现在我们基本保证了异常指令不会影响内存和寄存器。但是！**我们还需要保证外部中断到来的时候，当前指令也不会影响到内存和寄存器！**所以，请在<code>CP0_Req == 1</code>时，保证<code>byteen</code>是0。</p>
+</li>
+</ol>
+</li>
+<li><h5 id="MtoW流水线寄存器和W级："><a href="#MtoW流水线寄存器和W级：" class="headerlink" title="MtoW流水线寄存器和W级："></a><code>MtoW</code>流水线寄存器和W级：</h5><ol>
+<li>没有什么特别需要修改的，只需要注意在<code>CP0_Req == 1</code>时，保证<code>RegWrite</code>是0。</li>
+</ol>
+</li>
+<li><h5 id="CP0："><a href="#CP0：" class="headerlink" title="CP0："></a><code>CP0</code>：</h5><ol>
+<li><p><code>CP0</code>理论上可以说是各不相同，建议没把握可以对<code>CP0</code>模块进行单独仿真</p>
+</li>
+<li><p>注意有异常中断的时候，<code>Req</code>也不一定要更改，大致要求是</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> inter_req = (|(HWInt &amp; SR_IM)) &amp; SR_IE &amp; (!SR_EXL);</span><br><span class="line"><span class="keyword">assign</span> exc_req   = (EXcCodeIn != <span class="number">5&#x27;d0</span>) &amp; (!SR_EXL);</span><br><span class="line"><span class="keyword">assign</span> Req       = inter_req | exc_req;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>注意外部中断到来的时候，<code>mtc0</code>也不应该修改<code>CP0</code>寄存器</p>
+<p>所以<code>mtc0</code>也不应该修改<code>CP0</code>寄存器的条件是<code>if((en == 1) &amp;&amp; (Req == 0))</code></p>
+</li>
+<li><p>外部中断优先级高于异常，此时注意<code>Cause_ExcCode</code>存入的是0</p>
+</li>
+<li><p>本人的实现出现了一个奇怪的bug，在这里分享一下。和室友探讨以后发现这是一个很奇怪的问题，至今也没有完全理解，欢迎大家找我探讨！</p>
+<blockquote>
+<p>请看完再决定自己的代码在这部分有没有问题，因为。。</p>
+</blockquote>
+<p>以下三个版本可能看着没有区别。所以我决定把我的仿真结果跟在后面，以下是tb文件（数据全乱编的，可能不符合CPU逻辑，但是我觉得对CP0测试应该没有问题）</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> cp0_test;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Inputs</span></span><br><span class="line">	<span class="keyword">reg</span> clk;</span><br><span class="line">	<span class="keyword">reg</span> reset;</span><br><span class="line">	<span class="keyword">reg</span> en;</span><br><span class="line">	<span class="keyword">reg</span> [<span class="number">4</span>:<span class="number">0</span>] CP0Add;</span><br><span class="line">	<span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] CP0In;</span><br><span class="line">	<span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] VPC;</span><br><span class="line">	<span class="keyword">reg</span> BDIn;</span><br><span class="line">	<span class="keyword">reg</span> [<span class="number">4</span>:<span class="number">0</span>] EXcCodeIn;</span><br><span class="line">	<span class="keyword">reg</span> [<span class="number">5</span>:<span class="number">0</span>] HWInt;</span><br><span class="line">	<span class="keyword">reg</span> EXLClr;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Outputs</span></span><br><span class="line">	<span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] CP0Out;</span><br><span class="line">	<span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] EPCOut;</span><br><span class="line">	<span class="keyword">wire</span> Req;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Instantiate the Unit Under Test (UUT)</span></span><br><span class="line">	CP0 uut (</span><br><span class="line">		<span class="variable">.clk</span>(clk), </span><br><span class="line">		<span class="variable">.reset</span>(reset), </span><br><span class="line">		<span class="variable">.en</span>(en), </span><br><span class="line">		<span class="variable">.CP0Add</span>(CP0Add), </span><br><span class="line">		<span class="variable">.CP0In</span>(CP0In), </span><br><span class="line">		<span class="variable">.CP0Out</span>(CP0Out), </span><br><span class="line">		<span class="variable">.VPC</span>(VPC), </span><br><span class="line">		<span class="variable">.BDIn</span>(BDIn), </span><br><span class="line">		<span class="variable">.EXcCodeIn</span>(EXcCodeIn), </span><br><span class="line">		<span class="variable">.HWInt</span>(HWInt), </span><br><span class="line">		<span class="variable">.EXLClr</span>(EXLClr), </span><br><span class="line">		<span class="variable">.EPCOut</span>(EPCOut), </span><br><span class="line">		<span class="variable">.Req</span>(Req)</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">		<span class="comment">// Initialize Inputs</span></span><br><span class="line">		clk = <span class="number">1</span>;</span><br><span class="line">		reset = <span class="number">1</span>;</span><br><span class="line">		en = <span class="number">0</span>;</span><br><span class="line">		CP0Add = <span class="number">0</span>;</span><br><span class="line">		CP0In = <span class="number">0</span>;</span><br><span class="line">		VPC = <span class="number">0</span>;</span><br><span class="line">		BDIn = <span class="number">0</span>;</span><br><span class="line">		EXcCodeIn = <span class="number">0</span>;</span><br><span class="line">		HWInt = <span class="number">0</span>;</span><br><span class="line">		EXLClr = <span class="number">0</span>;</span><br><span class="line">		</span><br><span class="line">		#<span class="number">5</span>;</span><br><span class="line">		reset = <span class="number">0</span>;</span><br><span class="line">		</span><br><span class="line">		#<span class="number">5</span>;</span><br><span class="line">		VPC = <span class="number">10</span>;</span><br><span class="line">		BDIn = <span class="number">1</span>;</span><br><span class="line">		EXcCodeIn = <span class="number">4</span>;</span><br><span class="line">		HWInt = <span class="number">0</span>;</span><br><span class="line">		EXLClr = <span class="number">0</span>;</span><br><span class="line">		</span><br><span class="line">		#<span class="number">10</span>;</span><br><span class="line">		VPC = <span class="number">14</span>;</span><br><span class="line">		BDIn = <span class="number">0</span>;</span><br><span class="line">		EXcCodeIn = <span class="number">0</span>;</span><br><span class="line">		HWInt = <span class="number">0</span>;</span><br><span class="line">		EXLClr = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">	<span class="keyword">always</span> #<span class="number">5</span> clk = ~clk;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>我的初版是：</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(Req == <span class="number">1</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	`SR_EXL	 	   &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	`Cause_BD	   &lt;= BDIn;</span><br><span class="line">	`Cause_ExcCode &lt;= (inter_req)? <span class="number">5&#x27;d0</span> : EXcCodeIn;</span><br><span class="line">	`EPC 		   &lt;= (BDIn == <span class="number">1</span>)? (VPC - <span class="number">32&#x27;d4</span>) : VPC;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">	`Cause_IP 	   &lt;= HWInt;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>但是我对<code>CP0</code>模块进行单独仿真时发现，这个时候<code>EPC</code>已经是错误指令的下一个周期的对应值了</p>
+<p>如下图所示：</p>
+<p><figure class="img-caption"><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213154742459.png"  alt="图1"><figcaption>图1</figcaption></figure></p>
+<blockquote>
+<p>p. s.  这个明显应该是错误的，但是这个错误当时并没有被COT检测出来（）</p>
+</blockquote>
+<p>我的初步理解是，我的<code>Req</code>并没有在时钟上升沿到来的时候及时改变，即<code>10ns</code>时钟上升沿到来时，<code>Req</code>没有及时变为1，所以<code>if(Req == 1)</code>这一块代码没有在这一周期运行；在<code>20ns</code>时钟上升沿到来时，<code>Req</code>没有及时变为0，所以<code>if(Req == 1)</code>这一块代码在这一周期运行了</p>
+<p>于是改成了</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(((|(HWInt &amp; `SR_IM)) &amp; `SR_IE &amp; (!`SR_EXL)) || ((EXcCodeIn != <span class="number">5&#x27;d0</span>) &amp; (!`SR_EXL)))</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	`SR_EXL 	   &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	`Cause_BD      &lt;= BDIn;</span><br><span class="line">	`Cause_ExcCode &lt;= ((|(HWInt &amp; `SR_IM)) &amp; `SR_IE &amp; (!`SR_EXL))? <span class="number">5&#x27;d0</span> : EXcCodeIn;</span><br><span class="line">	`EPC           &lt;= (BDIn == <span class="number">1</span>)? (VPC - <span class="number">32&#x27;d4</span>) : VPC;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">	`Cause_IP      &lt;= HWInt;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>对照一下，你会发现，其实我就是把<code>Req</code>改成了组成他的部分。但是仿真结果出现了巨大改变：</p>
+<p><figure class="img-caption"><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213154836993.png"  alt="图2"><figcaption>图2</figcaption></figure></p>
+<p>诶EPC对了！</p>
+<p>此时整体结果应该是没有任何问题了</p>
+<p>但是仔细观察，你会发现，诶？我<code>Req</code>怎么没变过！？</p>
+<p>我的理解是，<code>Req</code>改变条件中有<code>SR_EXL</code>，而运行<code>if(((|(HWInt &amp; </code>SR_IM)) &amp; <code>SR_IE &amp; (!</code>SR_EXL)) || ((EXcCodeIn !&#x3D; 5’d0) &amp; (!<code>SR_EXL)))</code>模块的时候快速更改了<code>SR_EXL</code>，于是出现了<code>Req</code>昙花一现式改变的情况</p>
+<p>所以看似没变，只是<code>Req</code>迅速改变为1又迅速改变为0，仿真没有体现出来</p>
+<p>为了能够体现出来<code>Req</code>的改变，于是有了第三版：</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(Req == <span class="number">1</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	`SR_EXL        &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span>(((|(HWInt &amp; `SR_IM)) &amp; `SR_IE &amp; (!`SR_EXL)) || ((EXcCodeIn != <span class="number">5&#x27;d0</span>) &amp; (!`SR_EXL)))</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	`Cause_BD      &lt;= BDIn;</span><br><span class="line">	`Cause_ExcCode &lt;= ((|(HWInt &amp; `SR_IM)) &amp; `SR_IE &amp; (!`SR_EXL))? <span class="number">5&#x27;d0</span> : EXcCodeIn;</span><br><span class="line">	`EPC           &lt;= (BDIn == <span class="number">1</span>)? (VPC - <span class="number">32&#x27;d4</span>) : VPC;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">	`Cause_IP      &lt;= HWInt;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>然后就没有问题了：</p>
+<p><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213154923292.png" ></p>
+<p>这样看起来实现得很丑陋，但是可行，但是丑陋。</p>
+<blockquote>
+<p>当你看完这段，你去看自己的代码，大部分人可能会想，我不会是错的吧（本人室友就这想了）</p>
+<p>然而是！然而是！</p>
+<p>她与我的第一版实现几乎一致，但是仿真结果如第二版所示，也就是没有问题！</p>
+<p>以下是她这部分的代码：</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`CAUSE_IP &lt;= HwInt; </span><br><span class="line"><span class="keyword">if</span> (Req) <span class="keyword">begin</span></span><br><span class="line">	`CAUSE_BD       &lt;= BD;</span><br><span class="line">	`SR_EXL         &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">	EPC             &lt;= (BD) ? (Vpc - <span class="number">4</span>) : Vpc;</span><br><span class="line">	`CAUSE_EXCCODE  &lt;= (interruptJudge) ? <span class="number">5&#x27;b00</span> : excCode;</span><br><span class="line"><span class="keyword">end</span> </span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>仿真结果是：</p>
+<p><img   lazyload src="/assets/images/Meow-Loading.webp" data-lazy-src="https://anailurus.github.io/image-hosting//20260213154952411.png" ></p>
+<p>EPC正常改变了！</p>
+<p>仔细比较我们CP0的区别，只有：</p>
+<p>我在<code>CP0</code>开了数组，实现所有寄存器</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] mem [<span class="number">0</span>:<span class="number">31</span>];</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>而她只实现了部分寄存器</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] SR;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] CAUSE;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] EPC;</span><br><span class="line"><span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] PRID;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>但感觉应该不是这个区别导致的，并没有理解为什么: (</p>
+<p>有想法的话欢迎探讨！</p>
+</blockquote>
+</li>
+<li><p><code>Req</code>只会产生一个周期，在中断处理程序过程中一直是1的是<code>SR_EXL</code>，直到<code>eret</code>到达M级使得<code>(EXLClr == 1)</code>，<code>SR_EXL &lt;= 1&#39;b0;</code></p>
+</li>
+<li><p>连线部分</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">接口</th>
+<th align="center">连线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>CP0_en</code></td>
+<td align="center"><code>M_control_CP0en</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0Add</code></td>
+<td align="center"><code>IR[rd]</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0In</code></td>
+<td align="center">M级转发后的<code>GRF[rt]</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0_VPC</code></td>
+<td align="center"><code>EtoM_PC</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0_BDIn</code></td>
+<td align="center"><code>EtoM_BD</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0_EXcCodeIn</code></td>
+<td align="center"><code>EtoM_EXCcode</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0_HWInt</code></td>
+<td align="center"><code>CPU_HWInt</code></td>
+</tr>
+<tr>
+<td align="center"><code>CP0_EXLClr</code></td>
+<td align="center"><code>M_control_iferet</code></td>
+</tr>
+</tbody></table></div>
+</li>
+</ol>
+</li>
+<li><h5 id="CPU和外部的连线："><a href="#CPU和外部的连线：" class="headerlink" title="CPU和外部的连线："></a>CPU和外部的连线：</h5><p>额。。其实感觉只要内部实现了，与外部连线传输的数据就不怎么需要更改。还是强调一下<strong>异常中断时，当前指令也不应该影响到内存和寄存器</strong>，保证<code>byteen == 0</code>和<code>RegWrite == 0</code>。另外注意传输<code>CP0</code>所在一级的<code>PC</code>作为宏观PC。</p>
+</li>
+</ul>
+<h4 id="Bridge："><a href="#Bridge：" class="headerlink" title="Bridge："></a>Bridge：</h4><p>同样也是各不相同的实现方式，没把握可以对该模块进行单独仿真，现说明一些易错：</p>
+<ol>
+<li>地址地址地址。</li>
+</ol>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th align="center">地址</th>
+<th align="center">数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DM</td>
+<td align="center"><code>(A &gt;= 32&#39;H0000_0000 &amp;&amp; A &lt;= 32&#39;H0000_2FFF)</code></td>
+</tr>
+<tr>
+<td align="center">T0</td>
+<td align="center"><code>(A &gt;= 32&#39;H0000_7F00 &amp;&amp; A &lt;= 32&#39;H0000_7F0B)</code></td>
+</tr>
+<tr>
+<td align="center">T1</td>
+<td align="center"><code>(A &gt;= 32&#39;H0000_7F10 &amp;&amp; A &lt;= 32&#39;H0000_7F1B)</code></td>
+</tr>
+<tr>
+<td align="center">Int</td>
+<td align="center"><code>(A &gt;= 32&#39;H0000_7F20 &amp;&amp; A &lt;= 32&#39;H0000_7F23)</code></td>
+</tr>
+</tbody></table></div>
+<ol start="2">
+<li><p>保证Timer0 输出的中断信号接入 HWInt[0] (最低中断位)，Timer1 输出的中断信号接入 HWInt[1]，来自中断发生器的中断信号接入 HWInt[2]。（小心接错位）</p>
+<div class="code-container" code-lang="Verilog"><div class="codebox"><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> HWInt = &#123;<span class="number">3&#x27;b000</span>, interrupt, Timer1_IRQ, Timer0_IRQ&#125;;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div></li>
+</ol>
+<h4 id="Timer："><a href="#Timer：" class="headerlink" title="Timer："></a>Timer：</h4><p>课程组已经给了该板块了，但是但是不仔细阅读会出错。<strong>传入的地址是30位<code>input [31:2] Addr</code></strong> ！！！ </p>
+<h3 id="二-对拍！"><a href="#二-对拍！" class="headerlink" title="二.  对拍！"></a>二.  对拍！</h3><p>本人不会搭建评测机，但是我们有伟大的 <a target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/link/AAD1541E4EDC8549DC9C3823DBA5A5A572">COT评测机</a><br>感谢学长感谢学长！（我也用过cokiller，我们的输出和它mars对拍会多很多行，而且好像无法和同学对拍，所以就不过多叙述了）<br>但是COT对拍会有一点差异性：分为和mars对拍、和同学对拍进行讲述吧！</p>
+<ol>
+<li><h4 id="和mars对拍"><a href="#和mars对拍" class="headerlink" title="和mars对拍"></a>和mars对拍</h4><ul>
+<li><p>mars在遇到<code>sb</code>和<code>lb</code>指令读取<code>32&#39;H0000_2FFF</code>的时候会标记为异常指令，大致情形如下：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mars: &quot;@00004180: $26 &lt;= 00000414&quot;</span><br><span class="line">P7: &quot;@0000388c: *00002ffc &lt;= 69000000&quot;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+</li>
+<li><p>mars在读取计时器的<code>Count</code>寄存器时，会和我们有所不同，大致情形如下：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Mips Code: &quot;lw $15, 61($20)&quot; in line 285</span><br><span class="line">Mars: &quot;@00003400: $15 &lt;= ffffffff&quot;</span><br><span class="line">P7: &quot;@00003400: $15 &lt;= 00000000&quot;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>仔细debug然后会发现lw读取的是<code>Count</code>寄存器</p>
+</li>
+</ul>
+</li>
+<li><h4 id="和同学对拍"><a href="#和同学对拍" class="headerlink" title="和同学对拍"></a>和同学对拍</h4><p>由于每个人实现的不一样，会导致对拍的差异性：</p>
+<ul>
+<li><p>eret实现的不一样</p>
+<ul>
+<li><p>清空延迟槽</p>
+</li>
+<li><p>通过一个多路选择器，当D时eret时直接将F的<code>PC</code>改为<code>EPC</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>​       每一次中断异常，后者会比前者少一个周期，这样会导致到后期<code>Timer</code>产生的中断完全对不上</p>
+<ul>
+<li><p>阻塞转发实现的不一样。</p>
+<p>这个就比较多样性了，如<code>lui</code>的Tnew其实可以是1，会导致周期差异。同样面对<code>mtc0</code>和<code>eret</code>暴力阻塞还是转发，也会导致周期差异</p>
+<p>（甚至你乘除槽延长的时间是不是5&#x2F;10周期也会有影响）</p>
+</li>
+</ul>
+<p>对拍具体差异如下：</p>
+<div class="code-container" code-lang="Plaintext"><div class="codebox"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">verilog@P7_1 execute: &quot;mfc0 $k0, $13&quot; in line 1244</span><br><span class="line">verilog@P7_1: &quot;@00004180: $26 &lt;= 00000410&quot;</span><br><span class="line">verilog@P7_2 execute: &quot;mfc0 $k0, $13&quot; in line 1244</span><br><span class="line">verilog@P7_2: &quot;@00004180: $26 &lt;= 00000010&quot;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
+
+<p>此时具体去看会发现是<code>Cause_IP</code>的不同，再具体去查看就会发现此时<code>timer_IRQ</code>不一样，然后就会发现其实运行时间有很大差异。</p>
+</li>
+<li><h4 id="cot不足"><a href="#cot不足" class="headerlink" title="cot不足"></a>cot不足</h4><p>经过第一次强测，我们发现cot评测机没有BD位输出错误进行测试。具体是，没有对jr指令后延迟槽指令是否出现中断异常（涉及到BD位输出错误）进行测试。而本人之前也出现了cot评测全过但是弱测没过的情况: ( 。不过真的很感谢学长的cot评测机了。</p>
+<blockquote>
+<p>p. s. 据我所知，上一届强测没有检测<code>Timer</code>有关错误，所以拿到的上一届强测过了的代码不一定完全正确哦~</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="三-debug思路分享"><a href="#三-debug思路分享" class="headerlink" title="三.  debug思路分享"></a>三.  debug思路分享</h3><p>当我们发现cot评测机wa之后，我们可以选择吧code.txt放到我们的P7文件夹中进行仿真。code.txt一般比较长，记事本左上角的查找功能可以帮助我们找到我们错的那一行，然后观察上下文。mars程序也可以送给ai让他给我们标上PC。如果PC在4180那一段，基本是找不到bug的，我们需要知道异常中断之前发生了什么，可以往回找PC到3xxx，找对应寄存器的错误，然后记住PC，在仿真里面找到他，如果是寄存器，就一层一层展开路径上的所有模块看哪个结果不符合预期（可以把每一级的PC都拎出来方便观察）。如果是内存的话，就要算一下理想中是读那一段的内存，然后再一层一层展开。然后就是对着错误模块干瞪眼了，当然对错误模块进行单独仿真也不错。</p>
+<h3 id="四-最后"><a href="#四-最后" class="headerlink" title="四. 最后"></a>四. 最后</h3><p>感谢我伟大善良智慧的室友大人给予本篇文章的众多意见和想法！</p>
+<p>有任何想法意见欢迎讨论。有任何错误欢迎纠正！</p>
+<p>祝大家co顺利！</p>
+<details class="fold blue" ><summary>思考题点击展开，不保证正确性，建议自己思考</summary><div class='fold-content'><h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><h4 id="1、请查阅相关资料，说明鼠标和键盘的输入信号是如何被-CPU-知晓的？"><a href="#1、请查阅相关资料，说明鼠标和键盘的输入信号是如何被-CPU-知晓的？" class="headerlink" title="1、请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？"></a>1、请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？</h4><p>鼠标和键盘作为外设，其输入信号通常通过中断机制被 CPU 知晓。具体过程如下：<br>硬件接口：鼠标和键盘通过 USB、PS&#x2F;2 等接口连接到计算机系统。<br>中断信号：当用户按下按键或移动鼠标时，外设控制器会向 CPU 发送一个外部中断信号。<br>中断控制器：该信号通常先由中断控制器（如 8259A 或 APIC）管理，设置相应的中断标志。<br>CPU 响应：CPU 在每条指令执行结束时检查是否有中断请求。若有，则暂停当前程序，保存现场，跳转到中断服务程序入口地址。<br>中断服务程序：读取外设数据寄存器，获取输入内容，进行处理。</p>
+<h4 id="2、请思考为什么我们的-CPU-处理中断异常必须是已经指定好的地址？如果你的-CPU-支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）"><a href="#2、请思考为什么我们的-CPU-处理中断异常必须是已经指定好的地址？如果你的-CPU-支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）" class="headerlink" title="2、请思考为什么我们的 CPU 处理中断异常必须是已经指定好的地址？如果你的 CPU 支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）"></a>2、请思考为什么我们的 CPU 处理中断异常必须是已经指定好的地址？如果你的 CPU 支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）</h4><p>CPU 处理中断异常必须是固定入口地址的原因在于：<br>1.硬件设计简化：固定入口地址使得 CPU 硬件实现简单，无需额外寄存器存储用户提供的入口地址。<br>2.系统安全与控制：如果允许用户自定义入口地址，可能出现以下问题：<br>*恶意代码执行：用户可能将入口地址指向恶意代码，破坏系统。<br>*系统一致性破坏：用户程序可能未正确处理异常，导致系统状态不一致。<br>*优先级与嵌套问题：用户程序可能未正确处理中断嵌套或优先级，导致系统死锁或响应异常。<br>若支持用户自定义入口地址，虽能提供灵活性，但会引入安全性和可靠性风险，需额外的硬件保护机制（如特权模式、内存保护）来限制。</p>
+<h4 id="3、为何与外设通信需要-Bridge？"><a href="#3、为何与外设通信需要-Bridge？" class="headerlink" title="3、为何与外设通信需要 Bridge？"></a>3、为何与外设通信需要 Bridge？</h4><p>与外设通信需要系统桥（Bridge）的原因包括：<br>1.接口统一化：外设种类繁多，接口各异。系统桥提供统一的读写接口（如内存映射 I&#x2F;O），使 CPU 可以像访问内存一样访问外设。<br>2.简化 CPU 设计：CPU 无需为每种外设设计专用指令或接口，符合“高内聚、低耦合”设计原则。<br>3.地址映射与解码：系统桥负责将 CPU 发出的地址映射到相应的外设，并处理读写时序与协议转换。<br>4.扩展性与模块化：新增外设时只需接入系统桥，无需修改 CPU 设计。</p>
+<h4 id="4、请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。"><a href="#4、请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。" class="headerlink" title="4、请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。"></a>4、请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。</h4><p>模式0下的中断信号将持续有效，直至控制寄存器中的中断屏蔽位被设置为0。<br>不同于模式0，模式1下计数器每次计数循环中只产生一周期的中断信号。</p>
+<h4 id="5、倘若中断信号流入的时候，在检测宏观-PC-的一级如果是一条空泡（你的-CPU-该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在-P7-中，清空流水线产生的空泡指令应该保留原指令的哪些信息？"><a href="#5、倘若中断信号流入的时候，在检测宏观-PC-的一级如果是一条空泡（你的-CPU-该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在-P7-中，清空流水线产生的空泡指令应该保留原指令的哪些信息？" class="headerlink" title="5、倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的 CPU 该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在 P7 中，清空流水线产生的空泡指令应该保留原指令的哪些信息？"></a>5、倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的 CPU 该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在 P7 中，清空流水线产生的空泡指令应该保留原指令的哪些信息？</h4><p>(一) 如果中断信号到达时，宏观 PC 所在的流水级是一条空泡指令（NOP，所有信息为空），会发生：<br>无法确定异常入口：空泡指令没有有效的 PC 值，导致无法正确写入 EPC，也无法确定异常返回地址。<br>中断响应延迟：CPU 可能无法响应中断异常。<br>(二) 在 P7 中，清空流水线产生的空泡指令应保留以下信息：<br>PC 值：用于异常返回地址计算。<br>指令类型标记：标记是否为有效指令或异常指令。<br>流水线状态标记：如是否处于延迟槽。</p>
+<h4 id="6、为什么-jalr-指令为什么不能写成-jalr-31-31？"><a href="#6、为什么-jalr-指令为什么不能写成-jalr-31-31？" class="headerlink" title="6、为什么 jalr 指令为什么不能写成 jalr $31, $31？"></a>6、为什么 jalr 指令为什么不能写成 jalr $31, $31？</h4><p>jalr指令的功能是跳转到对应寄存器中的地址，同时把PC+4（有延迟槽则PC+8）的值写入对应寄存器中。如果后面两个寄存器都是相同的，则先跳转再写入还是先写入再跳转就会产生两种不一样的结果。因此为了避免这种未知情况的发生，不能这样写。</p></div></details></div><div class="post-copyright"><div class="post-copyright-info">本作品由 一一 于 2026-02-13 14:00:00 发布</div><div class="post-copyright-link"><span>作品地址：<a href="http://anailurus.github.io/2026/02/13/P7%20debug%E5%88%86%E4%BA%AB/">北航co计算机组成P7debug分享和思考题</a></span><button class="copy-text" type="button" data-text="http://anailurus.github.io/2026/02/13/P7%20debug%E5%88%86%E4%BA%AB/">复制</button></div><div class="post-copyright-detail">除特别声明外，本站作品均采用 <a href='https://creativecommons.org/licenses/by-nc-sa/4.0/' title='Attribution-NonCommercial-ShareAlike' target='_blank'>CC BY-NC-SA 4.0</a> 许可协议，转载请注明来自 <a href='/'>anAilurus' Blog</a></div><img class="post-copyright-icon noview" src="/assets/images/fu_cake.png" alt="Logo"/></div><div class="post-tail-tags"><a class="post-tail-tags-link" href="/tags/co/" rel="tag">co</a><a class="post-tail-tags-link" href="/tags/%E5%8C%97%E8%88%AA/" rel="tag">北航</a><a class="post-tail-tags-link" href="/tags/%E5%A4%A7%E4%BA%8C/" rel="tag">大二</a></div><div class="post-nav"><a class="post-nav-prev" href="/2026/02/13/co%E7%90%86%E8%AE%BA%E5%A4%8D%E4%B9%A0/" title="北航co计算机组成理论复习">上一篇<span>北航co计算机组成理论复习</span></a><a class="post-nav-next" href="/2026/02/13/P6co/" title="北航co计算机组成P6设计文档">下一篇<span>北航co计算机组成P6设计文档</span></a></div></div><aside id="post-sidebar" status="show"><div id="toc-container"><div class="toc-title"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"><span>目录</span></div><div class="toc-content" id="toc-div"><ol class="toc-list"><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#P7-debug%E5%88%86%E4%BA%AB"><span class="toc-list-text">P7 debug分享</span></a><ol class="toc-list-child"><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%80-%E6%98%93%E9%94%99%E5%88%86%E6%9E%90"><span class="toc-list-text">一.  易错分析</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%BA%8C-%E5%AF%B9%E6%8B%8D%EF%BC%81"><span class="toc-list-text">二.  对拍！</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E4%B8%89-debug%E6%80%9D%E8%B7%AF%E5%88%86%E4%BA%AB"><span class="toc-list-text">三.  debug思路分享</span></a></li><li class="toc-list-item toc-list-level-3"><a class="toc-list-link" href="#%E5%9B%9B-%E6%9C%80%E5%90%8E"><span class="toc-list-text">四. 最后</span></a></li></ol></li><li class="toc-list-item toc-list-level-2"><a class="toc-list-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-list-text">思考题</span></a></li></ol></div></div></aside></div></div><div id="toolbar" hide=""><div id="toolbar-setting-container" hide=""><div class="toolbar-item"><button id="tool-color-mode" title="深色模式" type="button"><img src="/assets/images/svg/ta/ta-moon.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button class="copy-text" id="tool-share" title="分享" type="button" data-text="http://anailurus.github.io/2026/02/13/P7%20debug%E5%88%86%E4%BA%AB/"><img src="/assets/images/svg/ta/ta-share.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-plus" title="放大字体" type="button"><img src="/assets/images/svg/ta/ta-text-plus.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-font-size-minus" title="缩小字体" type="button"><img src="/assets/images/svg/ta/ta-text-minus.svg" class="icon noview" alt="Icon"></button></div></div><div class="toolbar-container"><div class="toolbar-item"><button id="tool-setting" title="设置" type="button"><img src="/assets/images/svg/ta/ta-setting.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-toc" title="目录" type="button"><img src="/assets/images/svg/ta/ta-toc.svg" class="icon noview" alt="Icon"></button></div><div class="toolbar-item"><button id="tool-gototop" title="返回顶部" type="button"><img src="/assets/images/svg/ta/ta-up.svg" class="icon noview" alt="Icon"></button></div></div></div><div class="search-overlay"><div class="search-container"><div class="search-header"><div class="search-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+搜索</div><div class="search-close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21a9 9 0 0 0 9 -9a9 9 0 0 0 -9 -9a9 9 0 0 0 -9 9a9 9 0 0 0 9 9z" /><path d="M9 8l6 8" /><path d="M15 8l-6 8" /></svg></div></div><div class="search-input-box"><input id="search-input" type="search" placeholder="请输入关键词进行站内搜索……" value="" maxlength="80"/></div><div class="search-result-container"><div class="search-result-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></div></div></div></div><div id="music-player"></div></main><footer><div class="footer"><div id="footer-copyright">© 2026 <span>💗</span> <a href="/null">一一</a></div><div id="footer-info"><div id="footer-framework">🚀本站由 <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/chanwj/hexo-theme-meow" title="3.3.0" target="_blank">Meow</a> 强力驱动</div><div id="footer-runtime"><span id="runtime" data-startdate="2026-02-10T00:00:00.000Z">🌻已稳定运行.年.月.天</span></div></div></div></footer><div class="scripts"><script>const GLOBALCONFIG = {
+  root: '/',
+  toolbar: true,
+  lazyload_src: '/assets/images/Meow-Loading.webp',
+  friends: false,
+  album: '',
+  codeblock: true,
+  code_copy_text: false,
+  share_text: '🐱Share From anAilurus',
+  onblur_title: '＜(´⌯ ω ⌯`)＞',
+  mouse_click: true,
+  notify:{
+    enable: false,
+    info: '复制成功～转载请标注本文地址',
+    f12_info: '开发者模式已打开，请遵循本站版权协议'
+  },
+  search: {
+    enable: true,
+    path: 'search.json',
+    local: {
+      top_n_per_article: 1,
+      preload: false
+    }
+  },
+  encrypt: false,
+};
+</script><script>if (!localStorage.getItem('color-mode')) {
+  localStorage.setItem('color-mode', 'light' || 'light');
+}
+document.body.setAttribute('data-mode', localStorage.getItem('color-mode'));
+</script>
+<script src="/js/theme/tools/utils.js"></script>
+
+<script src="/js/plugins/dist/lazyload.min.js"></script>
+
+<script src="/js/plugins/view-image.min.js"></script>
+<script>if (localStorage.getItem('font-size')) {
+  document.querySelector('.post').style.fontSize = localStorage.getItem('font-size') + 'px';
+}
+</script>
+<script src="/js/plugins/dist/APlayer.min.js"></script>
+<script>const initAplayer = (data) => {
+  if (!data.length) return;
+
+  const ap = new APlayer({
+    container: document.getElementById('music-player'),
+    fixed: true,
+    autoplay: false,
+    theme: '#FFB347',
+    loop: 'all',
+    order: 'list',
+    volume: 0.7,
+    lrcType: 3,
+    audio: data
+  });
+
+  ap.on('play', () => {
+    document.getElementById('music-player').setAttribute("play", "");
+  });
+  ap.on('pause', () => {
+    document.getElementById('music-player').removeAttribute("play");
+  });
+};
+
+const fetchData = () => {
+  fetch('')
+    .then(res => res.json())
+    .then(result => initAplayer(result));
+};
+
+if ('') {
+  document.addEventListener("DOMContentLoaded", fetchData);
+} else {
+  document.addEventListener("DOMContentLoaded", initAplayer([{"name":"ESCAPE","artist":"i-dle","url":"https://anailurus.github.io/image-hosting//(G)I-DLE-ESCAPE.mp3","cover":"https://anailurus.github.io/image-hosting//20260212185314108.png","lrc":"https://anailurus.github.io/image-hosting//i-dle-ESCAPE.lrc"}]));;
+}</script>
+<script src="/js/plugins/dist/search.js"></script>
+
+<script src="/js/main.js" type="module"></script>
+</div></body></html>
