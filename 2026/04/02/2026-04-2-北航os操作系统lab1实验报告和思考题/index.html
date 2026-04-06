@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/anailurus/image-hosting/20260402030410725.png">
 <meta property="article:published_time" content="2026-04-02T11:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-06T19:43:16.618Z">
+<meta property="article:modified_time" content="2026-04-06T19:49:22.051Z">
 <meta property="article:author" content="一一">
 <meta property="article:tag" content="os">
 <meta property="article:tag" content="北航">
@@ -167,7 +167,9 @@
 
 <p>其中调用了<code>./kern/machine.c </code>中的<code>halt()</code>实现了停止整个系统。</p>
 <p>同时还调用了<code>./kern/printk.c </code>中的<code>printk()</code>函数</p>
-<h4 id="printk"><a href="#printk" class="headerlink" title="printk"></a>printk</h4><p><code>./kern/printk.c </code>中的<code>printk()</code>函数：</p>
+<h4 id="printk"><a href="#printk" class="headerlink" title="printk"></a>printk</h4><div class="note yellow"><p>目前，标答中 printk 无法正确打印 LONG_MIN。不知道后面会不会改。</p></div>
+
+<p><code>./kern/printk.c </code>中的<code>printk()</code>函数：</p>
 <div class="code-container" code-lang="C"><div class="codebox"><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//./kern/printk.c</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">printk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *fmt, ...)</span> &#123; </span><br><span class="line">	va_list ap; </span><br><span class="line">	va_start(ap, fmt); </span><br><span class="line">	vprintfmt(outputk, <span class="literal">NULL</span>, fmt, ap);</span><br><span class="line">	va_end(ap); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><div class="code-fold" title="Fold/Open"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 9l6 6l6 -6" /></svg></div><div class="code-copy" title="Copy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg></div></div></div>
 
 <div class="note yellow"><p>参数中有 … 可见其不一般。这里使用了变长参数表。</p>
